@@ -192,7 +192,7 @@ export const database: DatabaseItem[] = [
     v("beschuldigen", "to blame/accuse", "Genitiv", "Sie beschuldigen ihn des Diebstahls.", "beschuldigt", "beschuldigte", "hat beschuldigt"),
     v("überführen", "to convict", "Genitiv", "Man überführte ihn der Lüge.", "überführt", "überführte", "hat überführt"),
     v("verdächtigen", "to suspect", "Genitiv", "Er wird des Mordes verdächtigt.", "verdächtigt", "verdächtigte", "hat verdächtigt"),
-    v("sein", "to be", "Genitiv", "Ich bin der Meinung...", "ist", "war", "ist gewesen"), // Manually handled in v
+    v("sein", "to be", "Genitiv", "Ich bin Linn Htet Win", "ist", "war", "ist gewesen"), // Manually handled in v
 
     // --- WECHSELPRÄPOSITIONEN (Two-Way Prepositions) ---
     v("legen", "to lay/place", "Wechselpräposition (Akkusativ)", "Ich lege das Buch auf den Tisch.", "legt", "legte", "hat gelegt"),
