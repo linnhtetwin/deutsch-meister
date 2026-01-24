@@ -14,14 +14,14 @@ const GrammarTable = ({ data, highlightColor, smallText = false }: { data: strin
       <thead>
         <tr className="bg-gray-50 border-b border-gray-200">
           <th className="p-3 font-bold text-gray-400 uppercase tracking-tighter text-[10px] w-16">Kasus</th>
-          {data[0].length > 4 ? (
+          {data[0].length > 5 ? (
               // Dynamic headers for larger tables (like full pronouns)
                <>
                 <th className="p-3 font-bold text-gray-800 border-l border-gray-100">Ich</th>
                 <th className="p-3 font-bold text-gray-800 border-l border-gray-100">Du</th>
                 <th className="p-3 font-bold text-gray-800 border-l border-gray-100">Er</th>
-                <th className="p-3 font-bold text-gray-800 border-l border-gray-100">Sie</th>
                 <th className="p-3 font-bold text-gray-800 border-l border-gray-100">Es</th>
+                <th className="p-3 font-bold text-gray-800 border-l border-gray-100">sie</th>
                 <th className="p-3 font-bold text-gray-800 border-l border-gray-100">Wir</th>
                 <th className="p-3 font-bold text-gray-800 border-l border-gray-100">Ihr</th>
                 <th className="p-3 font-bold text-gray-800 border-l border-gray-100">Sie</th>
@@ -182,10 +182,10 @@ export const GrammarView: React.FC = () => {
   ];
 
   const personalFullData = [
-    ["Nom", "ich", "du", "er", "sie", "es", "wir", "ihr", "Sie"],
-    ["Akk", "mich", "dich", "ihn", "sie", "es", "uns", "euch", "Sie"],
-    ["Dat", "mir", "dir", "ihm", "ihr", "ihm", "uns", "euch", "Ihnen"],
-    ["Gen", "meiner", "deiner", "seiner", "ihrer", "seiner", "unser", "euer", "Ihrer"],
+    ["Nom", "ich", "du", "er", "es", "sie", "wir", "ihr", "Sie"],
+    ["Akk", "mich", "dich", "ihn", "es", "sie", "uns", "euch", "Sie"],
+    ["Dat", "mir", "dir", "ihm", "ihm", "ihr", "uns", "euch", "Ihnen"],
+    ["Gen", "meiner", "deiner", "seiner", "seiner", "ihrer", "unser", "euer", "Ihrer"],
   ];
 
   const reflexivData = [
@@ -265,13 +265,13 @@ export const GrammarView: React.FC = () => {
             
             <VerbGroupTable 
                 title="Hilfsverben (Auxiliary)" 
-                headers={["Verb", "Zeit", "ich", "du", "er/sie/es", "wir/Sie", "ihr"]}
+                headers={["Verb", "Zeit", "ich", "du", "er/es/sie", "wir/Sie", "ihr"]}
                 data={auxData}
             />
 
             <VerbGroupTable 
                 title="Modalverben (Präsens)" 
-                headers={["Verb", "ich / er", "du", "wir / Sie", "ihr"]}
+                headers={["Verb", "ich/er/es/sie", "du", "wir/Sie", "ihr"]}
                 data={modalData}
                 colWidths="w-1/5"
             />
