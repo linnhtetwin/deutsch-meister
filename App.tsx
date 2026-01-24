@@ -1,10 +1,12 @@
+
 import React, { useState } from 'react';
 import { TabView } from './types';
 import { DictionaryView } from './components/DictionaryView';
 import { VerbQuiz } from './components/VerbQuiz';
 import { NounQuiz } from './components/NounQuiz';
 import { GuideView } from './components/GuideView';
-import { BookOpen, HelpCircle, GraduationCap, Info } from 'lucide-react';
+import { GrammarView } from './components/GrammarView';
+import { BookOpen, HelpCircle, GraduationCap, Info, LayoutList } from 'lucide-react';
 
 // Custom German Shield Logo Component
 const LogoShield: React.FC<{ className?: string }> = ({ className = "" }) => (
@@ -57,6 +59,7 @@ const App: React.FC = () => {
         {/* Navigation */}
         <div className="flex flex-wrap justify-center gap-4 my-8 px-4">
           <NavButton tab="dictionary" label="Wörterbuch" icon={<BookOpen size={20} />} />
+          <NavButton tab="grammar" label="Grammatik" icon={<LayoutList size={20} />} />
           <NavButton tab="verb-quiz" label="Verb Quiz" icon={<HelpCircle size={20} />} />
           <NavButton tab="noun-quiz" label="Nomen Quiz" icon={<GraduationCap size={20} />} />
           <NavButton tab="guide" label="Anleitung" icon={<Info size={20} />} />
@@ -65,6 +68,7 @@ const App: React.FC = () => {
         {/* Content Area */}
         <div className="animate-in fade-in duration-500">
           {currentTab === 'dictionary' && <DictionaryView />}
+          {currentTab === 'grammar' && <GrammarView />}
           {currentTab === 'verb-quiz' && <VerbQuiz />}
           {currentTab === 'noun-quiz' && <NounQuiz />}
           {currentTab === 'guide' && <GuideView />}
