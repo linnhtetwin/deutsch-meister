@@ -2449,7 +2449,6 @@ export const database: DatabaseItem[] = [
     n("Die", "Herrschaft", "rule/reign", "-", "Herrschaft des Rechts."),
     n("Die", "Herausforderung", "challenge", "die Herausforderungen", "Eine neue Herausforderung."),
     n("Die", "Hinsicht", "respect/regard", "-", "In vielerlei Hinsicht."),
-    n("Die", "Hitze", "heat", "-", "Große Hitze."),
     n("Die", "Höhe", "height/amount", "die Höhen", "In der Höhe."),
     n("Die", "Höflichkeit", "politeness", "-", "Aus Höflichkeit."),
     n("Die", "Hütte", "hut/cottage", "die Hütten", "Berghütte."),
