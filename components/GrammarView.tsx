@@ -150,6 +150,86 @@ const GenderEndings = () => (
     </div>
 );
 
+const SentenceStructureSection = () => (
+    <div className="mb-16">
+        <h3 className="font-display text-2xl border-l-4 border-de-black pl-3 mb-6">Satzbau & Konjunktionen</h3>
+        
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            {/* Position 0 */}
+            <div className="bg-white rounded-lg border border-gray-200 shadow-sm overflow-hidden">
+                <div className="bg-gray-50 p-4 border-b border-gray-200">
+                    <h4 className="font-bold text-de-black text-lg">Position 0 (ADUSO)</h4>
+                    <p className="text-xs text-gray-500 uppercase tracking-wider font-bold mt-1">Hauptsatz + Hauptsatz</p>
+                </div>
+                <div className="p-4">
+                    <div className="mb-4 text-sm text-gray-600">
+                        Das Verb bleibt auf <strong className="text-de-red">Position 2</strong>. Der Konnektor zählt nicht mit (Position 0).
+                    </div>
+                    <div className="flex flex-wrap gap-2 mb-4">
+                        {["aber", "denn", "und", "sondern", "oder"].map(w => (
+                            <span key={w} className="px-2 py-1 bg-yellow-100 text-yellow-800 rounded font-bold text-sm">{w}</span>
+                        ))}
+                    </div>
+                    <div className="bg-gray-50 p-3 rounded text-sm border-l-4 border-yellow-400 font-mono text-gray-700">
+                        <div className="mb-1 border-b border-gray-200 pb-1"><span className="text-gray-400 w-6 inline-block">0</span> <span className="font-bold text-de-black">Denn</span></div>
+                        <div className="mb-1"><span className="text-gray-400 w-6 inline-block">1</span> er</div>
+                        <div className="mb-1"><span className="text-gray-400 w-6 inline-block">2</span> <strong className="text-de-red bg-red-50 px-1 rounded">ist</strong></div>
+                        <div><span className="text-gray-400 w-6 inline-block">3</span> müde.</div>
+                    </div>
+                </div>
+            </div>
+
+            {/* Position 1 */}
+            <div className="bg-white rounded-lg border border-gray-200 shadow-sm overflow-hidden">
+                <div className="bg-gray-50 p-4 border-b border-gray-200">
+                    <h4 className="font-bold text-de-black text-lg">Position 1 (Adverbien)</h4>
+                    <p className="text-xs text-gray-500 uppercase tracking-wider font-bold mt-1">Hauptsatz + Hauptsatz</p>
+                </div>
+                <div className="p-4">
+                    <div className="mb-4 text-sm text-gray-600">
+                        Der Konnektor steht auf Position 1. Das Verb folgt <strong className="text-de-red">direkt danach</strong> (Position 2).
+                    </div>
+                    <div className="flex flex-wrap gap-2 mb-4">
+                        {["deshalb", "dann", "danach", "sonst", "trotzdem"].map(w => (
+                            <span key={w} className="px-2 py-1 bg-blue-100 text-blue-800 rounded font-bold text-sm">{w}</span>
+                        ))}
+                    </div>
+                    <div className="bg-gray-50 p-3 rounded text-sm border-l-4 border-blue-400 font-mono text-gray-700">
+                        <div className="mb-1 border-b border-gray-200 pb-1"><span className="text-gray-400 w-6 inline-block">1</span> <span className="font-bold text-de-black">Deshalb</span></div>
+                        <div className="mb-1"><span className="text-gray-400 w-6 inline-block">2</span> <strong className="text-de-red bg-red-50 px-1 rounded">lernt</strong></div>
+                        <div className="mb-1"><span className="text-gray-400 w-6 inline-block">3</span> er</div>
+                        <div><span className="text-gray-400 w-6 inline-block">4</span> Deutsch.</div>
+                    </div>
+                </div>
+            </div>
+
+            {/* Nebensatz */}
+            <div className="bg-white rounded-lg border border-gray-200 shadow-sm overflow-hidden">
+                <div className="bg-gray-50 p-4 border-b border-gray-200">
+                    <h4 className="font-bold text-de-black text-lg">Nebensatz (Ende)</h4>
+                    <p className="text-xs text-gray-500 uppercase tracking-wider font-bold mt-1">Hauptsatz + Nebensatz</p>
+                </div>
+                <div className="p-4">
+                    <div className="mb-4 text-sm text-gray-600">
+                        Das konjugierte Verb geht ans <strong className="text-de-red">Ende</strong> des Satzes (Verban-Kick).
+                    </div>
+                    <div className="flex flex-wrap gap-2 mb-4">
+                        {["weil", "wenn", "als", "dass", "obwohl", "seit", "damit"].map(w => (
+                            <span key={w} className="px-2 py-1 bg-red-100 text-red-800 rounded font-bold text-sm">{w}</span>
+                        ))}
+                    </div>
+                    <div className="bg-gray-50 p-3 rounded text-sm border-l-4 border-de-red font-mono text-gray-700">
+                        <div className="mb-1 border-b border-gray-200 pb-1">... <span className="font-bold text-de-black">weil</span></div>
+                        <div className="mb-1">er</div>
+                        <div className="mb-1">Deutsch</div>
+                        <div><strong className="text-de-red bg-red-50 px-1 rounded">lernt</strong>.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+);
+
 export const GrammarView: React.FC = () => {
   // ORDER: [Case, Maskulin, Neutrum, Feminin, Plural]
   
@@ -309,7 +389,10 @@ export const GrammarView: React.FC = () => {
             </section>
         </div>
 
-        {/* 4. CHEAT SHEETS (Prepositions & Possessives) */}
+        {/* 4. SENTENCE STRUCTURE (New) */}
+        <SentenceStructureSection />
+
+        {/* 5. CHEAT SHEETS (Prepositions & Possessives) */}
         <div className="mb-8">
             <h3 className="font-display text-2xl border-l-4 border-gray-400 pl-3 mb-6">Kurzübersicht</h3>
             
@@ -330,7 +413,7 @@ export const GrammarView: React.FC = () => {
                      <div className="bg-yellow-50 p-3 rounded text-xs text-gray-700 border border-yellow-100">
                         <strong>Hinweis:</strong> Die Endungen sind identisch mit dem <strong className="text-art-die">Unbestimmten Artikel</strong> (ein, eine, einen...).
                         <br/>
-                        <em>z.B. Ich habe <strong>einen</strong> Ball -&gt; Ich habe <strong>meinen</strong> Ball.</em>
+                        <em>z.B. Ich habe <strong>einen</strong> Ball &rarr; Ich habe <strong>meinen</strong> Ball.</em>
                      </div>
                 </div>
 
