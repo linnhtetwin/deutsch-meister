@@ -2817,7 +2817,6 @@ export const database: DatabaseItem[] = [
     n("Das", "Möbel", "furniture", "die Möbel", "Möbel kaufen."),
     n("Das", "Modell", "model", "die Modelle", "Das neueste Modell."),
     n("Das", "Motiv", "motive/motif", "die Motive", "Kein Motiv haben."),
-    n("Das", "Motorrad", "motorcycle", "die Motorräder", "Motorrad fahren."),
     n("Das", "Muster", "pattern/sample", "die Muster", "Ein Muster anfordern."),
     n("Das", "Niveau", "level", "die Niveaus", "Das Niveau sinkt."),
     n("Das", "Obst", "fruit", "-", "Obst und Gemüse."),
