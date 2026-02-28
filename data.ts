@@ -245,6 +245,14 @@ export const database: DatabaseItem[] = [
     v("bleiben", "to stay", "Intransitiv", "Er bleibt zu Hause.", "bleibt", "blieb", "ist geblieben"),
     v("kommen", "to come", "Intransitiv", "Sie kommt morgen.", "kommt", "kam", "ist gekommen"),
 
+     // --- MODAL VERBS ---
+    v("können", "can/to be able to", "Modalverb", "Ich kann Deutsch sprechen.", "kann", "konnte", "hat gekonnt"),
+    v("müssen", "must/to have to", "Modalverb", "Ich muss jetzt gehen.", "muss", "musste", "hat gemusst"),
+    v("wollen", "want/to want to", "Modalverb", "Ich will ein Eis essen.", "will", "wollte", "hat gewollt"),
+    v("sollen", "should/to be supposed to", "Modalverb", "Du sollst deine Hausaufgaben machen.", "soll", "sollte", "hat gesollt"),
+    v("dürfen", "may/to be allowed to", "Modalverb", "Darf ich auf die Toilette gehen?", "darf", "durfte", "hat gedurft"),
+    v("mögen", "like/to like to", "Modalverb", "Ich mag Schokolade.", "mag", "mochte", "hat gemocht"),
+
     // --- 1. DATIV VERBS ---
     v("antworten", "to answer", "Dativ", "Bitte antworte mir.", "antwortet", "antwortete", "hat geantwortet"),
     v("ausweichen", "to avoid/swerve", "Dativ", "Er weicht dem Auto aus.", "weicht aus", "wich aus", "ist ausgewichen"),
@@ -386,7 +394,6 @@ export const database: DatabaseItem[] = [
     v("meinen", "to mean", "Akkusativ", "Ich meine dich.", "meint", "meinte", "hat gemeint"),
     v("messen", "to measure", "Akkusativ", "Er misst die Temperatur.", "misst", "maß", "hat gemessen"),
     v("mieten", "to rent", "Akkusativ", "Wir mieten eine Wohnung.", "mietet", "mietete", "hat gemietet"),
-    v("mögen", "to like", "Akkusativ", "Ich mag dich.", "mag", "mochte", "hat gemocht"),
     v("nehmen", "to take", "Akkusativ", "Ich nehme den Bus.", "nimmt", "nahm", "hat genommen"),
     v("nennen", "to call/name", "Akkusativ", "Er nennt seinen Namen.", "nennt", "nannte", "hat genannt"),
     v("öffnen", "to open", "Akkusativ", "Öffne das Fenster.", "öffnet", "öffnete", "hat geöffnet"),
@@ -462,7 +469,6 @@ export const database: DatabaseItem[] = [
     v("zerreißen", "to tear up", "Akkusativ", "Sie zerreißt den Brief.", "zerreißt", "zerriss", "hat zerrissen"),
     v("Mitgefühl zeigen", "to show compassion", "Akkusativ", "Sie zeigt viel Mitgefühl.", "zeigt", "zeigte", "hat gezeigt"),
     v("Respekt zeigen", "to show respect", "Akkusativ", "Er zeigt Respekt vor den Älteren.", "zeigt", "zeigte", "hat gezeigt"),
-
 
     // --- 3. FALSE FRIENDS (Look Dativ, are Akkusativ) ---
     v("anrufen", "to call (phone)", "Akkusativ", "Ich rufe dich an.", "ruft an", "rief an", "hat angerufen", true),
@@ -2804,7 +2810,6 @@ export const database: DatabaseItem[] = [
     n("Das", "Lied", "song", "die Lieder", "Ein Lied singen."),
     n("Das", "Loch", "hole", "die Löcher", "Ein Loch in der Socke."),
     n("Das", "Lokal", "restaurant/pub", "die Lokale", "Stammlokal."),
-    n("Das", "Magazin", "magazine", "die Magazine", "Ein Magazin lesen."),
     n("Das", "Mal", "time/instance", "die Male", "Das erste Mal."),
     n("Das", "Material", "material", "die Materialien", "Billiges Material."),
     n("Das", "Mehl", "flour", "die Mehle", "Mehl und Wasser."),
@@ -2897,7 +2902,6 @@ export const database: DatabaseItem[] = [
     n("Das", "Verhalten", "behavior", "die Verhalten", "Gutes Verhalten."),
     n("Das", "Verhältnis", "relationship/ratio", "die Verhältnisse", "Ein Verhältnis haben."),
     n("Das", "Verkehrsmittel", "means of transport", "die Verkehrsmittel", "Öffentliche Verkehrsmittel."),
-    n("Das", "Vermögen", "wealth/fortune", "die Vermögen", "Ein Vermögen kosten."),
     n("Das", "Versprechen", "promise", "die Versprechen", "Ein Versprechen halten."),
     n("Das", "Verständnis", "understanding", "-", "Verständnis zeigen."),
     n("Das", "Versteck", "hiding place", "die Verstecke", "Versteck spielen."),

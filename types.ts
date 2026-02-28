@@ -7,7 +7,8 @@ export type CaseType =
   | 'Wechselpräposition (Dativ)' 
   | 'Präpositionalverb + Akk' 
   | 'Präpositionalverb + Dativ'
-  | 'Intransitiv';
+  | 'Intransitiv'
+  | 'Modalverb';
 
 export type ArticleType = 'Der' | 'Die' | 'Das';
 export type ItemType = 'verb' | 'noun';
