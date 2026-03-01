@@ -3,8 +3,12 @@ import React, { useState, useMemo, useRef, useEffect } from 'react';
 import { database } from '../data';
 import { WordCard } from './WordCard';
 import { Search, ArrowUpDown, Loader2 } from 'lucide-react';
+import { CaseType } from '../types';
 
-type FilterType = 'all' | 'Dativ' | 'Akkusativ' | 'Genitiv' | 'OtherVerb' | 'noun';
+// FilterType now includes every CaseType value so the UI can present all cases defined
+// in the shared `types.ts` file. The special values are kept for global/noun/other
+// filtering logic.
+type FilterType = 'all' | 'noun' | 'OtherVerb' | CaseType;
 type SortType = 'de-asc' | 'de-desc' | 'en-asc' | 'en-desc';
 
 const BATCH_SIZE = 15; // 3 columns * 5 rows = 15 items per batch
@@ -138,7 +142,13 @@ export const DictionaryView: React.FC = () => {
             <FilterButton type="Dativ" label="Dativ" />
             <FilterButton type="Akkusativ" label="Akkusativ" />
             <FilterButton type="Genitiv" label="Genitiv" />
-            <FilterButton type="OtherVerb" label="Wechsel / Präp" />
+            <FilterButton type="Wechselpräposition (Akkusativ)" label="Wechselpräposition (Akkusativ)" />
+            <FilterButton type="Wechselpräposition (Dativ)" label="Wechselpräposition (Dativ)" />
+            <FilterButton type="Präpositionalverb + Akk" label="Präpositionalverb + Akk" />
+            <FilterButton type="Präpositionalverb + Dativ" label="Präpositionalverb + Dativ" />
+            <FilterButton type="Intransitiv" label="Intransitiv" />
+            <FilterButton type="Modalverb" label="Modalverb" />
+            <FilterButton type="OtherVerb" label="Andere Verben" />
             </div>
 
             <div className="flex items-center gap-2 self-end lg:self-auto">
