@@ -15,7 +15,7 @@ A comprehensive learning platform for German grammar, specializing in verbs, nou
 ## Features
 
 ✨ **Interactive Learning Modules**
-- 📚 **Wörterbuch (Dictionary)** - Browse and search comprehensive verb and noun database
+- 📚 **Wörterbuch (Dictionary)** - Browse and search comprehensive verb and noun database; filter by every case type (Dativ, Akkusativ, Genitiv, Wechselpräposition → Akk/Dativ, Präpositionalverb → Akk/Dativ, Intransitiv, Modalverb)
 - ❓ **Verb Quiz** - Master German verbs with multiple quiz modes (Classic, Wechselpräposition, Genitiv, Mix)
 - 🎓 **Nomen Quiz** - Practice German article selection (Der, Die, Das)
 - 📖 **Anleitung (Guide)** - Learn German grammar fundamentals
@@ -57,10 +57,13 @@ A comprehensive learning platform for German grammar, specializing in verbs, nou
 
 3. **Configure environment variables**
    
-   Create a `.env.local` file in the root directory:
+   Create a `.env.local` file in the root directory (these files are ignored by Git for security):
    ```env
    VITE_GEMINI_API_KEY=your_gemini_api_key_here
    ```
+   You can also use other `.env` variants like `.env.development.local` or `.env.production.local` – the gitignore prevents them from being accidentally committed.
+
+> ⚠️ **Security tip:** never commit API keys or other secrets. The app reads from `import.meta.env` at build time, so local files or environment variables on the hosting platform are sufficient.
 
 4. **Start development server**
    ```bash
@@ -158,9 +161,11 @@ This app focuses on mastering:
 
 Contributions are welcome! Feel free to:
 - Report bugs and issues
-- Suggest new features
+- Suggest new features (e.g. more case filters, verb/noun entries, etc.)
 - Improve the grammar database
 - Submit pull requests
+
+> 🔐 **Security:** please avoid adding any private credentials or keys to commits. Use environment variables or secure storage when testing APIs.
 
 ---
 
