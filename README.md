@@ -6,7 +6,7 @@
 
 A comprehensive learning platform for German grammar, specializing in verbs, nouns, and the German case system (Dativ, Akkusativ, Genitiv).
 
-[View Online](https://ai.studio/apps/drive/1Krf4WoJe39XR9v7VZ41kkQBpsMJq1DXe) • [Features](#features) • [Getting Started](#getting-started) • [Technologies](#technologies)
+[View Online](https://deutsch-meister.pages.dev/) • [Features](#features) • [Getting Started](#getting-started) • [Technologies](#technologies)
 
 </div>
 
