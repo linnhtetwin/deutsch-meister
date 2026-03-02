@@ -165,6 +165,48 @@ const SentenceStructureSection = () => (
     <div className="mb-16">
         <h3 className="font-display text-2xl border-l-4 border-de-black pl-3 mb-6">Sentence Structure & Conjunctions</h3>
         
+        {/* General Rule: V2 & TeKaMoLo */}
+        <div className="bg-gray-50 p-6 rounded-xl border border-gray-200 mb-10">
+            <h4 className="font-bold text-de-black text-lg mb-4 flex items-center gap-2">
+                General Rule: German Sentence Structure
+            </h4>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div className="space-y-4 text-sm text-gray-700">
+                    <div>
+                        <p className="font-bold text-de-red mb-1">1. The V2 Rule (Verb Position 2)</p>
+                        <p>In a standard main clause, the conjugated verb <strong>must</strong> be in the second position.</p>
+                        <div className="bg-white p-2 rounded border border-gray-200 mt-2 font-mono text-xs">
+                            <span className="text-blue-600">Ich</span> <span className="text-red-600 font-bold">gehe</span> heute nach Hause.
+                            <br/>
+                            <span className="text-blue-600">Heute</span> <span className="text-red-600 font-bold">gehe</span> ich nach Hause.
+                        </div>
+                    </div>
+                    <div>
+                        <p className="font-bold text-de-red mb-1">2. TeKaMoLo (Adverbial Order)</p>
+                        <p>When using multiple adverbs, follow this order:</p>
+                        <ul className="list-disc pl-5 mt-1 space-y-1">
+                            <li><strong>Te</strong>mporal (When?)</li>
+                            <li><strong>Ka</strong>usal (Why?)</li>
+                            <li><strong>Mo</strong>dal (How?)</li>
+                            <li><strong>Lo</strong>kal (Where?)</li>
+                        </ul>
+                    </div>
+                </div>
+                <div className="space-y-4 text-sm text-gray-700">
+                    <div>
+                        <p className="font-bold text-de-red mb-1">3. Questions (Verb Position 1)</p>
+                        <p>In Yes/No questions, the verb moves to the first position.</p>
+                        <div className="bg-white p-2 rounded border border-gray-200 mt-2 font-mono text-xs">
+                            <span className="text-red-600 font-bold">Gehst</span> du heute nach Hause?
+                        </div>
+                    </div>
+                    <div className="bg-blue-50 p-3 rounded border border-blue-100 text-xs italic">
+                        <strong>Tip:</strong> If you start with something other than the subject (like "Heute"), the subject must jump to Position 3 to keep the verb at Position 2.
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             {/* Position 0 */}
             <div className="bg-white rounded-lg border border-gray-200 shadow-sm overflow-hidden">
@@ -235,6 +277,56 @@ const SentenceStructureSection = () => (
                         <div className="mb-1">Deutsch (German)</div>
                         <div><strong className="text-de-red bg-red-50 px-1 rounded">lernt</strong> (learns).</div>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+);
+
+const AdverbSection = () => (
+    <div className="mb-16">
+        <h3 className="font-display text-2xl border-l-4 border-emerald-500 pl-3 mb-6">Adverbs</h3>
+        <div className="bg-emerald-50/50 p-6 rounded-xl border border-emerald-100 mb-8">
+            <h4 className="font-bold text-de-black text-lg mb-4">What are Adverbs?</h4>
+            <p className="text-sm text-gray-700 mb-4">
+                Adverbs describe <strong>how, when, where, or why</strong> something happens. 
+                Unlike adjectives, German adverbs <strong>never change their ending</strong> (no declension).
+            </p>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                <div className="bg-white p-4 rounded border border-emerald-100 shadow-sm">
+                    <h5 className="font-bold text-emerald-700 text-xs uppercase mb-2">Temporal (When?)</h5>
+                    <ul className="text-xs space-y-1 text-gray-600">
+                        <li>heute (today)</li>
+                        <li>oft (often)</li>
+                        <li>immer (always)</li>
+                        <li>bald (soon)</li>
+                    </ul>
+                </div>
+                <div className="bg-white p-4 rounded border border-emerald-100 shadow-sm">
+                    <h5 className="font-bold text-emerald-700 text-xs uppercase mb-2">Lokal (Where?)</h5>
+                    <ul className="text-xs space-y-1 text-gray-600">
+                        <li>hier (here)</li>
+                        <li>dort (there)</li>
+                        <li>überall (everywhere)</li>
+                        <li>links (left)</li>
+                    </ul>
+                </div>
+                <div className="bg-white p-4 rounded border border-emerald-100 shadow-sm">
+                    <h5 className="font-bold text-emerald-700 text-xs uppercase mb-2">Modal (How?)</h5>
+                    <ul className="text-xs space-y-1 text-gray-600">
+                        <li>gerne (gladly)</li>
+                        <li>vielleicht (maybe)</li>
+                        <li>sehr (very)</li>
+                        <li>besonders (especially)</li>
+                    </ul>
+                </div>
+                <div className="bg-white p-4 rounded border border-emerald-100 shadow-sm">
+                    <h5 className="font-bold text-emerald-700 text-xs uppercase mb-2">Kausal (Why?)</h5>
+                    <ul className="text-xs space-y-1 text-gray-600">
+                        <li>deshalb (therefore)</li>
+                        <li>darum (for that reason)</li>
+                        <li>trotzdem (nevertheless)</li>
+                    </ul>
                 </div>
             </div>
         </div>
@@ -554,7 +646,10 @@ export const GrammarView: React.FC = () => {
         {/* 4. SENTENCE STRUCTURE (New) */}
         <SentenceStructureSection />
 
-        {/* 5. CHEAT SHEETS (Prepositions & Possessives) */}
+        {/* 5. ADVERBS (New) */}
+        <AdverbSection />
+
+        {/* 6. CHEAT SHEETS (Prepositions & Possessives) */}
         <div className="mb-8">
             <h3 className="font-display text-2xl border-l-4 border-gray-400 pl-3 mb-6">Quick Overview</h3>
             
@@ -563,14 +658,14 @@ export const GrammarView: React.FC = () => {
                 <div className="bg-gray-50 p-5 rounded-lg border border-gray-200">
                      <h4 className="font-bold uppercase tracking-wider text-sm mb-4 text-de-black">Possessive Articles</h4>
                      <div className="grid grid-cols-2 gap-2 text-sm text-de-black mb-4">
-                        <div className="p-2 bg-white rounded border border-gray-100 flex items-center gap-2"><span className="text-gray-600 font-medium">I</span> <strong className="text-de-black">mein</strong></div>
-                        <div className="p-2 bg-white rounded border border-gray-100 flex items-center gap-2"><span className="text-gray-600 font-medium">You</span> <strong className="text-de-black">dein</strong></div>
-                        <div className="p-2 bg-white rounded border border-gray-100 flex items-center gap-2"><span className="text-gray-600 font-medium">He</span> <strong className="text-de-black">sein</strong></div>
-                        <div className="p-2 bg-white rounded border border-gray-100 flex items-center gap-2"><span className="text-gray-600 font-medium">She</span> <strong className="text-de-black">ihr</strong></div>
-                        <div className="p-2 bg-white rounded border border-gray-100 flex items-center gap-2"><span className="text-gray-600 font-medium">It</span> <strong className="text-de-black">sein</strong></div>
-                        <div className="p-2 bg-white rounded border border-gray-100 flex items-center gap-2"><span className="text-gray-600 font-medium">We</span> <strong className="text-de-black">unser</strong></div>
-                        <div className="p-2 bg-white rounded border border-gray-100 flex items-center gap-2"><span className="text-gray-600 font-medium">You pl.</span> <strong className="text-de-black">euer</strong></div>
-                        <div className="p-2 bg-white rounded border border-gray-100 flex items-center gap-2"><span className="text-gray-600 font-medium">You formal</span> <strong className="text-de-black">Ihr</strong></div>
+                        <div className="p-2 bg-white rounded border border-gray-100 flex justify-between items-center"><span className="text-gray-600 font-medium">I</span><strong className="text-de-black ml-2">mein</strong></div>
+                        <div className="p-2 bg-white rounded border border-gray-100 flex justify-between items-center"><span className="text-gray-600 font-medium">You</span><strong className="text-de-black ml-2">dein</strong></div>
+                        <div className="p-2 bg-white rounded border border-gray-100 flex justify-between items-center"><span className="text-gray-600 font-medium">He</span><strong className="text-de-black ml-2">sein</strong></div>
+                        <div className="p-2 bg-white rounded border border-gray-100 flex justify-between items-center"><span className="text-gray-600 font-medium">She</span><strong className="text-de-black ml-2">ihr</strong></div>
+                        <div className="p-2 bg-white rounded border border-gray-100 flex justify-between items-center"><span className="text-gray-600 font-medium">It</span><strong className="text-de-black ml-2">sein</strong></div>
+                        <div className="p-2 bg-white rounded border border-gray-100 flex justify-between items-center"><span className="text-gray-600 font-medium">We</span><strong className="text-de-black ml-2">unser</strong></div>
+                        <div className="p-2 bg-white rounded border border-gray-100 flex justify-between items-center"><span className="text-gray-600 font-medium">You pl.</span><strong className="text-de-black ml-2">euer</strong></div>
+                        <div className="p-2 bg-white rounded border border-gray-100 flex justify-between items-center"><span className="text-gray-600 font-medium">You formal</span><strong className="text-de-black ml-2">Ihr</strong></div>
                      </div>
                      <div className="bg-yellow-50 p-3 rounded text-xs text-gray-700 border border-yellow-100">
                         <strong>Note:</strong> The endings are identical to the <strong className="text-art-die">Indefinite Article</strong> (ein, eine, einen...).

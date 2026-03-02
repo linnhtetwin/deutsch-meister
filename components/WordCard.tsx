@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { DatabaseItem, VerbItem, NounItem, AdjectiveItem } from '../types';
+import { DatabaseItem, VerbItem, NounItem, AdjectiveItem, AdverbItem } from '../types';
 import { Volume2 } from 'lucide-react';
 
 interface WordCardProps {
@@ -351,12 +351,48 @@ const AdjectiveCard: React.FC<{ item: AdjectiveItem; searchTerm: string }> = ({ 
     );
 };
 
+const AdverbCard: React.FC<{ item: AdverbItem; searchTerm: string }> = ({ item, searchTerm }) => {
+    return (
+    <div className={`bg-white rounded-lg shadow-md border-t-4 transition-transform hover:-translate-y-1 border-t-emerald-500 overflow-hidden`}>
+      <div className="p-5">
+        <div className="flex justify-between items-start mb-2">
+          <div className="flex items-center gap-1 group">
+            <h3 className="font-display text-3xl text-de-black leading-tight">
+              <HighlightedText text={item.de} highlight={searchTerm} />
+            </h3>
+            <SpeakButton text={item.de} />
+          </div>
+          <span className={`bg-emerald-500 text-white text-[10px] font-bold px-2 py-1 rounded uppercase tracking-wider shadow-sm`}>
+              Adverb
+          </span>
+        </div>
+        
+        <span className="text-gray-500 italic text-base mb-5 block font-serif">
+            <HighlightedText text={item.en} highlight={searchTerm} />
+        </span>
+        
+        <div className="bg-gray-50 p-4 rounded-md border-l-4 border-gray-300">
+          <p className="text-gray-700 italic font-serif text-sm leading-relaxed mb-2">
+              "<HighlightedText text={item.ex} highlight={searchTerm} />"
+          </p>
+          <div className="flex justify-end">
+             <SpeakButton text={item.ex} variant="button" label="Beispielsatz" />
+          </div>
+        </div>
+      </div>
+    </div>
+    );
+};
+
 export const WordCard: React.FC<WordCardProps> = ({ item, searchTerm = '' }) => {
   if (item.type === 'verb') {
       return <VerbCard item={item} searchTerm={searchTerm} />;
   }
   if (item.type === 'adjective') {
       return <AdjectiveCard item={item} searchTerm={searchTerm} />;
+  }
+  if (item.type === 'adverb') {
+      return <AdverbCard item={item} searchTerm={searchTerm} />;
   }
   return <NounCard item={item} searchTerm={searchTerm} />;
 };

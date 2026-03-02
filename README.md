@@ -15,10 +15,10 @@ A comprehensive learning platform for German grammar, specializing in verbs, nou
 ## Features
 
 ✨ **Interactive Learning Modules**
-- 📚 **Wörterbuch (Dictionary)** - Browse and search comprehensive verb and noun database; filter by every case type (Dativ, Akkusativ, Genitiv, Wechselpräposition → Akk/Dativ, Präpositionalverb → Akk/Dativ, Intransitiv, Modalverb)
-- ❓ **Verb Quiz** - Master German verbs with multiple quiz modes (Classic, Wechselpräposition, Genitiv, Mix)
-- 🎓 **Nomen Quiz** - Practice German article selection (Der, Die, Das)
-- 📖 **Anleitung (Guide)** - Learn German grammar fundamentals
+- 📚 **Wörterbuch (Dictionary)** – Browse and search the growing verb/noun database with lazy‑loading infinite scroll, relevance‑aware sorting and advanced filters (Dativ, Akkusativ, Genitiv, Wechselpräposition → Akk/Dativ, Präpositionalverb → Akk/Dativ, Intransitiv, Modalverb, plus nouns/adjectives/adverbs). Search looks through example sentences and full verb conjugations for smarter results.
+- ❓ **Verb Quiz** – Master German verbs with multiple quiz modes: Classic, Wechselpräpositionen, Genitiv‑Meister (rare Genitiv verbs), and Chaos Mix. Real‑time feedback plus a **streak counter** keeps you motivated.
+- 🎓 **Nomen Quiz** – Practice German article selection (Der, Die, Das) with instant feedback, streak tracking and a built‑in educational section full of gender heuristics and tips.
+- 📖 **Anleitung (Guide)** – Comprehensive grammar reference featuring declension tables, sentence‑structure rules (V2, TeKaMoLo, subclauses), adverb explanations and handy gender‑ending cheat sheets.
 
 🎨 **User Experience**
 - Clean, intuitive interface with German cultural styling
@@ -70,7 +70,7 @@ A comprehensive learning platform for German grammar, specializing in verbs, nou
    npm run dev
    ```
 
-   The app will be available at `http://localhost:5173`
+   The app will be available at `http://localhost:3000`
 
 ### Build for Production
 
@@ -154,6 +154,12 @@ This app focuses on mastering:
   - Genitive verbs
   - Prepositional verbs
   - Intransitive verbs
+
+- **Additional Grammar Topics**:
+  - Declension tables for adjectives, pronouns and articles
+  - Sentence structure rules (V2, TeKaMoLo, subclauses)
+  - Adverbs and their order
+  - Gender-ending heuristics and cheat‑sheets
 
 ---
 

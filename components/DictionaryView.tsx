@@ -8,7 +8,7 @@ import { CaseType } from '../types';
 // FilterType now includes every CaseType value so the UI can present all cases defined
 // in the shared `types.ts` file. The special values are kept for global/noun/other
 // filtering logic.
-type FilterType = 'all' | 'noun' | 'adjective' | 'OtherVerb' | CaseType;
+type FilterType = 'all' | 'noun' | 'adjective' | 'adverb' | 'OtherVerb' | CaseType;
 type SortType = 'de-asc' | 'de-desc' | 'en-asc' | 'en-desc';
 
 const BATCH_SIZE = 15; // 3 columns * 5 rows = 15 items per batch
@@ -43,6 +43,8 @@ export const DictionaryView: React.FC = () => {
           if (item.type !== 'noun') return false;
         } else if (filter === 'adjective') {
           if (item.type !== 'adjective') return false;
+        } else if (filter === 'adverb') {
+          if (item.type !== 'adverb') return false;
         } else if (filter === 'OtherVerb') {
             // Include Wechsel & Prep & Genitiv if not filtered separately
             if (item.type !== 'verb') return false;
@@ -168,6 +170,7 @@ export const DictionaryView: React.FC = () => {
             <FilterButton type="all" currentFilter={filter} setFilter={setFilter} label="Alle" />
             <FilterButton type="noun" currentFilter={filter} setFilter={setFilter} label="Nomen" />
             <FilterButton type="adjective" currentFilter={filter} setFilter={setFilter} label="Adjektiv" />
+            <FilterButton type="adverb" currentFilter={filter} setFilter={setFilter} label="Adverb" />
             <div className="w-px h-6 bg-gray-300 mx-1 self-center hidden sm:block"></div>
             <FilterButton type="Dativ" currentFilter={filter} setFilter={setFilter} label="Dativ" />
             <FilterButton type="Akkusativ" currentFilter={filter} setFilter={setFilter} label="Akkusativ" />

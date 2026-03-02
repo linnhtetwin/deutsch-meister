@@ -11,7 +11,14 @@ export type CaseType =
   | 'Modalverb';
 
 export type ArticleType = 'Der' | 'Die' | 'Das';
-export type ItemType = 'verb' | 'noun' | 'adjective';
+export type ItemType = 'verb' | 'noun' | 'adjective' | 'adverb';
+
+export interface AdverbItem {
+  type: 'adverb';
+  de: string;
+  en: string;
+  ex: string;
+}
 
 export interface AdjectiveItem {
   type: 'adjective';
@@ -60,6 +67,6 @@ export interface NounItem {
   ex: string;
 }
 
-export type DatabaseItem = VerbItem | NounItem | AdjectiveItem;
+export type DatabaseItem = VerbItem | NounItem | AdjectiveItem | AdverbItem;
 
 export type TabView = 'dictionary' | 'verb-quiz' | 'noun-quiz' | 'guide' | 'grammar';

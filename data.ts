@@ -193,7 +193,98 @@ const a = (de: string, en: string, comp: string, sup: string, ex: string): Datab
   ex
 });
 
+const adv = (de: string, en: string, ex: string): DatabaseItem => ({
+  type: 'adverb',
+  de,
+  en,
+  ex
+});
+
 export const database: DatabaseItem[] = [
+  // --- Adverbs - Time ---
+
+  adv("ab und zu", "now and again", "Ich spiele ab und zu Tennis."),
+  adv("bald", "soon", "Bis bald!"),
+  adv("damals", "then / at that time", "Damals war alles anders."),
+  adv("dann", "then", "Zuerst essen wir, dann gehen wir."),
+  adv("endlich", "finally", "Endlich sind die Ferien da!"),
+  adv("gestern", "yesterday", "Gestern war das Wetter schön."),
+  adv("gewöhnlich", "usually", "Ich stehe gewöhnlich um sieben Uhr auf."),
+  adv("heute", "today", "Was machen wir heute?"),
+  adv("heutzutage", "nowadays", "Heutzutage haben alle ein Handy."),
+  adv("immer", "always", "Du bist immer pünktlich."),
+  adv("manchmal", "sometimes", "Manchmal sehe ich abends fern."),
+  adv("morgen", "tomorrow", "Morgen habe ich keine Schule."),
+  adv("nachher", "afterwards", "Wir sehen uns nachher."),
+  adv("neulich", "recently", "Ich habe ihn neulich getroffen."),
+  adv("noch", "still", "Bist du noch zu Hause?"),
+  adv("noch nicht", "not yet", "Ich bin noch nicht fertig."),
+  adv("oft", "often", "Wir gehen oft ins Kino."),
+  adv("plötzlich", "suddenly", "Plötzlich hat es geregnet."),
+  adv("schon", "already", "Es ist schon spät."),
+  adv("sofort", "immediately", "Komm sofort her!"),
+  adv("täglich", "daily", "Ich lerne täglich Vokabeln."),
+  adv("übermorgen", "day after tomorrow", "Übermorgen ist Freitag."),
+  adv("vorgestern", "day before yesterday", "Vorgestern war ich krank."),
+  adv("vorher", "beforehand", "Du musst vorher anrufen."),
+  adv("zuerst", "at first / first of all", "Zuerst machen wir Hausaufgaben."),
+  adv("wieder", "again", "Komm bald wieder!"),
+  adv("vor kurzem", "recently / a short time ago", "Ich habe ihn vor kurzem gesehen."),
+  adv("gerade", "just / at the moment", "Ich esse gerade."),
+  adv("nie", "never", "Ich war nie in Berlin."),
+  adv("selten", "seldom / rarely", "Wir gehen selten aus."),
+
+  // --- Adverbs - Place & Direction ---
+
+  adv("dort", "there", "Dort drüben ist die Post."),
+  adv("draußen", "outside", "Die Kinder spielen draußen."),
+  adv("drinnen", "inside", "Es ist kalt, gehen wir nach drinnen."),
+  adv("geradeaus", "straight ahead", "Gehen Sie immer geradeaus."),
+  adv("hier", "here", "Hier ist mein Ausweis."),
+  adv("hinten", "at the back", "Ich sitze im Bus immer hinten."),
+  adv("irgendwo", "somewhere", "Mein Schlüssel muss irgendwo sein."),
+  adv("links", "on the left", "Die Apotheke ist links."),
+  adv("rechts", "on the right", "Biegen Sie rechts ab."),
+  adv("überall", "everywhere", "Überall liegt Müll."),
+  adv("unten", "at the bottom / downstairs", "Die Küche ist unten."),
+  adv("oben", "at the top / upstairs", "Mein Zimmer ist oben."),
+  adv("vorne", "at the front", "Der Lehrer steht vorne."),
+  adv("weg", "away", "Geh weg!"),
+  adv("weit", "far", "Ist es noch weit?"),
+  adv("zurück", "back", "Wann kommst du zurück?"),
+
+  // --- Adverbs - Manner & Degree ---
+
+  adv("allein", "alone", "Ich lerne lieber allein."),
+  adv("auch", "also / too", "Ich komme auch mit."),
+  adv("besonders", "particularly", "Das ist besonders wichtig."),
+  adv("fast", "almost", "Ich bin fast fertig."),
+  adv("genau", "exactly", "Das ist genau richtig."),
+  adv("gern", "gladly / like to", "Ich esse gern Pizza."),
+  adv("höchstens", "at most", "Das dauert höchstens zehn Minuten."),
+  adv("kaum", "hardly", "Ich kann dich kaum hören."),
+  adv("leider", "unfortunately", "Leider habe ich kein Geld."),
+  adv("nur", "only", "Ich habe nur fünf Euro."),
+  adv("sogar", "even", "Sogar mein Hund mag Äpfel."),
+  adv("völlig", "completely", "Das ist völlig falsch."),
+  adv("wirklich", "really", "Das ist wirklich toll."),
+  adv("ziemlich", "quite / fairly", "Der Film war ziemlich lang."),
+  adv("zusammen", "together", "Wir lernen zusammen."),
+  adv("sehr", "very", "Das ist sehr gut."),
+  adv("vielleicht", "perhaps / maybe", "Vielleicht regnet es morgen."),
+  adv("umsonst", "free / in vain", "Das Ticket war umsonst."),
+  adv("insgesamt", "altogether", "Das macht insgesamt zehn Euro."),
+  adv("genug", "enough", "Ich habe genug gegessen."),
+  
+  // --- Adverbs - Logical Connectors ---
+
+  adv("also", "therefore / so", "Ich habe Hunger, also esse ich."),
+  adv("außerdem", "besides / furthermore", "Ich bin müde und außerdem ist es spät."),
+  adv("doch", "however / yes (contradicting)", "Ich habe doch keine Zeit."),
+  adv("sonst", "otherwise", "Beeil dich, sonst kommen wir zu spät."),
+  adv("trotzdem", "nevertheless", "Es regnet, aber ich gehe trotzdem spazieren."),
+  adv("vielleicht", "maybe", "Vielleicht gehen wir ins Kino."),
+
   // --- General Adjectives ---
   a("allein", "alone", "alleiner", "am alleinesten", "Ich bin nicht gern allein."),
   a("ausgezeichnet", "excellent", "ausgezeichneter", "am ausgezeichnetesten", "Das Essen ist ausgezeichnet!"),
