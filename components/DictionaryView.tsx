@@ -8,10 +8,23 @@ import { CaseType } from '../types';
 // FilterType now includes every CaseType value so the UI can present all cases defined
 // in the shared `types.ts` file. The special values are kept for global/noun/other
 // filtering logic.
-type FilterType = 'all' | 'noun' | 'OtherVerb' | CaseType;
+type FilterType = 'all' | 'noun' | 'adjective' | 'OtherVerb' | CaseType;
 type SortType = 'de-asc' | 'de-desc' | 'en-asc' | 'en-desc';
 
 const BATCH_SIZE = 15; // 3 columns * 5 rows = 15 items per batch
+
+const FilterButton: React.FC<{ type: FilterType, currentFilter: FilterType, setFilter: (type: FilterType) => void, label: string }> = ({ type, currentFilter, setFilter, label }) => (
+  <button
+    onClick={() => setFilter(type)}
+    className={`px-4 py-1 rounded-full text-sm font-medium border transition-colors whitespace-nowrap
+      ${currentFilter === type 
+        ? 'bg-de-black text-white border-de-black' 
+        : 'bg-white text-gray-600 border-gray-300 hover:border-gray-400'
+      }`}
+  >
+    {label}
+  </button>
+);
 
 export const DictionaryView: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -28,6 +41,8 @@ export const DictionaryView: React.FC = () => {
       if (filter !== 'all') {
         if (filter === 'noun') {
           if (item.type !== 'noun') return false;
+        } else if (filter === 'adjective') {
+          if (item.type !== 'adjective') return false;
         } else if (filter === 'OtherVerb') {
             // Include Wechsel & Prep & Genitiv if not filtered separately
             if (item.type !== 'verb') return false;
@@ -43,6 +58,8 @@ export const DictionaryView: React.FC = () => {
       const term = searchTerm.toLowerCase().trim();
       if (!term) return true;
 
+      const isShortCommon = ['der', 'die', 'das', 'ein', 'eine', 'und', 'in', 'zu', 'den', 'dem', 'denen'].includes(term);
+
       // Include Example sentences in search scope (both verbs and nouns have .ex now)
       let searchableText = `${item.de} ${item.en} ${item.ex}`;
       
@@ -51,18 +68,43 @@ export const DictionaryView: React.FC = () => {
         searchableText += ` ${item.pres_ich} ${item.pres_du} ${item.pres} ${item.pres_wir} ${item.pres_ihr} ${item.pres_sie}`;
         searchableText += ` ${item.past_ich} ${item.past_du} ${item.past} ${item.past_wir} ${item.past_ihr} ${item.past_sie}`;
         searchableText += ` ${item.perf}`;
-        
-        // Add pronoun combinations for natural queries like "ich mag" or "du hast"
-        searchableText += ` ich ${item.pres_ich} du ${item.pres_du} er sie es ${item.pres} wir ${item.pres_wir} ihr ${item.pres_ihr} sie ${item.pres_sie}`;
       } else if (item.type === 'noun') {
           searchableText += ` ${item.pl} ${item.art}`;
+      } else if (item.type === 'adjective') {
+          searchableText += ` ${item.comp} ${item.sup}`;
+      }
+
+      if (isShortCommon) {
+          return new RegExp(`\\b${term}\\b`, 'i').test(searchableText);
       }
 
       return searchableText.toLowerCase().includes(term);
     });
 
-    // 3. Sorting
+    // 3. Sorting with Relevance
     return data.sort((a, b) => {
+      const term = searchTerm.toLowerCase().trim();
+      
+      // If searching, prioritize exact/whole matches
+      if (term) {
+        const getRelevance = (word: string) => {
+          const w = word.toLowerCase();
+          if (w === term) return 3; // Exact match
+          
+          // Escape term for regex
+          const escapedTerm = term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+          if (new RegExp(`\\b${escapedTerm}\\b`, 'i').test(word)) return 2; // Whole word match
+          
+          return 1; // Partial match
+        };
+
+        const relA = getRelevance(a.de);
+        const relB = getRelevance(b.de);
+
+        if (relA !== relB) return relB - relA; // Higher relevance first
+      }
+
+      // Secondary sorting based on user selection
       switch (sort) {
         case 'de-asc': return a.de.localeCompare(b.de, 'de');
         case 'de-desc': return b.de.localeCompare(a.de, 'de');
@@ -99,19 +141,6 @@ export const DictionaryView: React.FC = () => {
   // The subset of data to actually render
   const visibleData = filteredData.slice(0, visibleCount);
 
-  const FilterButton: React.FC<{ type: FilterType, label: string }> = ({ type, label }) => (
-    <button
-      onClick={() => setFilter(type)}
-      className={`px-4 py-1 rounded-full text-sm font-medium border transition-colors whitespace-nowrap
-        ${filter === type 
-          ? 'bg-de-black text-white border-de-black' 
-          : 'bg-white text-gray-600 border-gray-300 hover:border-gray-400'
-        }`}
-    >
-      {label}
-    </button>
-  );
-
   return (
     <div className="max-w-6xl mx-auto px-4 pb-20">
       <div className="bg-white p-6 rounded-md border-l-4 border-de-gold shadow-sm mb-8">
@@ -136,19 +165,20 @@ export const DictionaryView: React.FC = () => {
         
         <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4">
             <div className="flex flex-wrap gap-2">
-            <FilterButton type="all" label="Alle" />
-            <FilterButton type="noun" label="Nomen" />
+            <FilterButton type="all" currentFilter={filter} setFilter={setFilter} label="Alle" />
+            <FilterButton type="noun" currentFilter={filter} setFilter={setFilter} label="Nomen" />
+            <FilterButton type="adjective" currentFilter={filter} setFilter={setFilter} label="Adjektiv" />
             <div className="w-px h-6 bg-gray-300 mx-1 self-center hidden sm:block"></div>
-            <FilterButton type="Dativ" label="Dativ" />
-            <FilterButton type="Akkusativ" label="Akkusativ" />
-            <FilterButton type="Genitiv" label="Genitiv" />
-            <FilterButton type="Wechselpräposition (Akkusativ)" label="Wechselpräposition (Akkusativ)" />
-            <FilterButton type="Wechselpräposition (Dativ)" label="Wechselpräposition (Dativ)" />
-            <FilterButton type="Präpositionalverb + Akk" label="Präpositionalverb + Akk" />
-            <FilterButton type="Präpositionalverb + Dativ" label="Präpositionalverb + Dativ" />
-            <FilterButton type="Intransitiv" label="Intransitiv" />
-            <FilterButton type="Modalverb" label="Modalverb" />
-            <FilterButton type="OtherVerb" label="Andere Verben" />
+            <FilterButton type="Dativ" currentFilter={filter} setFilter={setFilter} label="Dativ" />
+            <FilterButton type="Akkusativ" currentFilter={filter} setFilter={setFilter} label="Akkusativ" />
+            <FilterButton type="Genitiv" currentFilter={filter} setFilter={setFilter} label="Genitiv" />
+            <FilterButton type="Wechselpräposition (Akkusativ)" currentFilter={filter} setFilter={setFilter} label="Wechselpräposition (Akkusativ)" />
+            <FilterButton type="Wechselpräposition (Dativ)" currentFilter={filter} setFilter={setFilter} label="Wechselpräposition (Dativ)" />
+            <FilterButton type="Präpositionalverb + Akk" currentFilter={filter} setFilter={setFilter} label="Präpositionalverb + Akk" />
+            <FilterButton type="Präpositionalverb + Dativ" currentFilter={filter} setFilter={setFilter} label="Präpositionalverb + Dativ" />
+            <FilterButton type="Intransitiv" currentFilter={filter} setFilter={setFilter} label="Intransitiv" />
+            <FilterButton type="Modalverb" currentFilter={filter} setFilter={setFilter} label="Modalverb" />
+            <FilterButton type="OtherVerb" currentFilter={filter} setFilter={setFilter} label="Andere Verben" />
             </div>
 
             <div className="flex items-center gap-2 self-end lg:self-auto">

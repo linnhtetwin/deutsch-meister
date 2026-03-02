@@ -5,12 +5,12 @@ const v = (de: string, en: string, cas: CaseType, ex: string, pres: string, past
   // Special handling for 'sein'
   if (de === 'sein') {
     return {
-      type: 'verb', de, en, case: cas, ex,
-      pres_ich: 'bin', pres_du: 'bist', pres: 'ist',
-      pres_wir: 'sind', pres_ihr: 'seid', pres_sie: 'sind',
-      past_ich: 'war', past_du: 'warst', past: 'war',
-      past_wir: 'waren', past_ihr: 'wart', past_sie: 'waren',
-      perf: 'ist gewesen', isTrap: trap
+        type: 'verb', de, en, case: cas, ex,
+        pres_ich: 'bin', pres_du: 'bist', pres: 'ist',
+        pres_wir: 'sind', pres_ihr: 'seid', pres_sie: 'sind',
+        past_ich: 'war', past_du: 'warst', past: 'war',
+        past_wir: 'waren', past_ihr: 'wart', past_sie: 'waren',
+        perf: 'ist gewesen', isTrap: trap
     };
   }
 
@@ -30,63 +30,63 @@ const v = (de: string, en: string, cas: CaseType, ex: string, pres: string, past
   // Simple heuristic: if de starts with prefix and is longer, strip it.
   // Note: This simple check works for most simple separable verbs provided.
   if (isSeparable && de.startsWith(prefix) && de.length > prefix.length) {
-    verbBase = de.substring(prefix.length);
+      verbBase = de.substring(prefix.length);
   }
-
+  
   // Clean 'sich' for reflexive verbs for stem calculation if needed, 
   // but usually 'de' is 'sich freuen', so we should check verbBase.
   if (verbBase.startsWith('sich ')) {
-    verbBase = verbBase.substring(5);
+      verbBase = verbBase.substring(5);
   } else if (verbBase.endsWith('sich')) {
-    // rare case
+      // rare case
   }
-
+  
   // Handle '... an' etc in prepositional verbs if entered as "denken an"
   // The 'de' might be "denken an". We need the verb part "denken".
   const spaceIndex = verbBase.indexOf(' ');
   if (spaceIndex > 0) {
-    verbBase = verbBase.substring(0, spaceIndex);
+      verbBase = verbBase.substring(0, spaceIndex);
   }
 
   const stem = verbBase.replace(/e?n$/, ''); // "machen"->"mach"
-
+  
   // --- 2. PRESENT TENSE ---
-
+  
   // ich: Default is Stem + e (+ prefix). Handle irregulars.
   let ichSuffix = 'e';
-  if (stem.endsWith('el')) ichSuffix = 'e';
-
+  if (stem.endsWith('el')) ichSuffix = 'e'; 
+  
   let pres_ich_verb = stem + ichSuffix;
-
+  
   // Manual Overrides for Irregular 1st Person
   if (verbBase === 'wissen') pres_ich_verb = 'weiß';
   if (verbBase === 'mögen') pres_ich_verb = 'mag';
-  if (verbBase === 'können') pres_ich_verb = 'kann';
-  if (verbBase === 'müssen') pres_ich_verb = 'muss';
   if (verbBase === 'wollen') pres_ich_verb = 'will';
   if (verbBase === 'sollen') pres_ich_verb = 'soll';
+  if (verbBase === 'müssen') pres_ich_verb = 'muss';
+  if (verbBase === 'können') pres_ich_verb = 'kann';
   if (verbBase === 'dürfen') pres_ich_verb = 'darf';
   if (verbBase === 'tun') pres_ich_verb = 'tue';
   if (verbBase === 'werfen') pres_ich_verb = 'werfe';
   if (verbBase === 'nehmen') pres_ich_verb = 'nehme';
-
+  
   // Reflexive handling for 'ich'
   let reflexivePart = '';
   if (de.startsWith('sich ')) reflexivePart = 'mich ';
-
+  
   const pres_ich = isSeparable ? `${reflexivePart}${pres_ich_verb} ${prefix}` : `${reflexivePart}${pres_ich_verb}`;
 
   // du: 3rd Pers Sg + st replacement
-  let duStem = presVerbSg3.replace(/t$/, '');
+  let duStem = presVerbSg3.replace(/t$/, ''); 
   if (presVerbSg3 === 'wird') duStem = 'wirs'; // special case
   let duSuffix = 'st';
   // Heuristic for s/ß/z/x endings in stem -> usually just 't' or merged 'st'
-  if (duStem.endsWith('s') || duStem.endsWith('ß') || duStem.endsWith('z') || duStem.endsWith('x')) duSuffix = 't';
+  if (duStem.endsWith('s') || duStem.endsWith('ß') || duStem.endsWith('z') || duStem.endsWith('x')) duSuffix = 't'; 
   // Exception: wissen -> du weißt (stem 'weiß', suffix 't') - covered above
   // Exception: mag -> du magst (stem 'mag', suffix 'st') - covered below
   if (presVerbSg3 === 'mag') { duStem = 'mag'; duSuffix = 'st'; }
   if (presVerbSg3 === '-') { duStem = '-'; duSuffix = ''; } // For non-verbs like "anstatt"
-
+  
   // Special: nimmst (nehmen)
   if (presVerbSg3 === 'nimmt') { duStem = 'nimm'; duSuffix = 'st'; }
   // Special: wirfst (werfen)
@@ -121,7 +121,7 @@ const v = (de: string, en: string, cas: CaseType, ex: string, pres: string, past
 
 
   // --- 3. PAST TENSE (PRÄTERITUM) ---
-
+  
   // ich/er/sie/es: Provided
   const past_ich = past;
 
@@ -175,16 +175,171 @@ const v = (de: string, en: string, cas: CaseType, ex: string, pres: string, past
   };
 };
 
-const n = (art: 'Der' | 'Die' | 'Das', de: string, en: string, pl: string, ex: string): DatabaseItem => ({
-  type: 'noun',
-  art,
-  de,
-  en,
+const n = (art: 'Der' | 'Die' | 'Das', de: string, en: string, pl: string, ex: string): DatabaseItem => ({ 
+  type: 'noun', 
+  art, 
+  de, 
+  en, 
   pl,
   ex
 });
 
+const a = (de: string, en: string, comp: string, sup: string, ex: string): DatabaseItem => ({
+  type: 'adjective',
+  de,
+  en,
+  comp,
+  sup,
+  ex
+});
+
 export const database: DatabaseItem[] = [
+  // --- General Adjectives ---
+  a("allein", "alone", "alleiner", "am alleinesten", "Ich bin nicht gern allein."),
+  a("ausgezeichnet", "excellent", "ausgezeichneter", "am ausgezeichnetesten", "Das Essen ist ausgezeichnet!"),
+  a("befriedigend", "satisfactory", "befriedigender", "am befriedigendsten", "Das Ergebnis ist befriedigend."),
+  a("beliebt", "popular", "beliebter", "am beliebtesten", "Fußball ist sehr beliebt."),
+  a("bequem", "comfortable", "bequemer", "am bequemsten", "Der Sessel ist bequem."),
+  a("besonders", "particularly", "-", "-", "Das ist besonders wichtig."),
+  a("besser", "better", "-", "am besten", "Heute geht es mir besser."),
+  a("bestimmt", "definitely", "-", "-", "Ich komme bestimmt."),
+  a("billig", "cheap", "billiger", "am billigsten", "Das ist ein billiges Handy."),
+  a("breit", "wide", "breiter", "am breitesten", "Die Straße ist sehr breit."),
+  a("ehemalig", "former", "-", "-", "Mein ehemaliger Lehrer."),
+  a("eigen", "own", "-", "-", "Mein eigenes Zimmer."),
+  a("einverstanden", "agreed", "-", "-", "Ich bin damit einverstanden."),
+  a("eng", "narrow/tight", "enger", "am engsten", "Die Hose ist zu eng."),
+  a("entfernt", "distant", "entfernter", "am entferntesten", "Die Stadt ist weit entfernt."),
+  a("falsch", "wrong", "falscher", "am falschesten", "Das ist die falsche Antwort."),
+  a("fast", "almost", "-", "-", "Ich bin fast fertig."),
+  a("fertig", "ready/finished", "fertiger", "am fertigsten", "Das Abendessen ist fertig."),
+  a("genau", "exactly", "genauer", "am genauesten", "Du musst es genau machen."),
+  a("genug", "enough", "-", "-", "Ich habe genug gegessen."),
+  a("gleich", "the same/immediately", "-", "-", "Wir sind gleich alt."),
+  a("glücklich", "happy", "glücklicher", "am glücklichsten", "Ein glückliches Kind."),
+  a("günstig", "favourable/cheap", "günstiger", "am günstigsten", "Ein günstiges Angebot."),
+  a("gut", "good", "besser", "am besten", "Ein gutes Buch."),
+  a("halb", "half", "-", "-", "Eine halbe Stunde."),
+  a("klar", "clear", "klarer", "am klarsten", "Alles klar!"),
+  a("langsam", "slow", "langsamer", "am langsamsten", "Bitte fahr langsamer."),
+  a("letzt", "last", "-", "-", "Die letzte Woche."),
+  a("möglich", "possible", "-", "-", "Ist das möglich?"),
+  a("natürlich", "natural/of course", "-", "-", "Das ist ganz natürlich."),
+  a("neu", "new", "neuer", "am neuesten", "Ich habe ein neues Auto."),
+  a("offen", "open", "offener", "am offensten", "Das Fenster ist offen."),
+  a("ruhig", "quiet", "ruhiger", "am ruhigsten", "Sei bitte ruhig."),
+  a("rund", "round", "runder", "am rundesten", "Der Tisch ist rund."),
+  a("schlecht", "bad", "schlechter", "am schlechtesten", "Mir ist schlecht."),
+  a("schlimm", "bad/serious", "schlimmer", "am schlimmsten", "Das ist nicht so schlimm."),
+  a("schrecklich", "terrible", "schrecklicher", "am schrecklichsten", "Das Wetter ist schrecklich."),
+  a("sicher", "certain/sure", "sicherer", "am sichersten", "Ich bin mir sicher."),
+  a("teuer", "expensive", "teurer", "am teuersten", "Das ist ein teures Restaurant."),
+  a("toll", "great", "toller", "am tollsten", "Das ist eine tolle Idee."),
+  a("unmöglich", "impossible", "-", "-", "Das ist absolut unmöglich."),
+  a("verschieden", "different", "verschiedener", "am verschiedensten", "Wir haben verschiedene Hobbys."),
+  a("voll", "full", "voller", "am vollsten", "Das Glas ist voll."),
+  a("wahr", "true", "wahrer", "am wahrsten", "Das ist eine wahre Geschichte."),
+  a("wichtig", "important", "wichtiger", "am wichtigsten", "Das ist sehr wichtig."),
+  a("wunderbar", "wonderful", "wunderbarer", "am wunderbarsten", "Ein wunderbarer Tag."),
+  a("zufrieden", "contented", "zufriedener", "am zufriedensten", "Ich bin sehr zufrieden."),
+
+  // --- Personality & Physical Description ---
+  a("altmodisch", "old-fashioned", "altmodischer", "am altmodischsten", "Ein altmodisches Kleid."),
+  a("angenehm", "pleasant", "angenehmer", "am angenehmsten", "Eine angenehme Reise."),
+  a("ängstlich", "anxious", "ängstlicher", "am ängstlichsten", "Ich bin ein bisschen ängstlich."),
+  a("berühmt", "famous", "berühmter", "am berühmtesten", "Ein berühmter Schauspieler."),
+  a("blöd", "stupid", "blöder", "am blödesten", "Das ist eine blöde Frage."),
+  a("böse", "angry/evil", "böser", "am bösesten", "Bist du böse auf mich?"),
+  a("dick", "fat/thick", "dicker", "am dicksten", "Ein dicker Schal."),
+  a("dumm", "stupid", "dümmer", "am dümmsten", "Sei nicht so dumm."),
+  a("ehrlich", "honest", "ehrlicher", "am ehrlichsten", "Sei bitte ehrlich."),
+  a("ernst", "serious", "ernster", "am ernstesten", "Ein ernstes Gespräch."),
+  a("fleißig", "hard working", "fleißiger", "am fleißigsten", "Ein fleißiger Schüler."),
+  a("frech", "cheeky", "frecher", "am frechsten", "Ein freches Kind."),
+  a("freundlich", "friendly", "freundlicher", "am freundlichsten", "Ein freundlicher Mann."),
+  a("furchtbar", "awful", "furchtbarer", "am furchtbarsten", "Der Lärm ist furchtbar."),
+  a("geduldig", "patient", "geduldiger", "am geduldigsten", "Du musst geduldig sein."),
+  a("gemütlich", "cosy", "gemütlicher", "am gemütlichsten", "Ein gemütliches Zimmer."),
+  a("glatt", "smooth/slippery", "glatter", "am glattesten", "Die Straße ist glatt."),
+  a("groß", "tall/big", "größer", "am größten", "Ich bin sehr groß."),
+  a("hässlich", "ugly", "hässlicher", "am hässlichsten", "Das ist ein hässliches Bild."),
+  a("hilfsbereit", "helpful", "hilfsbereiter", "am hilfsbereitesten", "Meine Nachbarn sind sehr hilfsbereit."),
+  a("höflich", "polite", "höflicher", "am höflichsten", "Ein höflicher Junge."),
+  a("hübsch", "pretty", "hübscher", "am hübschesten", "Sie ist sehr hübsch."),
+  a("klein", "small", "kleiner", "am kleinsten", "Ein kleines Haus."),
+  a("klug", "clever", "klüger", "am klügsten", "Ein kluges Mädchen."),
+  a("komisch", "funny/strange", "komischer", "am komischsten", "Ein komischer Film."),
+  a("kurz", "short", "kürzer", "am kürzesten", "Ein kurzer Rock."),
+  a("laut", "loud", "lauter", "am lautesten", "Die Musik ist zu laut."),
+  a("lustig", "funny", "lustiger", "am lustigsten", "Ein lustiger Witz."),
+  a("merkwürdig", "strange", "merkwürdiger", "am merkwürdigsten", "Das ist merkwürdig."),
+  a("müde", "tired", "müder", "am müdesten", "Ich bin so müde."),
+  a("nervös", "nervous", "nervöser", "am nervösesten", "Ich bin vor Prüfungen nervös."),
+  a("nett", "nice", "netter", "am nettesten", "Das ist nett von dir."),
+  a("ordentlich", "tidy", "ordentlicher", "am ordentlichsten", "Ein ordentliches Zimmer."),
+  a("reich", "rich", "reicher", "am reichsten", "Er ist ein reicher Mann."),
+  a("sanft", "gentle", "sanfter", "am sanftesten", "Eine sanfte Stimme."),
+  a("satt", "full/fed up", "-", "-", "Ich bin satt."),
+  a("sauber", "clean", "sauberer", "am saubersten", "Das Auto ist sauber."),
+  a("scharf", "sharp/spicy", "schärfer", "am schärfsten", "Das Messer ist scharf."),
+  a("schick", "smart/stylish", "schicker", "am schicksten", "Ein schickes Kleid."),
+  a("schlank", "slim", "schlanker", "am schlankesten", "Sie ist sehr schlank."),
+  a("schmutzig", "dirty", "schmutziger", "am schmutzigsten", "Meine Schuhe sind schmutzig."),
+  a("schüchtern", "shy", "schüchterner", "am schüchternsten", "Ich war als Kind schüchtern."),
+  a("stark", "strong", "stärker", "am stärksten", "Ein starker Kaffee."),
+  a("streng", "strict", "strenger", "am strengsten", "Ein strenger Lehrer."),
+  a("traurig", "sad", "trauriger", "am traurigsten", "Ein trauriges Lied."),
+
+  // --- Colors ---
+  a("blau", "blue", "blauer", "am blauesten", "Der Himmel ist blau."),
+  a("bunt", "brightly coloured", "bunter", "am buntesten", "Ein bunter Garten."),
+  a("gelb", "yellow", "gelber", "am gelbesten", "Die Sonne ist gelb."),
+  a("grau", "grey", "grauer", "am grauesten", "Ein grauer Tag."),
+  a("grün", "green", "grüner", "am grünesten", "Das Gras ist grün."),
+  a("hell", "pale/light", "heller", "am hellsten", "Ein helles Zimmer."),
+  a("lila", "purple", "-", "-", "Eine lila Blume."),
+  a("rosa", "pink", "-", "-", "Ein rosa Hemd."),
+  a("rot", "red", "roter", "am rotesten", "Ein rotes Auto."),
+  a("schwarz", "black", "schärzer", "am schwärzesten", "Eine schwarze Katze."),
+  a("silber", "silver", "-", "-", "Ein silberner Ring."),
+  a("weiß", "white", "weißer", "am weißesten", "Ein weißes Kleid."),
+  a("dunkel", "dark", "dunkler", "am dunkelsten", "Ein dunkler Raum."),
+
+  // --- Weather & Environment ---
+
+  a("bedeckt", "overcast", "-", "-", "Der Himmel ist bedeckt."),
+  a("bewölkt", "cloudy", "-", "-", "Es ist heute bewölkt."),
+  a("dunkel", "dark", "dunkler", "am dunkelsten", "Draußen ist es dunkel."),
+  a("heiß", "hot", "heißer", "am heißesten", "Es ist sehr heiß."),
+  a("heiter", "bright/clear", "heiterer", "am heitersten", "Das Wetter ist heiter."),
+  a("kalt", "cold", "kälter", "am kältesten", "Im Winter ist es kalt."),
+  a("kühl", "cool", "kühler", "am kühlsten", "Am Abend wird es kühl."),
+  a("nass", "wet", "nasser", "am nassesten", "Das Gras ist nass."),
+  a("regnerisch", "rainy", "-", "-", "Ein regnerischer Tag."),
+  a("schön", "beautiful", "schöner", "am schönsten", "Eine schöne Aussicht."),
+  a("sonnig", "sunny", "sonniger", "am sonnigsten", "Morgen wird es sonnig."),
+  a("stürmisch", "stormy", "stürmischer", "am stürmischsten", "Eine stürmische Nacht."),
+  a("windig", "windy", "windiger", "am windigsten", "Am Strand ist es windig."),
+  a("wolkig", "cloudy", "wolkiger", "am wolkigsten", "Ein wolkiger Himmel."),
+  a("arm", "poor", "ärmer", "am ärmsten", "Eine arme Familie."),
+  a("niedrig", "low", "niedriger", "am niedrigsten", "Das Regal ist niedrig."),
+  a("tief", "deep/low", "tiefer", "am tiefsten", "Das Wasser ist tief."),
+
+  // --- Shcool & Work ---
+
+  a("anstrengend", "exhausting", "anstrengender", "am anstrengendsten", "Die Arbeit ist anstrengend."),
+  a("interessant", "interesting", "interessanter", "am interessantesten", "Biologie ist interessant."),
+  a("kompliziert", "complicated", "komplizierter", "am kompliziertesten", "Das ist zu kompliziert."),
+  a("langweilig", "boring", "langweiliger", "am langweiligsten", "Der Film war langweilig."),
+  a("leicht", "light/easy", "leichter", "am leichtesten", "Die Prüfung war leicht."),
+  a("nötig", "necessary", "-", "-", "Das ist nicht nötig."),
+  a("nützlich", "useful", "nützlicher", "am nützlichsten", "Ein nützliches Werkzeug."),
+  a("nutzlos", "useless", "-", "-", "Das ist nutzlos."),
+  a("pünktlich", "punctual", "pünktlicher", "am pünktlichsten", "Sei bitte pünktlich."),
+  a("schwach", "weak", "schwächer", "am schwächsten", "In Mathe bin ich schwach."),
+  a("schwer", "heavy/hard", "schwerer", "am schwersten", "Das Paket ist schwer."),
+  a("schwierig", "difficult", "schwieriger", "am schwierigsten", "Eine schwierige Aufgabe."),
+  
   // --- 0. GENITIV & SPECIAL ---
   v("bedürfen", "to require/need", "Genitiv", "Er bedarf deiner Hilfe.", "bedarf", "bedurfte", "hat bedurft"),
   v("anstatt", "instead of (Prep)", "Genitiv", "Anstatt eines Autos kaufte er ein Fahrrad.", "-", "-", "-"),

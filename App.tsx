@@ -19,24 +19,24 @@ const LogoShield: React.FC<{ className?: string }> = ({ className = "" }) => (
   </svg>
 );
 
+const NavButton: React.FC<{ tab: TabView, currentTab: TabView, setCurrentTab: (tab: TabView) => void, label: string, icon: React.ReactNode }> = ({ tab, currentTab, setCurrentTab, label, icon }) => (
+  <button
+    onClick={() => setCurrentTab(tab)}
+    className={`
+      flex items-center gap-2 px-6 py-3 font-display uppercase tracking-wider text-lg rounded-sm transition-all
+      ${currentTab === tab 
+        ? 'bg-de-red text-white shadow-[0_4px_0_#FFCE00] -translate-y-0.5' 
+        : 'bg-de-black text-de-gold hover:bg-gray-800 hover:-translate-y-0.5'
+      }
+    `}
+  >
+    {icon}
+    <span className="hidden sm:inline">{label}</span>
+  </button>
+);
+
 const App: React.FC = () => {
   const [currentTab, setCurrentTab] = useState<TabView>('dictionary');
-
-  const NavButton: React.FC<{ tab: TabView, label: string, icon: React.ReactNode }> = ({ tab, label, icon }) => (
-    <button
-      onClick={() => setCurrentTab(tab)}
-      className={`
-        flex items-center gap-2 px-6 py-3 font-display uppercase tracking-wider text-lg rounded-sm transition-all
-        ${currentTab === tab 
-          ? 'bg-de-red text-white shadow-[0_4px_0_#FFCE00] -translate-y-0.5' 
-          : 'bg-de-black text-de-gold hover:bg-gray-800 hover:-translate-y-0.5'
-        }
-      `}
-    >
-      {icon}
-      <span className="hidden sm:inline">{label}</span>
-    </button>
-  );
 
   return (
     <div className="min-h-screen bg-[#f4f4f4] pb-12">
@@ -58,11 +58,11 @@ const App: React.FC = () => {
       <main className="container mx-auto">
         {/* Navigation */}
         <div className="flex flex-wrap justify-center gap-4 my-8 px-4">
-          <NavButton tab="dictionary" label="Wörterbuch" icon={<BookOpen size={20} />} />
-          <NavButton tab="grammar" label="Grammatik" icon={<LayoutList size={20} />} />
-          <NavButton tab="verb-quiz" label="Verb Quiz" icon={<HelpCircle size={20} />} />
-          <NavButton tab="noun-quiz" label="Nomen Quiz" icon={<GraduationCap size={20} />} />
-          <NavButton tab="guide" label="Anleitung" icon={<Info size={20} />} />
+          <NavButton tab="dictionary" currentTab={currentTab} setCurrentTab={setCurrentTab} label="Wörterbuch" icon={<BookOpen size={20} />} />
+          <NavButton tab="grammar" currentTab={currentTab} setCurrentTab={setCurrentTab} label="Grammatik" icon={<LayoutList size={20} />} />
+          <NavButton tab="verb-quiz" currentTab={currentTab} setCurrentTab={setCurrentTab} label="Verb Quiz" icon={<HelpCircle size={20} />} />
+          <NavButton tab="noun-quiz" currentTab={currentTab} setCurrentTab={setCurrentTab} label="Nomen Quiz" icon={<GraduationCap size={20} />} />
+          <NavButton tab="guide" currentTab={currentTab} setCurrentTab={setCurrentTab} label="Anleitung" icon={<Info size={20} />} />
         </div>
 
         {/* Content Area */}
