@@ -322,6 +322,7 @@ export const database: DatabaseItem[] = [
   a("rund", "round", "runder", "am rundesten", "Der Tisch ist rund."),
   a("schlecht", "bad", "schlechter", "am schlechtesten", "Mir ist schlecht."),
   a("schlimm", "bad/serious", "schlimmer", "am schlimmsten", "Das ist nicht so schlimm."),
+  a("schnell", "fast", "schneller", "am schnellsten", "Ein schnelles Auto."),
   a("schrecklich", "terrible", "schrecklicher", "am schrecklichsten", "Das Wetter ist schrecklich."),
   a("sicher", "certain/sure", "sicherer", "am sichersten", "Ich bin mir sicher."),
   a("teuer", "expensive", "teurer", "am teuersten", "Das ist ein teures Restaurant."),
