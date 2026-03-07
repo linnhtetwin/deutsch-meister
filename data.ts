@@ -2935,7 +2935,6 @@ export const database: DatabaseItem[] = [
   n("Die", "Zahnpasta", "toothpaste", "die Zahnpasten", "Zahnpasta kaufen."),
   n("Die", "Zeichnung", "drawing", "die Zeichnungen", "Eine technische Zeichnung."),
   n("Die", "Zeile", "line (text)", "die Zeilen", "Zwischen den Zeilen lesen."),
-  n("Die", "Zeit", "time", "die Zeiten", "Es ist Zeit."),
   n("Die", "Zeitschrift", "magazine", "die Zeitschriften", "Eine Modezeitschrift."),
   n("Die", "Zeitung", "newspaper", "die Zeitungen", "Zeitung lesen."),
   n("Die", "Zentrale", "headquarters/center", "die Zentralen", "Die Zentrale anrufen."),
