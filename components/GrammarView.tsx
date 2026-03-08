@@ -516,34 +516,123 @@ export const GrammarView: React.FC = () => {
         <div className="mb-16">
             <h3 className="font-display text-2xl border-l-4 border-de-gold pl-3 mb-6">Adjective Declension</h3>
             
-            {/* Logic Summary Section */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-                <div className="bg-gray-50 p-4 rounded border border-gray-200">
-                    <h4 className="font-bold text-sm uppercase mb-2">1. Weak Declension</h4>
-                    <p className="text-xs text-gray-600 mb-2">After <strong>definite</strong> articles (der, die, das...).</p>
-                    <div className="text-xs font-mono bg-white p-2 rounded border border-gray-100">
-                        <div className="flex justify-between border-b pb-1 mb-1"><span>Nom. Sg.</span> <span className="font-bold text-art-der">-e</span></div>
-                        <div className="flex justify-between border-b pb-1 mb-1"><span>Acc. Fem/Neu</span> <span className="font-bold text-art-der">-e</span></div>
-                        <div className="flex justify-between"><span>All others</span> <span className="font-bold text-art-der">-en</span></div>
+            {/* Introduction */}
+            <div className="bg-blue-50 p-6 rounded-lg border border-blue-200 mb-8">
+                <h4 className="font-bold text-blue-800 text-lg mb-3">How Adjective Declension Works</h4>
+                <p className="text-blue-900 mb-4">
+                    German adjectives change their endings based on the article (or lack thereof) that precedes them. 
+                    There are three main declension patterns:
+                </p>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div className="bg-white p-4 rounded border">
+                        <h5 className="font-bold text-sm uppercase text-blue-700 mb-2">Weak Declension</h5>
+                        <p className="text-xs text-gray-600 mb-2">After definite articles (der, die, das, dieser, jeder, etc.)</p>
+                        <p className="text-sm">Adjective usually ends in <strong className="text-art-der">-en</strong>, with <strong className="text-art-der">-e</strong> in nominative singular feminine/neuter.</p>
+                    </div>
+                    <div className="bg-white p-4 rounded border">
+                        <h5 className="font-bold text-sm uppercase text-blue-700 mb-2">Mixed Declension</h5>
+                        <p className="text-xs text-gray-600 mb-2">After indefinite articles (ein, eine, kein, mein, etc.)</p>
+                        <p className="text-sm">Combines weak and strong endings. Nominative masculine/neuter get <strong className="text-art-die">-er/-es</strong>, others follow weak pattern.</p>
+                    </div>
+                    <div className="bg-white p-4 rounded border">
+                        <h5 className="font-bold text-sm uppercase text-blue-700 mb-2">Strong Declension</h5>
+                        <p className="text-xs text-gray-600 mb-2">Without article (materials, properties, indefinite plural)</p>
+                        <p className="text-sm">Adjective takes the same endings as definite articles would have.</p>
                     </div>
                 </div>
-                <div className="bg-gray-50 p-4 rounded border border-gray-200">
-                    <h4 className="font-bold text-sm uppercase mb-2">2. Mixed Declension</h4>
-                    <p className="text-xs text-gray-600 mb-2">After <strong>indefinite</strong> articles (ein, kein, mein...).</p>
-                    <div className="text-xs font-mono bg-white p-2 rounded border border-gray-100">
-                        <div className="flex justify-between border-b pb-1 mb-1"><span>Nom. Mas/Neu</span> <span className="font-bold text-art-die">-er / -es</span></div>
-                        <div className="flex justify-between border-b pb-1 mb-1"><span>Nom/Acc Fem</span> <span className="font-bold text-art-die">-e</span></div>
-                        <div className="flex justify-between"><span>Dative / Genitive</span> <span className="font-bold text-art-die">-en</span></div>
-                    </div>
-                </div>
-                <div className="bg-gray-50 p-4 rounded border border-gray-200">
-                    <h4 className="font-bold text-sm uppercase mb-2">3. Strong Declension</h4>
-                    <p className="text-xs text-gray-600 mb-2">Without article. Adjective takes the <strong>Article-Ending</strong>.</p>
-                    <div className="text-xs font-mono bg-white p-2 rounded border border-gray-100">
-                        <div className="flex justify-between border-b pb-1 mb-1"><span>Nom. Mas/Neu</span> <span className="font-bold text-art-das">-er / -es</span></div>
-                        <div className="flex justify-between border-b pb-1 mb-1"><span>Dative Mas/Neu</span> <span className="font-bold text-art-das">-em</span></div>
-                        <div className="flex justify-between"><span>Genitive Mas/Neu</span> <span className="font-bold text-art-das">-en (!)</span></div>
-                    </div>
+            </div>
+
+            {/* Endings Summary Table */}
+            <div className="mb-8">
+                <h4 className="font-bold text-lg mb-4">Adjective Endings Overview</h4>
+                <div className="overflow-x-auto rounded-lg border border-gray-200 shadow-sm bg-white">
+                    <table className="w-full text-left text-sm border-collapse">
+                        <thead>
+                            <tr className="bg-gray-50 border-b border-gray-200">
+                                <th className="p-3 font-bold text-gray-400 uppercase tracking-tighter text-[10px]">Case</th>
+                                <th className="p-3 font-bold text-gray-800 border-l border-gray-100 text-center" colSpan="4">Weak Declension<br/>(Definite Articles)</th>
+                                <th className="p-3 font-bold text-gray-800 border-l border-gray-100 text-center" colSpan="4">Mixed Declension<br/>(Indefinite Articles)</th>
+                                <th className="p-3 font-bold text-gray-800 border-l border-gray-100 text-center" colSpan="4">Strong Declension<br/>(No Article)</th>
+                            </tr>
+                            <tr className="bg-gray-50 border-b border-gray-200">
+                                <th className="p-3"></th>
+                                <th className="p-2 font-bold text-gray-600 text-xs border-l border-gray-100">Masc</th>
+                                <th className="p-2 font-bold text-gray-600 text-xs border-l border-gray-100 bg-gray-50/30">Neut</th>
+                                <th className="p-2 font-bold text-gray-600 text-xs border-l border-gray-100">Fem</th>
+                                <th className="p-2 font-bold text-gray-600 text-xs border-l border-gray-100">Pl</th>
+                                <th className="p-2 font-bold text-gray-600 text-xs border-l border-gray-100">Masc</th>
+                                <th className="p-2 font-bold text-gray-600 text-xs border-l border-gray-100 bg-gray-50/30">Neut</th>
+                                <th className="p-2 font-bold text-gray-600 text-xs border-l border-gray-100">Fem</th>
+                                <th className="p-2 font-bold text-gray-600 text-xs border-l border-gray-100">Pl</th>
+                                <th className="p-2 font-bold text-gray-600 text-xs border-l border-gray-100">Masc</th>
+                                <th className="p-2 font-bold text-gray-600 text-xs border-l border-gray-100 bg-gray-50/30">Neut</th>
+                                <th className="p-2 font-bold text-gray-600 text-xs border-l border-gray-100">Fem</th>
+                                <th className="p-2 font-bold text-gray-600 text-xs border-l border-gray-100">Pl</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr className="border-b border-gray-100">
+                                <td className="p-3 font-bold text-gray-500 bg-gray-50/50">Nominative</td>
+                                <td className="p-3 border-l border-gray-100 text-center"><span className="font-bold text-art-der">-e</span></td>
+                                <td className="p-3 border-l border-gray-100 text-center bg-gray-50/30"><span className="font-bold text-art-der">-e</span></td>
+                                <td className="p-3 border-l border-gray-100 text-center"><span className="font-bold text-art-der">-e</span></td>
+                                <td className="p-3 border-l border-gray-100 text-center"><span className="font-bold text-art-der">-en</span></td>
+                                <td className="p-3 border-l border-gray-100 text-center"><span className="font-bold text-art-die">-er</span></td>
+                                <td className="p-3 border-l border-gray-100 text-center bg-gray-50/30"><span className="font-bold text-art-die">-es</span></td>
+                                <td className="p-3 border-l border-gray-100 text-center"><span className="font-bold text-art-die">-e</span></td>
+                                <td className="p-3 border-l border-gray-100 text-center"><span className="font-bold text-art-die">-en</span></td>
+                                <td className="p-3 border-l border-gray-100 text-center"><span className="font-bold text-art-das">-er</span></td>
+                                <td className="p-3 border-l border-gray-100 text-center bg-gray-50/30"><span className="font-bold text-art-das">-es</span></td>
+                                <td className="p-3 border-l border-gray-100 text-center"><span className="font-bold text-art-das">-e</span></td>
+                                <td className="p-3 border-l border-gray-100 text-center"><span className="font-bold text-art-das">-e</span></td>
+                            </tr>
+                            <tr className="border-b border-gray-100">
+                                <td className="p-3 font-bold text-gray-500 bg-gray-50/50">Accusative</td>
+                                <td className="p-3 border-l border-gray-100 text-center"><span className="font-bold text-art-der">-en</span></td>
+                                <td className="p-3 border-l border-gray-100 text-center bg-gray-50/30"><span className="font-bold text-art-der">-e</span></td>
+                                <td className="p-3 border-l border-gray-100 text-center"><span className="font-bold text-art-der">-e</span></td>
+                                <td className="p-3 border-l border-gray-100 text-center"><span className="font-bold text-art-der">-en</span></td>
+                                <td className="p-3 border-l border-gray-100 text-center"><span className="font-bold text-art-die">-en</span></td>
+                                <td className="p-3 border-l border-gray-100 text-center bg-gray-50/30"><span className="font-bold text-art-die">-es</span></td>
+                                <td className="p-3 border-l border-gray-100 text-center"><span className="font-bold text-art-die">-e</span></td>
+                                <td className="p-3 border-l border-gray-100 text-center"><span className="font-bold text-art-die">-en</span></td>
+                                <td className="p-3 border-l border-gray-100 text-center"><span className="font-bold text-art-das">-en</span></td>
+                                <td className="p-3 border-l border-gray-100 text-center bg-gray-50/30"><span className="font-bold text-art-das">-es</span></td>
+                                <td className="p-3 border-l border-gray-100 text-center"><span className="font-bold text-art-das">-e</span></td>
+                                <td className="p-3 border-l border-gray-100 text-center"><span className="font-bold text-art-das">-e</span></td>
+                            </tr>
+                            <tr className="border-b border-gray-100">
+                                <td className="p-3 font-bold text-gray-500 bg-gray-50/50">Dative</td>
+                                <td className="p-3 border-l border-gray-100 text-center"><span className="font-bold text-art-der">-en</span></td>
+                                <td className="p-3 border-l border-gray-100 text-center bg-gray-50/30"><span className="font-bold text-art-der">-en</span></td>
+                                <td className="p-3 border-l border-gray-100 text-center"><span className="font-bold text-art-der">-en</span></td>
+                                <td className="p-3 border-l border-gray-100 text-center"><span className="font-bold text-art-der">-en</span></td>
+                                <td className="p-3 border-l border-gray-100 text-center"><span className="font-bold text-art-die">-en</span></td>
+                                <td className="p-3 border-l border-gray-100 text-center bg-gray-50/30"><span className="font-bold text-art-die">-en</span></td>
+                                <td className="p-3 border-l border-gray-100 text-center"><span className="font-bold text-art-die">-en</span></td>
+                                <td className="p-3 border-l border-gray-100 text-center"><span className="font-bold text-art-die">-en</span></td>
+                                <td className="p-3 border-l border-gray-100 text-center"><span className="font-bold text-art-das">-em</span></td>
+                                <td className="p-3 border-l border-gray-100 text-center bg-gray-50/30"><span className="font-bold text-art-das">-em</span></td>
+                                <td className="p-3 border-l border-gray-100 text-center"><span className="font-bold text-art-das">-er</span></td>
+                                <td className="p-3 border-l border-gray-100 text-center"><span className="font-bold text-art-das">-en</span></td>
+                            </tr>
+                            <tr>
+                                <td className="p-3 font-bold text-gray-500 bg-gray-50/50">Genitive</td>
+                                <td className="p-3 border-l border-gray-100 text-center"><span className="font-bold text-art-der">-en</span></td>
+                                <td className="p-3 border-l border-gray-100 text-center bg-gray-50/30"><span className="font-bold text-art-der">-en</span></td>
+                                <td className="p-3 border-l border-gray-100 text-center"><span className="font-bold text-art-der">-en</span></td>
+                                <td className="p-3 border-l border-gray-100 text-center"><span className="font-bold text-art-der">-en</span></td>
+                                <td className="p-3 border-l border-gray-100 text-center"><span className="font-bold text-art-die">-en</span></td>
+                                <td className="p-3 border-l border-gray-100 text-center bg-gray-50/30"><span className="font-bold text-art-die">-en</span></td>
+                                <td className="p-3 border-l border-gray-100 text-center"><span className="font-bold text-art-die">-en</span></td>
+                                <td className="p-3 border-l border-gray-100 text-center"><span className="font-bold text-art-die">-en</span></td>
+                                <td className="p-3 border-l border-gray-100 text-center"><span className="font-bold text-art-das">-en</span></td>
+                                <td className="p-3 border-l border-gray-100 text-center bg-gray-50/30"><span className="font-bold text-art-das">-en</span></td>
+                                <td className="p-3 border-l border-gray-100 text-center"><span className="font-bold text-art-das">-er</span></td>
+                                <td className="p-3 border-l border-gray-100 text-center"><span className="font-bold text-art-das">-en</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
 
