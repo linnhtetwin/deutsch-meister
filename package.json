@@ -20,9 +20,8 @@
     "@vitejs/plugin-react": "^5.0.0",
     "typescript": "~5.8.2",
     "vite": "^6.2.0",
-    "wrangler": "^4.67.0"
-  }
-  ,
+    "wrangler": "^4.71.0"
+  },
   "overrides": {
     "minimatch": "^10.2.1"
   }
