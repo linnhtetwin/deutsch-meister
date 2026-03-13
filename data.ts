@@ -381,6 +381,8 @@ export const database: DatabaseItem[] = [
   a("stark", "strong", "stärker", "am stärksten", "Ein starker Kaffee."),
   a("streng", "strict", "strenger", "am strengsten", "Ein strenger Lehrer."),
   a("traurig", "sad", "trauriger", "am traurigsten", "Ein trauriges Lied."),
+  a("dafür", "in favor of", "-", "-", "Ich bin dafür, dass wir ins Kino gehen."),
+  a("dagegen", "against", "-", "-", "Ich bin dagegen, dass wir ins Kino gehen."),
 
   // --- Colors ---
   a("blau", "blue", "blauer", "am blauesten", "Der Himmel ist blau."),
