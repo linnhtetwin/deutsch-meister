@@ -284,6 +284,8 @@ export const database: DatabaseItem[] = [
   adv("sonst", "otherwise", "Beeil dich, sonst kommen wir zu spät."),
   adv("trotzdem", "nevertheless", "Es regnet, aber ich gehe trotzdem spazieren."),
   adv("vielleicht", "maybe", "Vielleicht gehen wir ins Kino."),
+  adv("dafür", "in favor of", "Ich bin dafür, dass wir ins Kino gehen."),
+  adv("dagegen", "against", "Ich bin dagegen, dass wir ins Kino gehen."),
 
   // --- General Adjectives ---
   a("allein", "alone", "alleiner", "am alleinesten", "Ich bin nicht gern allein."),
@@ -381,8 +383,6 @@ export const database: DatabaseItem[] = [
   a("stark", "strong", "stärker", "am stärksten", "Ein starker Kaffee."),
   a("streng", "strict", "strenger", "am strengsten", "Ein strenger Lehrer."),
   a("traurig", "sad", "trauriger", "am traurigsten", "Ein trauriges Lied."),
-  a("dafür", "in favor of", "-", "-", "Ich bin dafür, dass wir ins Kino gehen."),
-  a("dagegen", "against", "-", "-", "Ich bin dagegen, dass wir ins Kino gehen."),
 
   // --- Colors ---
   a("blau", "blue", "blauer", "am blauesten", "Der Himmel ist blau."),
