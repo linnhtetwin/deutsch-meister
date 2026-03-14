@@ -223,6 +223,7 @@ export const database: DatabaseItem[] = [
   adv("plötzlich", "suddenly", "Plötzlich hat es geregnet."),
   adv("schon", "already", "Es ist schon spät."),
   adv("sofort", "immediately", "Komm sofort her!"),
+  adv("seit", "since / for", "Ich lerne seit einem Jahr Deutsch."),
   adv("täglich", "daily", "Ich lerne täglich Vokabeln."),
   adv("übermorgen", "day after tomorrow", "Übermorgen ist Freitag."),
   adv("vorgestern", "day before yesterday", "Vorgestern war ich krank."),
@@ -236,21 +237,29 @@ export const database: DatabaseItem[] = [
 
   // --- Adverbs - Place & Direction ---
 
+  adv("aus", "out / from", "Er kommt aus Deutschland."),
+  adv("bei", "at / near", "Ich wohne bei meinen Eltern."),
+  adv("dabei", "with it / there", "Ich habe mein Handy dabei."),
   adv("dort", "there", "Dort drüben ist die Post."),
   adv("draußen", "outside", "Die Kinder spielen draußen."),
   adv("drinnen", "inside", "Es ist kalt, gehen wir nach drinnen."),
   adv("geradeaus", "straight ahead", "Gehen Sie immer geradeaus."),
+  adv("gegenüber", "opposite/across from", "Die Bank ist gegenüber der Post."),
   adv("hier", "here", "Hier ist mein Ausweis."),
   adv("hinten", "at the back", "Ich sitze im Bus immer hinten."),
   adv("irgendwo", "somewhere", "Mein Schlüssel muss irgendwo sein."),
   adv("links", "on the left", "Die Apotheke ist links."),
+  adv("mit", "with", "Ich gehe mit dir."),
+  adv("nach", "to / after", "Wir fahren nach Berlin."),
   adv("rechts", "on the right", "Biegen Sie rechts ab."),
   adv("überall", "everywhere", "Überall liegt Müll."),
   adv("unten", "at the bottom / downstairs", "Die Küche ist unten."),
   adv("oben", "at the top / upstairs", "Mein Zimmer ist oben."),
+  adv("von", "from", "Das Geschenk ist von meiner Freundin."),
   adv("vorne", "at the front", "Der Lehrer steht vorne."),
   adv("weg", "away", "Geh weg!"),
   adv("weit", "far", "Ist es noch weit?"),
+  adv("zu", "to / closed", "Die Schule ist zu."),
   adv("zurück", "back", "Wann kommst du zurück?"),
 
   // --- Adverbs - Manner & Degree ---
