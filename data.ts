@@ -3057,7 +3057,6 @@ export const database: DatabaseItem[] = [
   n("Das", "Hemd", "shirt", "die Hemden", "Ein weißes Hemd."),
   n("Das", "Hindernis", "obstacle", "die Hindernisse", "Hindernisse überwinden."),
   n("Das", "Hobby", "hobby", "die Hobbys", "Ein teures Hobby."),
-  n("Das", "Holz", "wood", "die Hölzer", "Aus Holz."),
   n("Das", "Horn", "horn", "die Hörner", "Ins gleiche Horn stoßen."),
   n("Das", "Hotel", "hotel", "die Hotels", "Im Hotel übernachten."),
   n("Das", "Huhn", "chicken (animal)", "die Hühner", "Ein blindes Huhn."),
