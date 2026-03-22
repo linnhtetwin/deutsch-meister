@@ -3199,7 +3199,6 @@ export const database: DatabaseItem[] = [
   n("Das", "Zelt", "tent", "die Zelte", "Zelt aufbauen."),
   n("Das", "Zeug", "stuff", "-", "Dummes Zeug."),
   n("Das", "Ziel", "goal/destination", "die Ziele", "Das Ziel erreichen."),
-  n("Das", "Zimmer", "room", "die Zimmer", "Zimmer aufräumen."),
   n("Das", "Zitat", "quote", "die Zitate", "Ein bekanntes Zitat."),
   n("Das", "Zubehör", "accessories", "-", "Zubehör kaufen."),
   n("Das", "Einfamilienhaus", "detached house", "die Einfamilienhäuser", "Wir wohnen in einem Einfamilienhaus.")
