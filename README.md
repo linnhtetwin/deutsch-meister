@@ -8,7 +8,7 @@ A comprehensive learning platform for German grammar, specializing in verbs, nou
 
 [View Online](https://deutsch-meister.pages.dev/) • [Features](#features) • [Getting Started](#getting-started) • [Technologies](#technologies) • [License](#license)
 
-[![License: AGPL v3](https://img.shields.io/badge/License-AGPL%20v3-blue.svg)](https://www.gnu.org/licenses/agpl-3.0)
+[![License: Apache v2](https://img.shields.io/badge/License-apache%20v2-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0)
 
 </div>
 
@@ -179,7 +179,7 @@ Contributions are welcome! Feel free to:
 
 ## License
 
-This project is licensed under the GNU Affero General Public License v3.0 (AGPL-3.0). See the [LICENSE](LICENSE) file for details.
+This project is licensed under the Apache License v2.0 (Apache-2.0). See the [LICENSE](LICENSE) file for details.
 
 ---
 
