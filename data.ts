@@ -3003,7 +3003,6 @@ export const database: DatabaseItem[] = [
   n("Das", "Ergebnis", "result", "die Ergebnisse", "Das Ergebnis zählt."),
   n("Das", "Erlebnis", "experience", "die Erlebnisse", "Ein tolles Erlebnis."),
   n("Das", "Ersatzteil", "spare part", "die Ersatzteile", "Ersatzteile bestellen."),
-  n("Das", "Fach", "subject/compartment", "die Fächer", "Welches Fach unterrichtest du?"),
   n("Das", "Fahrrad", "bicycle", "die Fahrräder", "Fahrrad fahren."),
   n("Das", "Fahrzeug", "vehicle", "die Fahrzeuge", "Fahrzeug parken."),
   n("Das", "Fazit", "conclusion", "die Fazite", "Ein Fazit ziehen."),
