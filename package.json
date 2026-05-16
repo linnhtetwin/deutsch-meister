@@ -2,7 +2,7 @@
   "name": "deutsch-meister",
   "private": true,
   "license": "Apache-2.0",
-  "version": "1.2.2",
+  "version": "1.2.5",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -21,7 +21,7 @@
     "@vitejs/plugin-react": "^6.0.1",
     "typescript": "^6.0.3",
     "vite": "^8.0.10",
-    "wrangler": "^4.85.0"
+    "wrangler": "^4.92.0"
   },
   "overrides": {
     "minimatch": "^10.2.1"
