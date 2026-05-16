@@ -267,7 +267,7 @@ const SentenceStructureSection = () => (
                         The conjugated verb goes to the <strong className="text-de-red">end</strong> of the sentence (Verb-Kick).
                     </div>
                     <div className="flex flex-wrap gap-2 mb-4">
-                        {["weil (because)", "wenn (if/when)", "als (when)", "dass (that)", "obwohl (although)", "seit (since)", "damit (so that)"].map(w => (
+                        {["weil (because)", "wenn (if/when)", "als (when)", "dass (that)", "obwohl (although)", "seit (since)", "damit (so that)", "falls (in case/if)"].map(w => (
                             <span key={w} className="px-2 py-1 bg-red-100 text-red-800 rounded font-bold text-sm">{w}</span>
                         ))}
                     </div>
@@ -431,6 +431,93 @@ const StrongDeclensionExplanation = () => (
         </div>
     </div>
 );
+
+const B1GrammarSection = () => {
+  const konjunktivData = [
+    ["würde + Infinitive", "Ich würde gehen", "Du würdest gehen", "Er würde gehen", "Wir würden gehen", "Ihr würdet gehen", "Sie würden gehen"],
+    ["hätte / wäre", "Ich hätte Zeit", "Du hättest Zeit", "Er wäre glücklich", "Wir wären bereit", "Ihr wärt hier", "Sie wären stolz"],
+    ["könnte / sollte", "Ich könnte helfen", "Du solltest lernen", "Er könnte kommen", "Wir sollten gehen", "Ihr könntet fragen", "Sie sollten antworten"],
+  ];
+
+  const passiveData = [
+    ["Present Passive", "Der Brief wird geschrieben.", "The letter is being written."],
+    ["Past Passive", "Der Brief wurde geschrieben.", "The letter was written."],
+    ["Perfect Passive", "Der Brief ist geschrieben worden.", "The letter has been written."],
+  ];
+
+  const relativePronounsData = [
+    ["Case", "Masculine", "Neuter", "Feminine", "Plural"],
+    ["Nominative", "der", "das", "die", "die"],
+    ["Accusative", "den", "das", "die", "die"],
+    ["Dative", "dem", "dem", "der", "denen"],
+    ["Genitive", "dessen", "dessen", "deren", "deren"],
+  ];
+
+  return (
+    <div className="mb-16">
+      <h3 className="font-display text-2xl border-l-4 border-violet-500 pl-3 mb-6">B1 Grammar Focus</h3>
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-10">
+        <div className="bg-white rounded-lg border border-gray-200 shadow-sm p-6">
+          <h4 className="font-bold text-de-black mb-3">Konjunktiv II</h4>
+          <p className="text-sm text-gray-600 mb-4">
+            Use Konjunktiv II to talk about wishes, polite requests, or unreal situations.
+          </p>
+          <div className="space-y-3 text-sm text-gray-700">
+            <div><strong>Ich würde</strong> gern helfen. (I would like to help.)</div>
+            <div><strong>Wenn ich Zeit hätte</strong>, würde ich kommen. (If I had time, I would come.)</div>
+            <div><strong>Du solltest</strong> das ausprobieren. (You should try that.)</div>
+          </div>
+        </div>
+        <div className="bg-white rounded-lg border border-gray-200 shadow-sm p-6">
+          <h4 className="font-bold text-de-black mb-3">Passive Voice</h4>
+          <p className="text-sm text-gray-600 mb-4">
+            The agent becomes optional and the action becomes the focus.
+          </p>
+          <div className="space-y-3 text-sm text-gray-700">
+            <div><strong>Präsens:</strong> Der Brief wird geschrieben.</div>
+            <div><strong>Präteritum:</strong> Der Brief wurde geschrieben.</div>
+            <div><strong>Perfekt:</strong> Der Brief ist geschrieben worden.</div>
+          </div>
+        </div>
+        <div className="bg-white rounded-lg border border-gray-200 shadow-sm p-6">
+          <h4 className="font-bold text-de-black mb-3">Relative Clauses</h4>
+          <p className="text-sm text-gray-600 mb-4">
+            The verb goes to the end of the relative clause.
+          </p>
+          <div className="space-y-3 text-sm text-gray-700">
+            <div>Das ist der Mann, <strong>der</strong> das Buch liest.</div>
+            <div>Ich kenne das Haus, <strong>in dem</strong> er wohnt.</div>
+            <div>Die Frau, <strong>deren</strong> Auto kaputt ist, fährt heute nicht.</div>
+          </div>
+        </div>
+      </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div className="bg-white rounded-lg border border-gray-200 shadow-sm overflow-hidden">
+          <div className="bg-violet-50 p-4 border-b border-violet-100">
+            <h4 className="font-bold text-de-black">B1 Konjunktiv II Table</h4>
+          </div>
+          <div className="p-4">
+            <VerbGroupTable
+              title="Konjunktiv II Patterns"
+              headers={["Form", "ich", "du", "er/sie/es", "wir", "ihr", "sie/Sie"]}
+              data={konjunktivData}
+            />
+          </div>
+        </div>
+
+        <div className="bg-white rounded-lg border border-gray-200 shadow-sm overflow-hidden">
+          <div className="bg-violet-50 p-4 border-b border-violet-100">
+            <h4 className="font-bold text-de-black">Relative Pronouns</h4>
+          </div>
+          <div className="p-4">
+            <GrammarTable data={relativePronounsData} highlightColor="text-de-black" />
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
 
 export const GrammarView: React.FC = () => {
   // ORDER: [Case, Maskulin, Neutrum, Feminin, Plural]
@@ -735,10 +822,13 @@ export const GrammarView: React.FC = () => {
         {/* 4. SENTENCE STRUCTURE (New) */}
         <SentenceStructureSection />
 
-        {/* 5. ADVERBS (New) */}
+        {/* 5. B1 GRAMMAR */}
+        <B1GrammarSection />
+
+        {/* 6. ADVERBS (New) */}
         <AdverbSection />
 
-        {/* 6. CHEAT SHEETS (Prepositions & Possessives) */}
+        {/* 7. CHEAT SHEETS (Prepositions & Possessives) */}
         <div className="mb-8">
             <h3 className="font-display text-2xl border-l-4 border-gray-400 pl-3 mb-6">Quick Overview</h3>
             
