@@ -492,7 +492,7 @@ const B1GrammarSection = () => {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 gap-6">
         <div className="bg-white rounded-lg border border-gray-200 shadow-sm overflow-hidden">
           <div className="bg-violet-50 p-4 border-b border-violet-100">
             <h4 className="font-bold text-de-black">B1 Konjunktiv II Table</h4>
