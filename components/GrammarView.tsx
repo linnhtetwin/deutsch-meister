@@ -207,6 +207,108 @@ const SentenceStructureSection = () => (
             </div>
         </div>
 
+        <div className="bg-indigo-50 p-6 rounded-xl border border-indigo-200 mb-10">
+            <h4 className="font-bold text-de-black text-lg mb-4">Conjunctions for B1</h4>
+            <p className="text-sm text-gray-700 mb-4">
+                These conjunctions are common at the B1 level. They connect ideas, add alternatives, and show cause or contrast while keeping German sentence order rules in mind.
+            </p>
+            <div className="grid gap-4 lg:grid-cols-2">
+                <div className="bg-white p-4 rounded border border-indigo-100">
+                    <p className="font-bold text-de-black mb-2">Sowohl ... als auch</p>
+                    <p className="text-sm text-gray-600 mb-3">Both ... and</p>
+                    <div className="bg-slate-50 p-3 rounded text-xs font-mono text-gray-700">
+                        <span className="font-bold">Ich</span> <span className="text-de-red font-bold">mag</span> sowohl Kaffee <span className="font-bold">als</span> auch Tee.
+                    </div>
+                </div>
+                <div className="bg-white p-4 rounded border border-indigo-100">
+                    <p className="font-bold text-de-black mb-2">Entweder ... oder</p>
+                    <p className="text-sm text-gray-600 mb-3">Either ... or</p>
+                    <div className="bg-slate-50 p-3 rounded text-xs font-mono text-gray-700">
+                        <span className="font-bold">Entweder</span> gehst du jetzt, <span className="font-bold">oder</span> du bleibst hier.
+                    </div>
+                </div>
+                <div className="bg-white p-4 rounded border border-indigo-100">
+                    <p className="font-bold text-de-black mb-2">Nicht nur ... sondern auch</p>
+                    <p className="text-sm text-gray-600 mb-3">Not only ... but also</p>
+                    <div className="bg-slate-50 p-3 rounded text-xs font-mono text-gray-700">
+                        <span className="font-bold">Er</span> ist nicht nur klug, <span className="font-bold">sondern</span> auch sehr fleißig.
+                    </div>
+                </div>
+                <div className="bg-white p-4 rounded border border-indigo-100">
+                    <p className="font-bold text-de-black mb-2">Weder ... noch</p>
+                    <p className="text-sm text-gray-600 mb-3">Neither ... nor</p>
+                    <div className="bg-slate-50 p-3 rounded text-xs font-mono text-gray-700">
+                        <span className="font-bold">Sie</span> ist weder müde <span className="font-bold">noch</span> krank.
+                    </div>
+                </div>
+                <div className="bg-white p-4 rounded border border-indigo-100">
+                    <p className="font-bold text-de-black mb-2">Obwohl / Trotzdem</p>
+                    <p className="text-sm text-gray-600 mb-3">Although / nevertheless</p>
+                    <div className="bg-slate-50 p-3 rounded text-xs font-mono text-gray-700">
+                        <span className="font-bold">Obwohl</span> es regnet, gehen wir spazieren.
+                        <br/>
+                        <span className="font-bold">Trotzdem</span> haben wir gute Laune.
+                    </div>
+                </div>
+                <div className="bg-white p-4 rounded border border-indigo-100">
+                    <p className="font-bold text-de-black mb-2">Während / Bevor / Nachdem</p>
+                    <p className="text-sm text-gray-600 mb-3">While / before / after</p>
+                    <div className="bg-slate-50 p-3 rounded text-xs font-mono text-gray-700">
+                        <span className="font-bold">Bevor</span> ich schlafe, lese ich.
+                        <br/>
+                        <span className="font-bold">Nachdem</span> er gegessen hatte, ging er schlafen.
+                    </div>
+                </div>
+                <div className="bg-white p-4 rounded border border-indigo-100">
+                    <p className="font-bold text-de-black mb-2">Da / Sobald / Solange / Sodass</p>
+                    <p className="text-sm text-gray-600 mb-3">Since / as soon as / as long as / so that</p>
+                    <div className="bg-slate-50 p-3 rounded text-xs font-mono text-gray-700">
+                        <span className="font-bold">Da</span> es kalt ist, ziehe ich eine Jacke an.
+                        <br/>
+                        <span className="font-bold">Sobald</span> ich fertig bin, rufe ich dich an.
+                        <br/>
+                        <span className="font-bold">Solange</span> du lernst, wirst du besser.
+                        <br/>
+                        <span className="font-bold">Sodass</span> er pünktlich war, hat er den Bus genommen.
+                    </div>
+                </div>
+            </div>
+            <div className="mt-6 grid gap-2 sm:grid-cols-2">
+                {[
+                    { key: 'denn', text: 'denn (because, main clause order)' },
+                    { key: 'sondern', text: 'sondern (but rather, after negation)' },
+                    { key: 'ob', text: 'ob (whether/if, subordinate clause)' },
+                    { key: 'weil', text: 'weil (because, subordinate clause)' },
+                    { key: 'damit', text: 'damit (so that, subordinate clause)' },
+                    { key: 'falls', text: 'falls (in case, subordinate clause)' },
+                ].map(item => (
+                    <div key={item.key} className="bg-white p-3 rounded border border-indigo-100 text-sm text-gray-700">
+                        <span className="font-bold">{item.text}</span>
+                    </div>
+                ))}
+            </div>
+            <div className="mt-6 overflow-x-auto rounded-lg border border-indigo-100 bg-white shadow-sm">
+                <table className="w-full text-left text-sm border-collapse">
+                    <thead>
+                        <tr className="bg-indigo-50">
+                            <th className="p-3 font-bold text-indigo-900">Coordinating</th>
+                            <th className="p-3 font-bold text-indigo-900">Subordinating</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr className="border-t border-indigo-100">
+                            <td className="p-3">und, aber, oder, denn, sondern</td>
+                            <td className="p-3">weil, da, wenn, ob, obwohl</td>
+                        </tr>
+                        <tr className="border-t border-indigo-100 bg-indigo-50/50">
+                            <td className="p-3">entweder ... oder, sowohl ... als auch</td>
+                            <td className="p-3">damit, sodass, sobald, solange, nachdem, bevor</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             {/* Position 0 */}
             <div className="bg-white rounded-lg border border-gray-200 shadow-sm overflow-hidden">
