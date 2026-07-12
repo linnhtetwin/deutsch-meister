@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { DatabaseItem, VerbItem, NounItem, AdjectiveItem, AdverbItem } from '../types';
-import { Volume2 } from 'lucide-react';
+import { AlertTriangle, Volume2 } from 'lucide-react';
 
 interface WordCardProps {
   item: DatabaseItem;
@@ -14,6 +14,7 @@ const SpeakButton: React.FC<{ text: string; label?: string; variant?: 'icon' | '
   
   const handleSpeak = (e: React.MouseEvent) => {
     e.stopPropagation();
+    if (!('speechSynthesis' in window)) return;
     
     // Cancel any currently playing speech to avoid overlap
     window.speechSynthesis.cancel();
@@ -28,8 +29,10 @@ const SpeakButton: React.FC<{ text: string; label?: string; variant?: 'icon' | '
   if (variant === 'button') {
     return (
         <button 
+            type="button"
             onClick={handleSpeak}
-            className="flex items-center gap-1 text-xs font-bold uppercase tracking-wider text-de-red hover:text-de-black transition-colors"
+            className="flex items-center gap-1 rounded px-2 py-1 text-xs font-bold uppercase tracking-wider text-de-red transition-colors hover:bg-red-50 hover:text-de-black focus:outline-none focus-visible:ring-4 focus-visible:ring-de-gold/50"
+            aria-label={`German pronunciation for ${text}`}
         >
             <Volume2 size={14} />
             {label || 'Anhören'}
@@ -39,9 +42,11 @@ const SpeakButton: React.FC<{ text: string; label?: string; variant?: 'icon' | '
 
   return (
     <button 
+      type="button"
       onClick={handleSpeak}
-      className="text-gray-400 hover:text-de-red transition-colors p-2 rounded-full hover:bg-red-50 flex-shrink-0 flex items-center justify-center"
+      className="text-gray-400 hover:text-de-red transition-colors p-2 rounded-full hover:bg-red-50 flex-shrink-0 flex items-center justify-center focus:outline-none focus-visible:ring-4 focus-visible:ring-de-gold/50"
       title="Aussprache hören"
+      aria-label={`German pronunciation for ${text}`}
     >
       <Volume2 size={20} />
     </button>
@@ -78,13 +83,16 @@ const HighlightedText: React.FC<{ text: string; highlight: string }> = ({ text, 
   const regex = isShortCommon 
     ? new RegExp(`(\\b${escaped}\\b)`, 'gi')
     : new RegExp(`(${escaped})`, 'gi');
+  const partRegex = isShortCommon
+    ? new RegExp(`^${escaped}$`, 'i')
+    : new RegExp(`^${escaped}$`, 'i');
 
   const parts = text.split(regex);
   
   return (
     <>
       {parts.map((part, i) => 
-        part.toLowerCase() === highlight.toLowerCase().trim() || (regex.test(part) && !isShortCommon) || (isShortCommon && new RegExp(`^${escaped}$`, 'i').test(part)) ? (
+        partRegex.test(part) ? (
           <span key={i} className="bg-de-gold/20 text-de-black font-bold px-0.5 rounded-sm border-b-2 border-de-gold/60 shadow-[0_1px_2px_rgba(0,0,0,0.05)]">
             {part}
           </span>
@@ -127,13 +135,13 @@ const VerbCard: React.FC<{ item: VerbItem; searchTerm: string }> = ({ item, sear
   }
 
   return (
-    <div className={`bg-white rounded-lg shadow-md border-t-4 transition-transform hover:-translate-y-1 ${borderClass} overflow-hidden`}>
+    <div className={`bg-white rounded-lg shadow-md border-t-4 transition-all hover:-translate-y-1 hover:shadow-xl ${borderClass} overflow-hidden`}>
       <div className="p-5">
         
         {/* Header: German Word + Audio */}
-        <div className="flex justify-between items-start mb-2">
-          <div className="flex items-center gap-1 group flex-wrap max-w-[70%]">
-            <h3 className="font-display text-3xl text-de-black leading-tight">
+        <div className="flex justify-between gap-3 items-start mb-2">
+          <div className="flex min-w-0 flex-1 items-start gap-1 group">
+            <h3 className="min-w-0 break-words font-display text-3xl leading-tight text-de-black">
               <HighlightedText text={item.de} highlight={searchTerm} />
             </h3>
             <SpeakButton text={item.de} />
@@ -145,8 +153,9 @@ const VerbCard: React.FC<{ item: VerbItem; searchTerm: string }> = ({ item, sear
               {badgeText}
             </span>
             {item.isTrap && (
-              <span className="bg-de-gold text-black text-[10px] font-bold px-2 py-0.5 rounded uppercase tracking-wider shadow-sm flex items-center gap-1">
-                ⚠️ Trap
+              <span className="flex items-center gap-1 rounded bg-de-gold px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-black shadow-sm">
+                <AlertTriangle size={12} />
+                Trap
               </span>
             )}
           </div>
@@ -231,9 +240,9 @@ const VerbCard: React.FC<{ item: VerbItem; searchTerm: string }> = ({ item, sear
                 </div>
             </div>
             
-             <div className="mt-3 pt-2 border-t border-gray-100 flex justify-between items-center bg-gray-50/50 p-2 rounded-sm">
+             <div className="mt-3 flex items-start justify-between gap-3 rounded-sm border-t border-gray-100 bg-gray-50/50 p-2 pt-2">
                  <span className="text-xs font-bold text-gray-400 uppercase tracking-wide">Perfekt</span>
-                 <span className="text-sm font-bold text-de-black">
+                 <span className="min-w-0 break-words text-right text-sm font-bold text-de-black">
                      <HighlightedText text={item.perf} highlight={searchTerm} />
                  </span>
             </div>
@@ -263,11 +272,11 @@ const NounCard: React.FC<{ item: NounItem; searchTerm: string }> = ({ item, sear
     }
 
     return (
-    <div className={`bg-white rounded-lg shadow-md border-t-4 transition-transform hover:-translate-y-1 ${borderClass} overflow-hidden`}>
+    <div className={`bg-white rounded-lg shadow-md border-t-4 transition-all hover:-translate-y-1 hover:shadow-xl ${borderClass} overflow-hidden`}>
       <div className="p-5">
-        <div className="flex justify-between items-start mb-2">
-          <div className="flex items-center gap-1 group">
-            <h3 className="font-display text-3xl text-de-black leading-tight">
+        <div className="flex justify-between gap-3 items-start mb-2">
+          <div className="flex min-w-0 flex-1 items-start gap-1 group">
+            <h3 className="min-w-0 break-words font-display text-3xl leading-tight text-de-black">
               <HighlightedText text={item.de} highlight={searchTerm} />
             </h3>
             <SpeakButton text={`${item.art} ${item.de}`} />
@@ -291,9 +300,9 @@ const NounCard: React.FC<{ item: NounItem; searchTerm: string }> = ({ item, sear
         </div>
         
         <div className="mt-4 pt-3 border-t border-gray-100">
-             <div className="flex justify-between items-center px-2">
+             <div className="flex items-start justify-between gap-3 px-2">
                  <span className="text-xs font-bold text-gray-400 uppercase tracking-widest">Plural</span>
-                 <span className={`text-base font-medium ${textClass}`}>
+                 <span className={`min-w-0 break-words text-right text-base font-medium ${textClass}`}>
                      <HighlightedText text={item.pl} highlight={searchTerm} />
                  </span>
             </div>
@@ -305,11 +314,11 @@ const NounCard: React.FC<{ item: NounItem; searchTerm: string }> = ({ item, sear
 
 const AdjectiveCard: React.FC<{ item: AdjectiveItem; searchTerm: string }> = ({ item, searchTerm }) => {
     return (
-    <div className={`bg-white rounded-lg shadow-md border-t-4 transition-transform hover:-translate-y-1 border-t-purple-500 overflow-hidden`}>
+    <div className={`bg-white rounded-lg shadow-md border-t-4 transition-all hover:-translate-y-1 hover:shadow-xl border-t-purple-500 overflow-hidden`}>
       <div className="p-5">
-        <div className="flex justify-between items-start mb-2">
-          <div className="flex items-center gap-1 group">
-            <h3 className="font-display text-3xl text-de-black leading-tight">
+        <div className="flex justify-between gap-3 items-start mb-2">
+          <div className="flex min-w-0 flex-1 items-start gap-1 group">
+            <h3 className="min-w-0 break-words font-display text-3xl leading-tight text-de-black">
               <HighlightedText text={item.de} highlight={searchTerm} />
             </h3>
             <SpeakButton text={item.de} />
@@ -333,15 +342,15 @@ const AdjectiveCard: React.FC<{ item: AdjectiveItem; searchTerm: string }> = ({ 
         </div>
         
         <div className="mt-4 pt-3 border-t border-gray-100 space-y-2">
-             <div className="flex justify-between items-center px-2">
+             <div className="flex items-start justify-between gap-3 px-2">
                  <span className="text-xs font-bold text-gray-400 uppercase tracking-widest">Komparativ</span>
-                 <span className="text-base font-medium text-purple-600">
+                 <span className="min-w-0 break-words text-right text-base font-medium text-purple-600">
                      <HighlightedText text={item.comp} highlight={searchTerm} />
                  </span>
             </div>
-             <div className="flex justify-between items-center px-2">
+             <div className="flex items-start justify-between gap-3 px-2">
                  <span className="text-xs font-bold text-gray-400 uppercase tracking-widest">Superlativ</span>
-                 <span className="text-base font-medium text-purple-600">
+                 <span className="min-w-0 break-words text-right text-base font-medium text-purple-600">
                      <HighlightedText text={item.sup} highlight={searchTerm} />
                  </span>
             </div>
@@ -353,11 +362,11 @@ const AdjectiveCard: React.FC<{ item: AdjectiveItem; searchTerm: string }> = ({ 
 
 const AdverbCard: React.FC<{ item: AdverbItem; searchTerm: string }> = ({ item, searchTerm }) => {
     return (
-    <div className={`bg-white rounded-lg shadow-md border-t-4 transition-transform hover:-translate-y-1 border-t-emerald-500 overflow-hidden`}>
+    <div className={`bg-white rounded-lg shadow-md border-t-4 transition-all hover:-translate-y-1 hover:shadow-xl border-t-emerald-500 overflow-hidden`}>
       <div className="p-5">
-        <div className="flex justify-between items-start mb-2">
-          <div className="flex items-center gap-1 group">
-            <h3 className="font-display text-3xl text-de-black leading-tight">
+        <div className="flex justify-between gap-3 items-start mb-2">
+          <div className="flex min-w-0 flex-1 items-start gap-1 group">
+            <h3 className="min-w-0 break-words font-display text-3xl leading-tight text-de-black">
               <HighlightedText text={item.de} highlight={searchTerm} />
             </h3>
             <SpeakButton text={item.de} />

@@ -9,6 +9,7 @@ export const VerbQuiz: React.FC = () => {
   const [mode, setMode] = useState<QuizMode | null>(null);
   const [currentVerb, setCurrentVerb] = useState<VerbItem | null>(null);
   const [feedback, setFeedback] = useState<'correct' | 'incorrect' | null>(null);
+  const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
   const [streak, setStreak] = useState(0);
 
   // Filter verbs based on active mode
@@ -55,6 +56,7 @@ export const VerbQuiz: React.FC = () => {
 
     setCurrentVerb(nextVerb);
     setFeedback(null);
+    setSelectedAnswer(null);
   }, [quizPool, mode]);
 
   // Initial load when mode changes
@@ -76,6 +78,7 @@ export const VerbQuiz: React.FC = () => {
     if (feedback !== null || !currentVerb) return;
 
     const correctCase = getBaseCase(currentVerb.case);
+    setSelectedAnswer(choice);
 
     if (correctCase === choice) {
       setFeedback('correct');
@@ -94,7 +97,7 @@ export const VerbQuiz: React.FC = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 
                 {/* Classic Mode */}
-                <button onClick={() => setMode('classic')} className="bg-white p-6 rounded-lg shadow-md hover:shadow-xl hover:-translate-y-1 transition-all border-l-8 border-dativ text-left group">
+                <button type="button" onClick={() => setMode('classic')} className="bg-white p-6 rounded-lg shadow-md hover:shadow-xl hover:-translate-y-1 transition-all border-l-8 border-dativ text-left group focus:outline-none focus-visible:ring-4 focus-visible:ring-de-gold/50">
                     <div className="flex items-center justify-between mb-4">
                         <div className="bg-dativ/10 p-3 rounded-full group-hover:bg-dativ/20 transition-colors">
                             <Play className="w-8 h-8 text-dativ" />
@@ -106,7 +109,7 @@ export const VerbQuiz: React.FC = () => {
                 </button>
 
                 {/* Wechsel Mode */}
-                <button onClick={() => setMode('wechsel')} className="bg-white p-6 rounded-lg shadow-md hover:shadow-xl hover:-translate-y-1 transition-all border-l-8 border-wechsel text-left group">
+                <button type="button" onClick={() => setMode('wechsel')} className="bg-white p-6 rounded-lg shadow-md hover:shadow-xl hover:-translate-y-1 transition-all border-l-8 border-wechsel text-left group focus:outline-none focus-visible:ring-4 focus-visible:ring-de-gold/50">
                     <div className="flex items-center justify-between mb-4">
                          <div className="bg-wechsel/10 p-3 rounded-full group-hover:bg-wechsel/20 transition-colors">
                             <Anchor className="w-8 h-8 text-wechsel" />
@@ -117,7 +120,7 @@ export const VerbQuiz: React.FC = () => {
                 </button>
 
                 {/* Genitiv Mode */}
-                <button onClick={() => setMode('genitiv')} className="bg-white p-6 rounded-lg shadow-md hover:shadow-xl hover:-translate-y-1 transition-all border-l-8 border-genitiv text-left group">
+                <button type="button" onClick={() => setMode('genitiv')} className="bg-white p-6 rounded-lg shadow-md hover:shadow-xl hover:-translate-y-1 transition-all border-l-8 border-genitiv text-left group focus:outline-none focus-visible:ring-4 focus-visible:ring-de-gold/50">
                     <div className="flex items-center justify-between mb-4">
                         <div className="bg-genitiv/10 p-3 rounded-full group-hover:bg-genitiv/20 transition-colors">
                             <Crown className="w-8 h-8 text-genitiv" />
@@ -129,7 +132,7 @@ export const VerbQuiz: React.FC = () => {
                 </button>
 
                 {/* Mix Mode */}
-                <button onClick={() => setMode('mix')} className="bg-white p-6 rounded-lg shadow-md hover:shadow-xl hover:-translate-y-1 transition-all border-l-8 border-de-black text-left group">
+                <button type="button" onClick={() => setMode('mix')} className="bg-white p-6 rounded-lg shadow-md hover:shadow-xl hover:-translate-y-1 transition-all border-l-8 border-de-black text-left group focus:outline-none focus-visible:ring-4 focus-visible:ring-de-gold/50">
                     <div className="flex items-center justify-between mb-4">
                         <div className="bg-black/5 p-3 rounded-full group-hover:bg-black/10 transition-colors">
                             <Shuffle className="w-8 h-8 text-de-black" />
@@ -145,6 +148,13 @@ export const VerbQuiz: React.FC = () => {
 
   // --- RENDER: QUIZ ---
   if (!currentVerb) return <div className="text-center mt-12">Loading Quiz...</div>;
+  const correctCase = getBaseCase(currentVerb.case);
+  const getAnswerClass = (choice: string, baseClass: string) => {
+    if (!feedback) return baseClass;
+    if (choice === correctCase) return 'bg-green-600 text-white ring-4 ring-green-100';
+    if (choice === selectedAnswer) return 'bg-red-600 text-white ring-4 ring-red-100';
+    return 'bg-gray-100 text-gray-400';
+  };
 
   return (
     <div className="max-w-2xl mx-auto px-4 mt-8">
@@ -152,7 +162,7 @@ export const VerbQuiz: React.FC = () => {
         
         {/* Header with Exit Button */}
         <div className="absolute top-4 left-4">
-            <button onClick={() => setMode(null)} className="text-gray-400 hover:text-de-black flex items-center gap-1 text-sm font-bold uppercase tracking-wider transition-colors">
+            <button type="button" onClick={() => setMode(null)} className="text-gray-400 hover:text-de-black flex items-center gap-1 rounded text-sm font-bold uppercase tracking-wider transition-colors focus:outline-none focus-visible:ring-4 focus-visible:ring-de-gold/50">
                 <Settings className="w-4 h-4" /> Modus
             </button>
         </div>
@@ -176,19 +186,21 @@ export const VerbQuiz: React.FC = () => {
 
           <div className="flex flex-wrap justify-center gap-4 mb-8">
             <button
+              type="button"
               onClick={() => handleAnswer('Dativ')}
               disabled={feedback !== null}
-              className={`min-w-[120px] px-6 py-4 text-xl font-bold font-display uppercase tracking-wide rounded shadow-md transition-all transform hover:-translate-y-1 active:translate-y-0 disabled:opacity-50 disabled:cursor-not-allowed
-                ${feedback === null ? 'bg-dativ text-white' : 'bg-gray-200 text-gray-400'}
+              className={`min-w-[120px] px-6 py-4 text-xl font-bold font-display uppercase tracking-wide rounded shadow-md transition-all transform hover:-translate-y-1 active:translate-y-0 disabled:cursor-not-allowed focus:outline-none focus-visible:ring-4 focus-visible:ring-de-gold/50
+                ${getAnswerClass('Dativ', 'bg-dativ text-white')}
               `}
             >
               {mode === 'wechsel' ? 'Dativ (Wo?)' : 'Dativ'}
             </button>
             <button
+              type="button"
               onClick={() => handleAnswer('Akkusativ')}
               disabled={feedback !== null}
-              className={`min-w-[120px] px-6 py-4 text-xl font-bold font-display uppercase tracking-wide rounded shadow-md transition-all transform hover:-translate-y-1 active:translate-y-0 disabled:opacity-50 disabled:cursor-not-allowed
-                ${feedback === null ? 'bg-akk text-white' : 'bg-gray-200 text-gray-400'}
+              className={`min-w-[120px] px-6 py-4 text-xl font-bold font-display uppercase tracking-wide rounded shadow-md transition-all transform hover:-translate-y-1 active:translate-y-0 disabled:cursor-not-allowed focus:outline-none focus-visible:ring-4 focus-visible:ring-de-gold/50
+                ${getAnswerClass('Akkusativ', 'bg-akk text-white')}
               `}
             >
               {mode === 'wechsel' ? 'Akk (Wohin?)' : 'Akkusativ'}
@@ -196,10 +208,11 @@ export const VerbQuiz: React.FC = () => {
             
             {(mode === 'genitiv' || mode === 'mix') && (
                 <button
+                type="button"
                 onClick={() => handleAnswer('Genitiv')}
                 disabled={feedback !== null}
-                className={`min-w-[120px] px-6 py-4 text-xl font-bold font-display uppercase tracking-wide rounded shadow-md transition-all transform hover:-translate-y-1 active:translate-y-0 disabled:opacity-50 disabled:cursor-not-allowed
-                    ${feedback === null ? 'bg-genitiv text-white' : 'bg-gray-200 text-gray-400'}
+                className={`min-w-[120px] px-6 py-4 text-xl font-bold font-display uppercase tracking-wide rounded shadow-md transition-all transform hover:-translate-y-1 active:translate-y-0 disabled:cursor-not-allowed focus:outline-none focus-visible:ring-4 focus-visible:ring-de-gold/50
+                    ${getAnswerClass('Genitiv', 'bg-genitiv text-white')}
                 `}
                 >
                 Genitiv
@@ -238,8 +251,9 @@ export const VerbQuiz: React.FC = () => {
 
           {feedback !== null && (
             <button
+              type="button"
               onClick={pickRandomVerb}
-              className="mt-6 inline-flex items-center px-6 py-2 border-2 border-de-black text-de-black font-bold uppercase tracking-wider hover:bg-de-black hover:text-de-gold transition-colors"
+              className="mt-6 inline-flex items-center rounded-md border-2 border-de-black px-6 py-2 font-bold uppercase tracking-wider text-de-black transition-colors hover:bg-de-black hover:text-de-gold focus:outline-none focus-visible:ring-4 focus-visible:ring-de-gold/50"
             >
               Nächstes Wort <ArrowRight className="ml-2 w-4 h-4" />
             </button>

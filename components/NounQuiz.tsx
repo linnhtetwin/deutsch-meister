@@ -6,6 +6,7 @@ import { ArrowRight, CheckCircle, XCircle, Info } from 'lucide-react';
 export const NounQuiz: React.FC = () => {
   const [currentNoun, setCurrentNoun] = useState<NounItem | null>(null);
   const [feedback, setFeedback] = useState<'correct' | 'incorrect' | null>(null);
+  const [selectedAnswer, setSelectedAnswer] = useState<'Der' | 'Die' | 'Das' | null>(null);
   const [streak, setStreak] = useState(0);
 
   const nouns = useMemo(() => database.filter((item): item is NounItem => item.type === 'noun'), []);
@@ -14,6 +15,7 @@ export const NounQuiz: React.FC = () => {
     const random = nouns[Math.floor(Math.random() * nouns.length)];
     setCurrentNoun(random);
     setFeedback(null);
+    setSelectedAnswer(null);
   }, [nouns]);
 
   useEffect(() => {
@@ -23,6 +25,7 @@ export const NounQuiz: React.FC = () => {
   const handleAnswer = (choice: 'Der' | 'Die' | 'Das') => {
     if (feedback !== null || !currentNoun) return;
 
+    setSelectedAnswer(choice);
     if (currentNoun.art === choice) {
       setFeedback('correct');
       setStreak(s => s + 1);
@@ -33,6 +36,13 @@ export const NounQuiz: React.FC = () => {
   };
 
   if (!currentNoun) return <div>Loading...</div>;
+
+  const getAnswerClass = (choice: 'Der' | 'Die' | 'Das', baseClass: string) => {
+    if (!feedback) return baseClass;
+    if (choice === currentNoun.art) return 'bg-green-600 text-white ring-4 ring-green-100';
+    if (choice === selectedAnswer) return 'bg-red-600 text-white ring-4 ring-red-100';
+    return 'bg-gray-100 text-gray-400';
+  };
 
   return (
     <div className="max-w-2xl mx-auto px-4 mt-8 pb-12">
@@ -57,28 +67,31 @@ export const NounQuiz: React.FC = () => {
 
           <div className="flex flex-wrap justify-center gap-4 mb-8">
             <button
+              type="button"
               onClick={() => handleAnswer('Der')}
               disabled={feedback !== null}
-              className={`min-w-[100px] px-6 py-4 text-xl font-bold font-display uppercase tracking-wide rounded shadow-md transition-all transform hover:-translate-y-1 active:translate-y-0 disabled:opacity-50 disabled:cursor-not-allowed
-                ${feedback === null ? 'bg-art-der text-white' : 'bg-gray-200 text-gray-400'}
+              className={`min-w-[100px] px-6 py-4 text-xl font-bold font-display uppercase tracking-wide rounded shadow-md transition-all transform hover:-translate-y-1 active:translate-y-0 disabled:cursor-not-allowed focus:outline-none focus-visible:ring-4 focus-visible:ring-de-gold/50
+                ${getAnswerClass('Der', 'bg-art-der text-white')}
               `}
             >
               Der
             </button>
             <button
+              type="button"
               onClick={() => handleAnswer('Die')}
               disabled={feedback !== null}
-              className={`min-w-[100px] px-6 py-4 text-xl font-bold font-display uppercase tracking-wide rounded shadow-md transition-all transform hover:-translate-y-1 active:translate-y-0 disabled:opacity-50 disabled:cursor-not-allowed
-                ${feedback === null ? 'bg-art-die text-white' : 'bg-gray-200 text-gray-400'}
+              className={`min-w-[100px] px-6 py-4 text-xl font-bold font-display uppercase tracking-wide rounded shadow-md transition-all transform hover:-translate-y-1 active:translate-y-0 disabled:cursor-not-allowed focus:outline-none focus-visible:ring-4 focus-visible:ring-de-gold/50
+                ${getAnswerClass('Die', 'bg-art-die text-white')}
               `}
             >
               Die
             </button>
              <button
+              type="button"
               onClick={() => handleAnswer('Das')}
               disabled={feedback !== null}
-              className={`min-w-[100px] px-6 py-4 text-xl font-bold font-display uppercase tracking-wide rounded shadow-md transition-all transform hover:-translate-y-1 active:translate-y-0 disabled:opacity-50 disabled:cursor-not-allowed
-                ${feedback === null ? 'bg-art-das text-white' : 'bg-gray-200 text-gray-400'}
+              className={`min-w-[100px] px-6 py-4 text-xl font-bold font-display uppercase tracking-wide rounded shadow-md transition-all transform hover:-translate-y-1 active:translate-y-0 disabled:cursor-not-allowed focus:outline-none focus-visible:ring-4 focus-visible:ring-de-gold/50
+                ${getAnswerClass('Das', 'bg-art-das text-white')}
               `}
             >
               Das
@@ -114,8 +127,9 @@ export const NounQuiz: React.FC = () => {
 
           {feedback !== null && (
             <button
+              type="button"
               onClick={pickRandomNoun}
-              className="mt-6 inline-flex items-center px-6 py-2 border-2 border-de-black text-de-black font-bold uppercase tracking-wider hover:bg-de-black hover:text-de-gold transition-colors"
+              className="mt-6 inline-flex items-center rounded-md border-2 border-de-black px-6 py-2 font-bold uppercase tracking-wider text-de-black transition-colors hover:bg-de-black hover:text-de-gold focus:outline-none focus-visible:ring-4 focus-visible:ring-de-gold/50"
             >
               Nächstes Wort <ArrowRight className="ml-2 w-4 h-4" />
             </button>

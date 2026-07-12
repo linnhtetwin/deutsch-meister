@@ -2,7 +2,7 @@
 import React, { useState, useMemo, useRef, useEffect } from 'react';
 import { database } from '../data';
 import { WordCard } from './WordCard';
-import { Search, ArrowUpDown, Loader2 } from 'lucide-react';
+import { Search, ArrowUpDown, Loader2, X } from 'lucide-react';
 import { CaseType } from '../types';
 
 // FilterType now includes every CaseType value so the UI can present all cases defined
@@ -13,10 +13,30 @@ type SortType = 'de-asc' | 'de-desc' | 'en-asc' | 'en-desc';
 
 const BATCH_SIZE = 15; // 3 columns * 5 rows = 15 items per batch
 
+const primaryFilters: { type: FilterType; label: string }[] = [
+  { type: 'all', label: 'Alle' },
+  { type: 'noun', label: 'Nomen' },
+  { type: 'adjective', label: 'Adjektiv' },
+  { type: 'adverb', label: 'Adverb' },
+];
+
+const verbFilters: { type: FilterType; label: string }[] = [
+  { type: 'Dativ', label: 'Dativ' },
+  { type: 'Akkusativ', label: 'Akkusativ' },
+  { type: 'Genitiv', label: 'Genitiv' },
+  { type: 'Wechselpräposition (Akkusativ)', label: 'Wechsel Akk' },
+  { type: 'Wechselpräposition (Dativ)', label: 'Wechsel Dat' },
+  { type: 'Präpositionalverb + Akk', label: 'Präp + Akk' },
+  { type: 'Präpositionalverb + Dativ', label: 'Präp + Dat' },
+  { type: 'Intransitiv', label: 'Intransitiv' },
+  { type: 'Modalverb', label: 'Modalverb' },
+  { type: 'OtherVerb', label: 'Andere Verben' },
+];
+
 const FilterButton: React.FC<{ type: FilterType, currentFilter: FilterType, setFilter: (type: FilterType) => void, label: string }> = ({ type, currentFilter, setFilter, label }) => (
   <button
     onClick={() => setFilter(type)}
-    className={`px-4 py-1 rounded-full text-sm font-medium border transition-colors whitespace-nowrap
+    className={`min-h-9 rounded-full border px-3 py-1.5 text-sm font-medium transition-colors whitespace-nowrap focus:outline-none focus-visible:ring-4 focus-visible:ring-de-gold/50
       ${currentFilter === type 
         ? 'bg-de-black text-white border-de-black' 
         : 'bg-white text-gray-600 border-gray-300 hover:border-gray-400'
@@ -142,10 +162,22 @@ export const DictionaryView: React.FC = () => {
 
   // The subset of data to actually render
   const visibleData = filteredData.slice(0, visibleCount);
+  const activeFilterLabel = [...primaryFilters, ...verbFilters].find(item => item.type === filter)?.label ?? 'Alle';
 
   return (
     <div className="max-w-6xl mx-auto px-4 pb-20">
-      <div className="bg-white p-6 rounded-md border-l-4 border-de-gold shadow-sm mb-8">
+      <div className="bg-white p-5 sm:p-6 rounded-lg border-l-4 border-de-gold shadow-sm mb-8">
+        <div className="mb-5 flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+          <div>
+            <h2 className="font-display text-3xl uppercase tracking-wide text-de-black">Wörterbuch</h2>
+            <p className="text-sm text-gray-500">Search German, English, examples, and conjugated forms.</p>
+          </div>
+          <div className="flex gap-2 text-xs font-bold uppercase tracking-wider text-gray-500">
+            <span className="rounded-full bg-gray-100 px-3 py-1 text-de-black">{filteredData.length} Treffer</span>
+            <span className="rounded-full bg-gray-100 px-3 py-1">{activeFilterLabel}</span>
+          </div>
+        </div>
+
         <div className="relative mb-4">
             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                 <Search className="h-5 w-5 text-gray-400" />
@@ -155,42 +187,48 @@ export const DictionaryView: React.FC = () => {
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             placeholder="Suche... (e.g. 'begegnen', 'lernte', 'mag')"
-            className="w-full pl-10 pr-20 py-3 border-2 border-gray-200 rounded focus:border-de-black focus:ring-0 outline-none transition-colors text-lg"
+            aria-label="Search dictionary"
+            className="w-full rounded-md border-2 border-gray-200 py-3 pl-10 pr-24 text-lg outline-none transition-colors focus:border-de-black focus:ring-4 focus:ring-de-gold/20"
             />
-            <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-                 {/* Display TOTAL count, not just visible count */}
-                 <span className="text-gray-400 text-xs font-bold bg-gray-100 px-2 py-1 rounded-full border border-gray-200">
+            <div className="absolute inset-y-0 right-0 pr-3 flex items-center gap-2">
+                 {searchTerm && (
+                  <button
+                    type="button"
+                    onClick={() => setSearchTerm('')}
+                    className="rounded-full p-1 text-gray-400 transition-colors hover:bg-gray-100 hover:text-de-black focus:outline-none focus-visible:ring-4 focus-visible:ring-de-gold/50"
+                    aria-label="Clear search"
+                  >
+                    <X size={16} />
+                  </button>
+                 )}
+                 <span className="pointer-events-none text-gray-500 text-xs font-bold bg-gray-100 px-2 py-1 rounded-full border border-gray-200">
                     {filteredData.length}
                  </span>
             </div>
         </div>
         
         <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4">
-            <div className="flex flex-wrap gap-2">
-            <FilterButton type="all" currentFilter={filter} setFilter={setFilter} label="Alle" />
-            <FilterButton type="noun" currentFilter={filter} setFilter={setFilter} label="Nomen" />
-            <FilterButton type="adjective" currentFilter={filter} setFilter={setFilter} label="Adjektiv" />
-            <FilterButton type="adverb" currentFilter={filter} setFilter={setFilter} label="Adverb" />
-            <div className="w-px h-6 bg-gray-300 mx-1 self-center hidden sm:block"></div>
-            <FilterButton type="Dativ" currentFilter={filter} setFilter={setFilter} label="Dativ" />
-            <FilterButton type="Akkusativ" currentFilter={filter} setFilter={setFilter} label="Akkusativ" />
-            <FilterButton type="Genitiv" currentFilter={filter} setFilter={setFilter} label="Genitiv" />
-            <FilterButton type="Wechselpräposition (Akkusativ)" currentFilter={filter} setFilter={setFilter} label="Wechselpräposition (Akkusativ)" />
-            <FilterButton type="Wechselpräposition (Dativ)" currentFilter={filter} setFilter={setFilter} label="Wechselpräposition (Dativ)" />
-            <FilterButton type="Präpositionalverb + Akk" currentFilter={filter} setFilter={setFilter} label="Präpositionalverb + Akk" />
-            <FilterButton type="Präpositionalverb + Dativ" currentFilter={filter} setFilter={setFilter} label="Präpositionalverb + Dativ" />
-            <FilterButton type="Intransitiv" currentFilter={filter} setFilter={setFilter} label="Intransitiv" />
-            <FilterButton type="Modalverb" currentFilter={filter} setFilter={setFilter} label="Modalverb" />
-            <FilterButton type="OtherVerb" currentFilter={filter} setFilter={setFilter} label="Andere Verben" />
+            <div className="flex flex-1 flex-col gap-3">
+              <div className="flex flex-wrap gap-2">
+                {primaryFilters.map(item => (
+                  <FilterButton key={item.type} type={item.type} currentFilter={filter} setFilter={setFilter} label={item.label} />
+                ))}
+              </div>
+              <div className="flex flex-wrap gap-2 border-t border-gray-100 pt-3">
+                {verbFilters.map(item => (
+                  <FilterButton key={item.type} type={item.type} currentFilter={filter} setFilter={setFilter} label={item.label} />
+                ))}
+              </div>
             </div>
 
-            <div className="flex items-center gap-2 self-end lg:self-auto">
+            <div className="flex items-center gap-2 self-end lg:self-start">
                 <span className="text-xs font-bold text-gray-400 uppercase tracking-wider">Sort:</span>
                 <div className="relative">
                     <select 
                         value={sort} 
                         onChange={(e) => setSort(e.target.value as SortType)}
-                        className="appearance-none bg-gray-50 border border-gray-200 text-gray-700 py-1.5 pl-3 pr-8 rounded focus:outline-none focus:border-de-black text-sm font-medium cursor-pointer hover:bg-gray-100 transition-colors"
+                        aria-label="Sort dictionary"
+                        className="appearance-none bg-gray-50 border border-gray-200 text-gray-700 py-2 pl-3 pr-8 rounded-md focus:outline-none focus:border-de-black focus:ring-4 focus:ring-de-gold/20 text-sm font-medium cursor-pointer hover:bg-gray-100 transition-colors"
                     >
                         <option value="de-asc">Deutsch (A-Z)</option>
                         <option value="de-desc">Deutsch (Z-A)</option>
@@ -214,8 +252,9 @@ export const DictionaryView: React.FC = () => {
 
       {/* Sentinel Element for Infinite Scroll */}
       {visibleCount < filteredData.length && (
-        <div ref={observerTarget} className="flex justify-center py-8">
+        <div ref={observerTarget} className="flex items-center justify-center gap-2 py-8 text-sm font-medium text-gray-400">
             <Loader2 className="animate-spin text-gray-400" />
+            Loading more words
         </div>
       )}
 

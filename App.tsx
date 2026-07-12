@@ -22,11 +22,12 @@ const LogoShield: React.FC<{ className?: string }> = ({ className = "" }) => (
 const NavButton: React.FC<{ tab: TabView, currentTab: TabView, setCurrentTab: (tab: TabView) => void, label: string, icon: React.ReactNode }> = ({ tab, currentTab, setCurrentTab, label, icon }) => (
   <button
     onClick={() => setCurrentTab(tab)}
+    aria-current={currentTab === tab ? 'page' : undefined}
     className={`
-      flex items-center gap-2 px-6 py-3 font-display uppercase tracking-wider text-lg rounded-sm transition-all
+      flex min-h-12 items-center justify-center gap-2 rounded-md px-4 py-3 font-display text-base uppercase tracking-wide transition-all focus:outline-none focus-visible:ring-4 focus-visible:ring-de-gold/60 sm:px-5 lg:text-lg
       ${currentTab === tab 
-        ? 'bg-de-red text-white shadow-[0_4px_0_#FFCE00] -translate-y-0.5' 
-        : 'bg-de-black text-de-gold hover:bg-gray-800 hover:-translate-y-0.5'
+        ? 'bg-de-red text-white shadow-[0_4px_0_#FFCE00]'
+        : 'bg-white text-de-black ring-1 ring-gray-200 hover:bg-de-black hover:text-de-gold hover:ring-de-black'
       }
     `}
   >
@@ -39,34 +40,36 @@ const App: React.FC = () => {
   const [currentTab, setCurrentTab] = useState<TabView>('dictionary');
 
   return (
-    <div className="min-h-screen bg-[#f4f4f4] pb-12">
+    <div className="min-h-screen bg-[#f4f4f4] pb-12 text-de-black">
       {/* Header */}
-      <header className="bg-gradient-to-b from-black via-[#DD0000] via-33% to-[#FFCE00] to-66% pt-10 pb-6 px-4 text-center shadow-lg">
-        <div className="inline-block bg-white/95 px-12 py-6 rounded shadow-2xl border-b-4 border-de-black transform rotate-1 hover:rotate-0 transition-transform duration-500 relative group cursor-default">
-            <div className="flex flex-col items-center">
-                <div className="mb-3 transform transition-transform group-hover:scale-110 duration-300">
-                    <LogoShield className="h-16 w-16 drop-shadow-md" />
-                </div>
-                <h1 className="font-gothic text-5xl sm:text-6xl text-de-black m-0 leading-none">Deutsch Meister</h1>
-                <p className="font-display text-de-red uppercase tracking-[0.2em] font-bold text-sm sm:text-base mt-2 border-t-2 border-de-gold pt-2 inline-block">
-                    Verbs & Nouns Database
-                </p>
+      <header className="bg-[linear-gradient(180deg,#111_0_34%,#DD0000_34%_67%,#FFCE00_67%_100%)] px-4 pb-8 pt-8 text-center shadow-lg sm:pt-10">
+        <div className="mx-auto max-w-5xl rounded-lg border border-white/30 bg-white/95 px-5 py-5 shadow-2xl sm:px-8">
+          <div className="flex flex-col items-center justify-center gap-4 sm:flex-row sm:text-left">
+            <LogoShield className="h-16 w-16 shrink-0 drop-shadow-md sm:h-20 sm:w-20" />
+            <div>
+              <h1 className="m-0 font-gothic text-5xl leading-none text-de-black sm:text-6xl">Deutsch Meister</h1>
+              <p className="mt-2 inline-block border-t-2 border-de-gold pt-2 font-display text-sm font-bold uppercase tracking-[0.18em] text-de-red sm:text-base">
+                Verbs, Nouns & Grammar Practice
+              </p>
             </div>
+          </div>
         </div>
       </header>
 
       <main className="container mx-auto">
         {/* Navigation */}
-        <div className="flex flex-wrap justify-center gap-4 my-8 px-4">
+        <nav className="sticky top-0 z-20 border-b border-gray-200 bg-[#f4f4f4]/95 px-4 py-4 backdrop-blur supports-[backdrop-filter]:bg-[#f4f4f4]/80" aria-label="Main sections">
+          <div className="mx-auto grid max-w-5xl grid-cols-2 gap-3 sm:flex sm:flex-wrap sm:justify-center">
           <NavButton tab="dictionary" currentTab={currentTab} setCurrentTab={setCurrentTab} label="Wörterbuch" icon={<BookOpen size={20} />} />
           <NavButton tab="grammar" currentTab={currentTab} setCurrentTab={setCurrentTab} label="Grammatik" icon={<LayoutList size={20} />} />
           <NavButton tab="verb-quiz" currentTab={currentTab} setCurrentTab={setCurrentTab} label="Verb Quiz" icon={<HelpCircle size={20} />} />
           <NavButton tab="noun-quiz" currentTab={currentTab} setCurrentTab={setCurrentTab} label="Nomen Quiz" icon={<GraduationCap size={20} />} />
           <NavButton tab="guide" currentTab={currentTab} setCurrentTab={setCurrentTab} label="Anleitung" icon={<Info size={20} />} />
-        </div>
+          </div>
+        </nav>
 
         {/* Content Area */}
-        <div className="animate-in fade-in duration-500">
+        <div className="animate-in fade-in duration-500 pt-8">
           {currentTab === 'dictionary' && <DictionaryView />}
           {currentTab === 'grammar' && <GrammarView />}
           {currentTab === 'verb-quiz' && <VerbQuiz />}
