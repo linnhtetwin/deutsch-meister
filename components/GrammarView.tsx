@@ -9,33 +9,179 @@ const TableHeader = ({ title, subtitle }: { title: string; subtitle: string }) =
   </div>
 );
 
-const GrammarTable = ({ data, highlightColor, smallText = false }: { data: string[][], highlightColor: string, smallText?: boolean }) => (
+const LevelBadge = ({ level }: { level: string }) => (
+  <span className="ml-2 inline-flex align-middle rounded bg-de-black px-2 py-0.5 text-xs font-bold uppercase tracking-wider text-de-gold">
+    {level}
+  </span>
+);
+
+const TeacherNote = ({ children }: { children: React.ReactNode }) => (
+  <div className="rounded-lg border border-yellow-200 bg-yellow-50 p-4 text-sm leading-relaxed text-yellow-900">
+    <strong className="text-yellow-800">Teacher note:</strong> {children}
+  </div>
+);
+
+const LevelRoadmap = () => (
+  <div className="mb-12 rounded-lg border border-gray-200 bg-gray-50 p-5">
+    <h3 className="mb-4 font-display text-2xl text-de-black">A1-B1 Grammar Roadmap</h3>
+    <div className="grid gap-4 md:grid-cols-3">
+      <div className="rounded-lg border border-green-100 bg-white p-4 shadow-sm">
+        <div className="mb-2 inline-flex rounded bg-green-100 px-2 py-1 text-xs font-bold uppercase tracking-wider text-green-800">A1 Foundation</div>
+        <ul className="space-y-2 text-sm text-gray-700">
+          <li><strong>Sentence order:</strong> verb in position 2.</li>
+          <li><strong>Articles:</strong> der, die, das; ein/eine.</li>
+          <li><strong>Cases:</strong> nominative vs accusative first.</li>
+          <li><strong>Verbs:</strong> present tense, haben, sein, modal verbs.</li>
+        </ul>
+      </div>
+      <div className="rounded-lg border border-blue-100 bg-white p-4 shadow-sm">
+        <div className="mb-2 inline-flex rounded bg-blue-100 px-2 py-1 text-xs font-bold uppercase tracking-wider text-blue-800">A2 Expansion</div>
+        <ul className="space-y-2 text-sm text-gray-700">
+          <li><strong>Dative:</strong> with people, places, and fixed prepositions.</li>
+          <li><strong>Perfect tense:</strong> haben/sein + Partizip II.</li>
+          <li><strong>Separable verbs:</strong> einkaufen, aufstehen, mitkommen.</li>
+          <li><strong>Subordinate clauses:</strong> weil, dass, wenn.</li>
+        </ul>
+      </div>
+      <div className="rounded-lg border border-violet-100 bg-white p-4 shadow-sm">
+        <div className="mb-2 inline-flex rounded bg-violet-100 px-2 py-1 text-xs font-bold uppercase tracking-wider text-violet-800">B1 Control</div>
+        <ul className="space-y-2 text-sm text-gray-700">
+          <li><strong>Adjective endings:</strong> weak, mixed, strong.</li>
+          <li><strong>Relative clauses:</strong> der, das, die, dem, dessen.</li>
+          <li><strong>Konjunktiv II:</strong> polite requests and wishes.</li>
+          <li><strong>Passive:</strong> wird/wurde + Partizip II.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+);
+
+const CorePatternsSection = () => (
+  <div className="mb-12">
+    <h3 className="font-display text-2xl border-l-4 border-de-black pl-3 mb-6">
+      Core Sentence Patterns <LevelBadge level="A1-A2" />
+    </h3>
+    <div className="grid gap-4 lg:grid-cols-2">
+      <div className="rounded-lg border border-gray-200 bg-white p-5 shadow-sm">
+        <h4 className="mb-3 font-bold text-de-black">Main Clause: Position 2</h4>
+        <div className="space-y-3 text-sm text-gray-700">
+          <div className="rounded bg-gray-50 p-3 font-mono text-xs">
+            <span className="text-blue-700">Ich</span> <strong className="text-de-red">lerne</strong> Deutsch.
+          </div>
+          <div className="rounded bg-gray-50 p-3 font-mono text-xs">
+            <span className="text-blue-700">Heute</span> <strong className="text-de-red">lerne</strong> ich Deutsch.
+          </div>
+          <p>The conjugated verb stays in position 2. If time comes first, the subject moves after the verb.</p>
+        </div>
+      </div>
+      <div className="rounded-lg border border-gray-200 bg-white p-5 shadow-sm">
+        <h4 className="mb-3 font-bold text-de-black">Subordinate Clause: Verb at the End</h4>
+        <div className="space-y-3 text-sm text-gray-700">
+          <div className="rounded bg-gray-50 p-3 font-mono text-xs">
+            Ich bleibe zu Hause, weil ich Deutsch <strong className="text-de-red">lerne</strong>.
+          </div>
+          <p>Use this pattern with <strong>weil, dass, wenn, obwohl, bevor, nachdem</strong>. This becomes very important from A2 to B1.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+);
+
+const CaseDecisionSection = () => (
+  <div className="mb-12">
+    <h3 className="font-display text-2xl border-l-4 border-dativ pl-3 mb-6">
+      Case Decision Guide <LevelBadge level="A1-B1" />
+    </h3>
+    <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+      <div className="rounded-lg border border-gray-200 bg-white p-4 shadow-sm">
+        <h4 className="font-bold text-de-black">Nominativ</h4>
+        <p className="mt-2 text-sm text-gray-600">Who or what does the action?</p>
+        <p className="mt-3 rounded bg-gray-50 p-2 text-xs font-mono">Der Mann kommt.</p>
+      </div>
+      <div className="rounded-lg border border-red-100 bg-white p-4 shadow-sm">
+        <h4 className="font-bold text-akk">Akkusativ</h4>
+        <p className="mt-2 text-sm text-gray-600">Direct object: whom or what?</p>
+        <p className="mt-3 rounded bg-red-50 p-2 text-xs font-mono">Ich sehe den Mann.</p>
+      </div>
+      <div className="rounded-lg border border-blue-100 bg-white p-4 shadow-sm">
+        <h4 className="font-bold text-dativ">Dativ</h4>
+        <p className="mt-2 text-sm text-gray-600">Recipient, indirect object, or dative preposition.</p>
+        <p className="mt-3 rounded bg-blue-50 p-2 text-xs font-mono">Ich helfe dem Mann.</p>
+      </div>
+      <div className="rounded-lg border border-violet-100 bg-white p-4 shadow-sm">
+        <h4 className="font-bold text-genitiv">Genitiv</h4>
+        <p className="mt-2 text-sm text-gray-600">Possession or formal written style. Mostly B1+.</p>
+        <p className="mt-3 rounded bg-violet-50 p-2 text-xs font-mono">Das Auto des Mannes.</p>
+      </div>
+    </div>
+    <div className="mt-4">
+      <TeacherNote>
+        For A1 learners, do not try to master every case ending at once. First recognize the subject, then the direct object. Add dative prepositions and dative verbs in A2, then genitive and adjective endings in B1.
+      </TeacherNote>
+    </div>
+  </div>
+);
+
+const TenseProgressionSection = () => (
+  <div className="mb-12">
+    <h3 className="font-display text-2xl border-l-4 border-de-red pl-3 mb-6">
+      Tense Progression <LevelBadge level="A1-B1" />
+    </h3>
+    <div className="overflow-x-auto rounded-lg border border-gray-200 bg-white shadow-sm">
+      <table className="w-full min-w-[720px] border-collapse text-left text-sm">
+        <thead>
+          <tr className="bg-gray-50 text-xs uppercase tracking-wider text-gray-500">
+            <th className="p-3 font-bold">Level</th>
+            <th className="border-l border-gray-100 p-3 font-bold">Tense / Form</th>
+            <th className="border-l border-gray-100 p-3 font-bold">Use</th>
+            <th className="border-l border-gray-100 p-3 font-bold">Example</th>
+          </tr>
+        </thead>
+        <tbody className="text-gray-700">
+          <tr className="border-t border-gray-100">
+            <td className="p-3 font-bold text-green-700">A1</td>
+            <td className="border-l border-gray-100 p-3">Präsens</td>
+            <td className="border-l border-gray-100 p-3">Daily life, plans, routines</td>
+            <td className="border-l border-gray-100 p-3 font-mono text-xs">Ich lerne Deutsch.</td>
+          </tr>
+          <tr className="border-t border-gray-100">
+            <td className="p-3 font-bold text-blue-700">A2</td>
+            <td className="border-l border-gray-100 p-3">Perfekt</td>
+            <td className="border-l border-gray-100 p-3">Spoken past</td>
+            <td className="border-l border-gray-100 p-3 font-mono text-xs">Ich habe Deutsch gelernt.</td>
+          </tr>
+          <tr className="border-t border-gray-100">
+            <td className="p-3 font-bold text-blue-700">A2</td>
+            <td className="border-l border-gray-100 p-3">Präteritum of sein/haben/modal verbs</td>
+            <td className="border-l border-gray-100 p-3">Common narrative past</td>
+            <td className="border-l border-gray-100 p-3 font-mono text-xs">Ich war krank. Ich musste arbeiten.</td>
+          </tr>
+          <tr className="border-t border-gray-100">
+            <td className="p-3 font-bold text-violet-700">B1</td>
+            <td className="border-l border-gray-100 p-3">Konjunktiv II</td>
+            <td className="border-l border-gray-100 p-3">Polite requests, wishes, advice</td>
+            <td className="border-l border-gray-100 p-3 font-mono text-xs">Ich würde gern kommen.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+);
+
+const ARTICLE_TABLE_HEADERS = ['Masculine (r)', 'Neuter (s)', 'Feminine (e)', 'Plural (n)'];
+const PERSON_PRONOUN_HEADERS = ['ich', 'du', 'er', 'es', 'sie', 'wir', 'ihr', 'sie/Sie'];
+
+const GrammarTable = ({ data, highlightColor, headers = ARTICLE_TABLE_HEADERS, smallText = false }: { data: string[][], highlightColor: string, headers?: string[], smallText?: boolean }) => (
   <div className="overflow-x-auto rounded-lg border border-gray-200 shadow-sm mb-10 bg-white">
     <table className="w-full text-left text-sm border-collapse min-w-[500px]">
       <thead>
         <tr className="bg-gray-50 border-b border-gray-200">
           <th className="p-3 font-bold text-gray-400 uppercase tracking-tighter text-[10px] w-16">Case</th>
-          {data[0].length > 5 ? (
-              // Dynamic headers for larger tables (like full pronouns)
-               <>
-                <th className="p-3 font-bold text-gray-800 border-l border-gray-100">I (ich)</th>
-                <th className="p-3 font-bold text-gray-800 border-l border-gray-100">You (du)</th>
-                <th className="p-3 font-bold text-gray-800 border-l border-gray-100">He (er)</th>
-                <th className="p-3 font-bold text-gray-800 border-l border-gray-100">It (es)</th>
-                <th className="p-3 font-bold text-gray-800 border-l border-gray-100">She (sie)</th>
-                <th className="p-3 font-bold text-gray-800 border-l border-gray-100">We (wir)</th>
-                <th className="p-3 font-bold text-gray-800 border-l border-gray-100">You pl. (ihr)</th>
-                <th className="p-3 font-bold text-gray-800 border-l border-gray-100">They/You formal (Sie)</th>
-               </>
-          ) : (
-              // Standard Headers
-               <>
-                <th className="p-3 font-bold text-gray-800 border-l border-gray-100 w-1/4">Masculine (r)</th>
-                <th className="p-3 font-bold text-gray-800 border-l border-gray-100 w-1/4 bg-gray-50/30">Neuter (s)</th>
-                <th className="p-3 font-bold text-gray-800 border-l border-gray-100 w-1/4">Feminine (e)</th>
-                <th className="p-3 font-bold text-gray-800 border-l border-gray-100 w-1/4">Plural (n)</th>
-               </>
-          )}
+          {headers.map((header, index) => (
+            <th key={`${header}-${index}`} className={`p-3 font-bold text-gray-800 border-l border-gray-100 ${headers.length === 4 ? 'w-1/4' : ''} ${headers.length === 4 && index === 1 ? 'bg-gray-50/30' : ''}`}>
+              {header}
+            </th>
+          ))}
         </tr>
       </thead>
       <tbody>
@@ -48,7 +194,7 @@ const GrammarTable = ({ data, highlightColor, smallText = false }: { data: strin
               // Handle single words (Pronouns)
               if (parts.length < 2) {
                    const isSpecial = ['denen', 'dessen', 'deren', 'ihnen', 'ihm', 'ihr', 'mich', 'dich', 'sich'].includes(cell);
-                   const isNeutrumCol = j === 1 && data[0].length <= 5; // Only for article tables
+                   const isNeutrumCol = headers.length === 4 && j === 1;
                    return (
                     <td key={j} className={`p-3 border-l border-gray-100 ${smallText ? 'text-xs' : ''} ${isNeutrumCol ? 'bg-gray-50/30' : ''} ${isSpecial ? 'bg-yellow-50 text-de-black font-bold' : ''}`}>
                         {cell}
@@ -58,7 +204,7 @@ const GrammarTable = ({ data, highlightColor, smallText = false }: { data: strin
               
               const article = parts[0];
               const adj = parts[1];
-              const isNeutrumCol = j === 1 && data[0].length <= 5;
+              const isNeutrumCol = headers.length === 4 && j === 1;
 
               // Improved ending detection
               let ending = '';
@@ -163,7 +309,9 @@ const GenderEndings = () => (
 
 const SentenceStructureSection = () => (
     <div className="mb-16">
-        <h3 className="font-display text-2xl border-l-4 border-de-black pl-3 mb-6">Sentence Structure & Conjunctions</h3>
+        <h3 className="font-display text-2xl border-l-4 border-de-black pl-3 mb-6">
+          Sentence Structure & Conjunctions <LevelBadge level="A1-B1" />
+        </h3>
         
         {/* General Rule: V2 & TeKaMoLo */}
         <div className="bg-gray-50 p-6 rounded-xl border border-gray-200 mb-10">
@@ -210,99 +358,100 @@ const SentenceStructureSection = () => (
         <div className="bg-indigo-50 p-6 rounded-xl border border-indigo-200 mb-10">
             <h4 className="font-bold text-de-black text-lg mb-4">Conjunctions for B1</h4>
             <p className="text-sm text-gray-700 mb-4">
-                These conjunctions are common at the B1 level. They connect ideas, add alternatives, and show cause or contrast while keeping German sentence order rules in mind.
+                For B1, learners should not only memorize connectors, but also know their word-order type: position 0, position 1, or subordinate clause with the verb at the end.
             </p>
-            <div className="grid gap-4 lg:grid-cols-2">
+            <div className="grid gap-4 lg:grid-cols-3">
                 <div className="bg-white p-4 rounded border border-indigo-100">
-                    <p className="font-bold text-de-black mb-2">Sowohl ... als auch</p>
-                    <p className="text-sm text-gray-600 mb-3">Both ... and</p>
+                    <p className="font-bold text-de-black mb-2">Reason & Result</p>
+                    <p className="text-sm text-gray-600 mb-3">weil, da, denn, deshalb, deswegen, sodass</p>
                     <div className="bg-slate-50 p-3 rounded text-xs font-mono text-gray-700">
-                        <span className="font-bold">Ich</span> <span className="text-de-red font-bold">mag</span> sowohl Kaffee <span className="font-bold">als</span> auch Tee.
+                        Ich bleibe zu Hause, <span className="font-bold">weil</span> ich krank <span className="text-de-red font-bold">bin</span>.
+                        <br/>
+                        Ich bin krank. <span className="font-bold">Deshalb</span> <span className="text-de-red font-bold">bleibe</span> ich zu Hause.
+                        <br/>
+                        Er hat den Bus genommen, <span className="font-bold">sodass</span> er pünktlich <span className="text-de-red font-bold">war</span>.
                     </div>
                 </div>
                 <div className="bg-white p-4 rounded border border-indigo-100">
-                    <p className="font-bold text-de-black mb-2">Entweder ... oder</p>
-                    <p className="text-sm text-gray-600 mb-3">Either ... or</p>
-                    <div className="bg-slate-50 p-3 rounded text-xs font-mono text-gray-700">
-                        <span className="font-bold">Entweder</span> gehst du jetzt, <span className="font-bold">oder</span> du bleibst hier.
-                    </div>
-                </div>
-                <div className="bg-white p-4 rounded border border-indigo-100">
-                    <p className="font-bold text-de-black mb-2">Nicht nur ... sondern auch</p>
-                    <p className="text-sm text-gray-600 mb-3">Not only ... but also</p>
-                    <div className="bg-slate-50 p-3 rounded text-xs font-mono text-gray-700">
-                        <span className="font-bold">Er</span> ist nicht nur klug, <span className="font-bold">sondern</span> auch sehr fleißig.
-                    </div>
-                </div>
-                <div className="bg-white p-4 rounded border border-indigo-100">
-                    <p className="font-bold text-de-black mb-2">Weder ... noch</p>
-                    <p className="text-sm text-gray-600 mb-3">Neither ... nor</p>
-                    <div className="bg-slate-50 p-3 rounded text-xs font-mono text-gray-700">
-                        <span className="font-bold">Sie</span> ist weder müde <span className="font-bold">noch</span> krank.
-                    </div>
-                </div>
-                <div className="bg-white p-4 rounded border border-indigo-100">
-                    <p className="font-bold text-de-black mb-2">Obwohl / Trotzdem</p>
-                    <p className="text-sm text-gray-600 mb-3">Although / nevertheless</p>
+                    <p className="font-bold text-de-black mb-2">Contrast</p>
+                    <p className="text-sm text-gray-600 mb-3">aber, sondern, obwohl, trotzdem, während</p>
                     <div className="bg-slate-50 p-3 rounded text-xs font-mono text-gray-700">
                         <span className="font-bold">Obwohl</span> es regnet, gehen wir spazieren.
                         <br/>
-                        <span className="font-bold">Trotzdem</span> haben wir gute Laune.
+                        Es regnet. <span className="font-bold">Trotzdem</span> gehen wir spazieren.
+                        <br/>
+                        Ich trinke keinen Kaffee, <span className="font-bold">sondern</span> Tee.
                     </div>
                 </div>
                 <div className="bg-white p-4 rounded border border-indigo-100">
-                    <p className="font-bold text-de-black mb-2">Während / Bevor / Nachdem</p>
-                    <p className="text-sm text-gray-600 mb-3">While / before / after</p>
+                    <p className="font-bold text-de-black mb-2">Time</p>
+                    <p className="text-sm text-gray-600 mb-3">wenn, als, bevor, nachdem, während, seitdem, bis, sobald, solange</p>
                     <div className="bg-slate-50 p-3 rounded text-xs font-mono text-gray-700">
-                        <span className="font-bold">Bevor</span> ich schlafe, lese ich.
+                        <span className="font-bold">Als</span> ich Kind war, wohnte ich in Berlin.
                         <br/>
-                        <span className="font-bold">Nachdem</span> er gegessen hatte, ging er schlafen.
+                        <span className="font-bold">Wenn</span> ich Zeit habe, lerne ich Deutsch.
+                        <br/>
+                        <span className="font-bold">Seitdem</span> ich hier wohne, spreche ich mehr Deutsch.
                     </div>
                 </div>
                 <div className="bg-white p-4 rounded border border-indigo-100">
-                    <p className="font-bold text-de-black mb-2">Da / Sobald / Solange / Sodass</p>
-                    <p className="text-sm text-gray-600 mb-3">Since / as soon as / as long as / so that</p>
+                    <p className="font-bold text-de-black mb-2">Condition & Indirect Question</p>
+                    <p className="text-sm text-gray-600 mb-3">wenn, falls, ob</p>
                     <div className="bg-slate-50 p-3 rounded text-xs font-mono text-gray-700">
-                        <span className="font-bold">Da</span> es kalt ist, ziehe ich eine Jacke an.
+                        <span className="font-bold">Wenn</span> du Zeit hast, ruf mich an.
                         <br/>
-                        <span className="font-bold">Sobald</span> ich fertig bin, rufe ich dich an.
+                        <span className="font-bold">Falls</span> es regnet, bleiben wir zu Hause.
                         <br/>
-                        <span className="font-bold">Solange</span> du lernst, wirst du besser.
-                        <br/>
-                        <span className="font-bold">Sodass</span> er pünktlich war, hat er den Bus genommen.
+                        Ich weiß nicht, <span className="font-bold">ob</span> er heute <span className="text-de-red font-bold">kommt</span>.
                     </div>
                 </div>
-            </div>
-            <div className="mt-6 grid gap-2 sm:grid-cols-2">
-                {[
-                    { key: 'denn', text: 'denn (because, main clause order)' },
-                    { key: 'sondern', text: 'sondern (but rather, after negation)' },
-                    { key: 'ob', text: 'ob (whether/if, subordinate clause)' },
-                    { key: 'weil', text: 'weil (because, subordinate clause)' },
-                    { key: 'damit', text: 'damit (so that, subordinate clause)' },
-                    { key: 'falls', text: 'falls (in case, subordinate clause)' },
-                ].map(item => (
-                    <div key={item.key} className="bg-white p-3 rounded border border-indigo-100 text-sm text-gray-700">
-                        <span className="font-bold">{item.text}</span>
+                <div className="bg-white p-4 rounded border border-indigo-100">
+                    <p className="font-bold text-de-black mb-2">Purpose & Method</p>
+                    <p className="text-sm text-gray-600 mb-3">damit, um ... zu, indem, ohne ... zu</p>
+                    <div className="bg-slate-50 p-3 rounded text-xs font-mono text-gray-700">
+                        Ich lerne Deutsch, <span className="font-bold">damit</span> ich in Deutschland arbeiten <span className="text-de-red font-bold">kann</span>.
+                        <br/>
+                        Ich lerne Deutsch, <span className="font-bold">um</span> eine Prüfung <span className="font-bold">zu</span> bestehen.
+                        <br/>
+                        Man lernt Wörter, <span className="font-bold">indem</span> man sie oft <span className="text-de-red font-bold">benutzt</span>.
                     </div>
-                ))}
+                </div>
+                <div className="bg-white p-4 rounded border border-indigo-100">
+                    <p className="font-bold text-de-black mb-2">Two-Part Connectors</p>
+                    <p className="text-sm text-gray-600 mb-3">entweder ... oder, sowohl ... als auch, nicht nur ... sondern auch, weder ... noch</p>
+                    <div className="bg-slate-50 p-3 rounded text-xs font-mono text-gray-700">
+                        <span className="font-bold">Entweder</span> kommst du mit, <span className="font-bold">oder</span> du bleibst hier.
+                        <br/>
+                        Er ist <span className="font-bold">nicht nur</span> klug, <span className="font-bold">sondern auch</span> sehr fleißig.
+                        <br/>
+                        Sie ist <span className="font-bold">weder</span> müde <span className="font-bold">noch</span> krank.
+                    </div>
+                </div>
             </div>
             <div className="mt-6 overflow-x-auto rounded-lg border border-indigo-100 bg-white shadow-sm">
                 <table className="w-full text-left text-sm border-collapse">
                     <thead>
                         <tr className="bg-indigo-50">
-                            <th className="p-3 font-bold text-indigo-900">Coordinating</th>
-                            <th className="p-3 font-bold text-indigo-900">Subordinating</th>
+                            <th className="p-3 font-bold text-indigo-900">Type</th>
+                            <th className="p-3 font-bold text-indigo-900 border-l border-indigo-100">Connectors</th>
+                            <th className="p-3 font-bold text-indigo-900 border-l border-indigo-100">Word order</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr className="border-t border-indigo-100">
-                            <td className="p-3">und, aber, oder, denn, sondern</td>
-                            <td className="p-3">weil, da, wenn, ob, obwohl</td>
+                            <td className="p-3 font-bold">Position 0</td>
+                            <td className="p-3 border-l border-indigo-100">und, aber, oder, denn, sondern</td>
+                            <td className="p-3 border-l border-indigo-100">Verb stays in position 2 after the subject.</td>
                         </tr>
                         <tr className="border-t border-indigo-100 bg-indigo-50/50">
-                            <td className="p-3">entweder ... oder, sowohl ... als auch</td>
-                            <td className="p-3">damit, sodass, sobald, solange, nachdem, bevor</td>
+                            <td className="p-3 font-bold">Position 1</td>
+                            <td className="p-3 border-l border-indigo-100">deshalb, deswegen, trotzdem, dann, danach, sonst</td>
+                            <td className="p-3 border-l border-indigo-100">Connector takes position 1, verb comes immediately after it.</td>
+                        </tr>
+                        <tr className="border-t border-indigo-100">
+                            <td className="p-3 font-bold">Subordinate clause</td>
+                            <td className="p-3 border-l border-indigo-100">weil, da, dass, ob, wenn, falls, obwohl, bevor, nachdem, seitdem, bis, sobald, solange, damit, sodass, indem</td>
+                            <td className="p-3 border-l border-indigo-100">Conjugated verb goes to the end.</td>
                         </tr>
                     </tbody>
                 </table>
@@ -387,7 +536,9 @@ const SentenceStructureSection = () => (
 
 const AdverbSection = () => (
     <div className="mb-16">
-        <h3 className="font-display text-2xl border-l-4 border-emerald-500 pl-3 mb-6">Adverbs</h3>
+        <h3 className="font-display text-2xl border-l-4 border-emerald-500 pl-3 mb-6">
+          Adverbs <LevelBadge level="A2-B1" />
+        </h3>
         <div className="bg-emerald-50/50 p-6 rounded-xl border border-emerald-100 mb-8">
             <h4 className="font-bold text-de-black text-lg mb-4">What are Adverbs?</h4>
             <p className="text-sm text-gray-700 mb-4">
@@ -449,7 +600,7 @@ const VerbConjugationPatterns = () => (
                     <div className="flex justify-between border-b border-gray-50 pb-1"><span>wir</span> <strong className="text-de-red">-en</strong></div>
                     <div className="flex justify-between border-b border-gray-50 pb-1"><span>du</span> <strong className="text-de-red">-st</strong></div>
                     <div className="flex justify-between border-b border-gray-50 pb-1"><span>ihr</span> <strong className="text-de-red">-t</strong></div>
-                    <div className="flex justify-between"><span>er/sie/es</span> <strong className="text-de-red">-t</strong></div>
+                    <div className="flex justify-between"><span>er/es/sie</span> <strong className="text-de-red">-t</strong></div>
                     <div className="flex justify-between"><span>sie/Sie</span> <strong className="text-de-red">-en</strong></div>
                 </div>
                 <div className="mt-4 text-[10px] text-gray-500 italic bg-gray-50 p-2 rounded">
@@ -469,7 +620,7 @@ const VerbConjugationPatterns = () => (
                     <div className="flex justify-between border-b border-gray-50 pb-1"><span>wir</span> <strong className="text-gray-600">-ten</strong></div>
                     <div className="flex justify-between border-b border-gray-50 pb-1"><span>du</span> <strong className="text-gray-600">-test</strong></div>
                     <div className="flex justify-between border-b border-gray-50 pb-1"><span>ihr</span> <strong className="text-gray-600">-tet</strong></div>
-                    <div className="flex justify-between"><span>er/sie/es</span> <strong className="text-gray-600">-te</strong></div>
+                    <div className="flex justify-between"><span>er/es/sie</span> <strong className="text-gray-600">-te</strong></div>
                     <div className="flex justify-between"><span>sie/Sie</span> <strong className="text-gray-600">-ten</strong></div>
                 </div>
                 <div className="mt-4 text-[10px] text-gray-500 italic bg-gray-50 p-2 rounded">
@@ -548,7 +699,6 @@ const B1GrammarSection = () => {
   ];
 
   const relativePronounsData = [
-    ["Case", "Masculine", "Neuter", "Feminine", "Plural"],
     ["Nominative", "der", "das", "die", "die"],
     ["Accusative", "den", "das", "die", "die"],
     ["Dative", "dem", "dem", "der", "denen"],
@@ -557,7 +707,9 @@ const B1GrammarSection = () => {
 
   return (
     <div className="mb-16">
-      <h3 className="font-display text-2xl border-l-4 border-violet-500 pl-3 mb-6">B1 Grammar Focus</h3>
+      <h3 className="font-display text-2xl border-l-4 border-violet-500 pl-3 mb-6">
+        B1 Grammar Focus <LevelBadge level="B1" />
+      </h3>
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-10">
         <div className="bg-white rounded-lg border border-gray-200 shadow-sm p-6">
           <h4 className="font-bold text-de-black mb-3">Konjunktiv II</h4>
@@ -602,7 +754,7 @@ const B1GrammarSection = () => {
           <div className="p-4">
             <VerbGroupTable
               title="Konjunktiv II Patterns"
-              headers={["Form", "ich", "du", "er/sie/es", "wir", "ihr", "sie/Sie"]}
+              headers={["Form", "ich", "du", "er/es/sie", "wir", "ihr", "sie/Sie"]}
               data={konjunktivData}
             />
           </div>
@@ -613,7 +765,7 @@ const B1GrammarSection = () => {
             <h4 className="font-bold text-de-black">Relative Pronouns</h4>
           </div>
           <div className="p-4">
-            <GrammarTable data={relativePronounsData} highlightColor="text-de-black" />
+            <GrammarTable data={relativePronounsData} highlightColor="text-de-black" headers={ARTICLE_TABLE_HEADERS} />
           </div>
         </div>
       </div>
@@ -665,24 +817,24 @@ export const GrammarView: React.FC = () => {
   ];
 
   // Auxiliaries Data
-  // Headers: [Verb, Zeit, ich, du, er/sie/es, wir/Sie, ihr]
+  // Headers: [Verb, Zeit, ich, du, er/es/sie, wir, ihr, sie/Sie]
   const auxData = [
-    [<span className="font-bold">werden</span>, <span className="text-xs text-gray-400 font-bold uppercase">Pres</span>, "werde", "wirst", "wird", "werden", "werdet"],
-    [<span className="font-bold"></span>, <span className="text-xs text-gray-400 font-bold uppercase">Past</span>, "wurde", "wurdest", "wurde", "wurden", "wurdet"],
-    [<span className="font-bold">haben</span>, <span className="text-xs text-gray-400 font-bold uppercase">Pres</span>, "habe", "hast", "hat", "haben", "habt"],
-    [<span className="font-bold"></span>, <span className="text-xs text-gray-400 font-bold uppercase">Past</span>, "hatte", "hattest", "hatte", "hatten", "hattet"],
-    [<span className="font-bold">sein</span>, <span className="text-xs text-gray-400 font-bold uppercase">Pres</span>, "bin", "bist", "ist", "sind", "seid"],
-    [<span className="font-bold"></span>, <span className="text-xs text-gray-400 font-bold uppercase">Past</span>, "war", "warst", "war", "waren", "wart"],
+    [<span className="font-bold">werden</span>, <span className="text-xs text-gray-400 font-bold uppercase">Pres</span>, "werde", "wirst", "wird", "werden", "werdet", "werden"],
+    [<span className="font-bold"></span>, <span className="text-xs text-gray-400 font-bold uppercase">Past</span>, "wurde", "wurdest", "wurde", "wurden", "wurdet", "wurden"],
+    [<span className="font-bold">haben</span>, <span className="text-xs text-gray-400 font-bold uppercase">Pres</span>, "habe", "hast", "hat", "haben", "habt", "haben"],
+    [<span className="font-bold"></span>, <span className="text-xs text-gray-400 font-bold uppercase">Past</span>, "hatte", "hattest", "hatte", "hatten", "hattet", "hatten"],
+    [<span className="font-bold">sein</span>, <span className="text-xs text-gray-400 font-bold uppercase">Pres</span>, "bin", "bist", "ist", "sind", "seid", "sind"],
+    [<span className="font-bold"></span>, <span className="text-xs text-gray-400 font-bold uppercase">Past</span>, "war", "warst", "war", "waren", "wart", "waren"],
   ];
 
   // Modal Data
   const modalData = [
-    ["wollen", "will", "willst", "wollen", "wollt"],
-    ["sollen", "soll", "sollst", "sollen", "sollt"],
-    ["müssen", "muss", "musst", "müssen", "müsst"],
-    ["können", "kann", "kannst", "können", "könnt"],
-    ["dürfen", "darf", "darfst", "dürfen", "dürft"],
-    ["mögen", "mag", "magst", "mögen", "mögt"],
+    ["wollen", "will", "willst", "will", "wollen", "wollt", "wollen"],
+    ["sollen", "soll", "sollst", "soll", "sollen", "sollt", "sollen"],
+    ["müssen", "muss", "musst", "muss", "müssen", "müsst", "müssen"],
+    ["können", "kann", "kannst", "kann", "können", "könnt", "können"],
+    ["dürfen", "darf", "darfst", "darf", "dürfen", "dürft", "dürfen"],
+    ["mögen", "mag", "magst", "mag", "mögen", "mögt", "mögen"],
   ];
 
 
@@ -692,18 +844,27 @@ export const GrammarView: React.FC = () => {
         
         <div className="text-center mb-12">
             <h2 className="font-gothic text-5xl text-de-black mb-2">Grammar</h2>
-            <p className="text-gray-500 font-display uppercase tracking-widest text-sm font-bold">Reference Tables</p>
+            <p className="text-gray-500 font-display uppercase tracking-widest text-sm font-bold">A1-B1 Learning Path & Reference Tables</p>
         </div>
+
+        <LevelRoadmap />
+        <CorePatternsSection />
+        <CaseDecisionSection />
+        <TenseProgressionSection />
 
         {/* 0. COMMON ENDINGS (New) */}
         <div className="mb-12 border-b border-gray-100 pb-8">
-            <h3 className="font-display text-2xl border-l-4 border-de-black pl-3 mb-6">Noun Endings (Gender)</h3>
+            <h3 className="font-display text-2xl border-l-4 border-de-black pl-3 mb-6">
+              Noun Gender & Endings <LevelBadge level="A1-A2" />
+            </h3>
             <GenderEndings />
         </div>
 
         {/* 1. ADJEKTIVDEKLINATION */}
         <div className="mb-16">
-            <h3 className="font-display text-2xl border-l-4 border-de-gold pl-3 mb-6">Adjective Declension</h3>
+            <h3 className="font-display text-2xl border-l-4 border-de-gold pl-3 mb-6">
+              Adjective Declension <LevelBadge level="A2-B1" />
+            </h3>
             
             {/* Introduction */}
             <div className="bg-blue-50 p-6 rounded-lg border border-blue-200 mb-8">
@@ -731,98 +892,28 @@ export const GrammarView: React.FC = () => {
                 </div>
             </div>
 
-            {/* Endings Summary Table */}
-            <div className="mb-8">
-                <h4 className="font-bold text-lg mb-4">Adjective Endings Overview</h4>
-                <div className="overflow-x-auto rounded-lg border border-gray-200 shadow-sm bg-white">
-                    <table className="w-full text-left text-sm border-collapse">
-                        <thead>
-                            <tr className="bg-gray-50 border-b border-gray-200">
-                                <th className="p-3 font-bold text-gray-400 uppercase tracking-tighter text-[10px]">Case</th>
-                                <th className="p-3 font-bold text-gray-800 border-l border-gray-100 text-center" colSpan="4">Weak Declension<br/>(Definite Articles)</th>
-                                <th className="p-3 font-bold text-gray-800 border-l border-gray-100 text-center" colSpan="4">Mixed Declension<br/>(Indefinite Articles)</th>
-                                <th className="p-3 font-bold text-gray-800 border-l border-gray-100 text-center" colSpan="4">Strong Declension<br/>(No Article)</th>
-                            </tr>
-                            <tr className="bg-gray-50 border-b border-gray-200">
-                                <th className="p-3"></th>
-                                <th className="p-2 font-bold text-gray-600 text-xs border-l border-gray-100">Masc</th>
-                                <th className="p-2 font-bold text-gray-600 text-xs border-l border-gray-100 bg-gray-50/30">Neut</th>
-                                <th className="p-2 font-bold text-gray-600 text-xs border-l border-gray-100">Fem</th>
-                                <th className="p-2 font-bold text-gray-600 text-xs border-l border-gray-100">Pl</th>
-                                <th className="p-2 font-bold text-gray-600 text-xs border-l border-gray-100">Masc</th>
-                                <th className="p-2 font-bold text-gray-600 text-xs border-l border-gray-100 bg-gray-50/30">Neut</th>
-                                <th className="p-2 font-bold text-gray-600 text-xs border-l border-gray-100">Fem</th>
-                                <th className="p-2 font-bold text-gray-600 text-xs border-l border-gray-100">Pl</th>
-                                <th className="p-2 font-bold text-gray-600 text-xs border-l border-gray-100">Masc</th>
-                                <th className="p-2 font-bold text-gray-600 text-xs border-l border-gray-100 bg-gray-50/30">Neut</th>
-                                <th className="p-2 font-bold text-gray-600 text-xs border-l border-gray-100">Fem</th>
-                                <th className="p-2 font-bold text-gray-600 text-xs border-l border-gray-100">Pl</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr className="border-b border-gray-100">
-                                <td className="p-3 font-bold text-gray-500 bg-gray-50/50">Nominative</td>
-                                <td className="p-3 border-l border-gray-100 text-center"><span className="font-bold text-art-der">-e</span></td>
-                                <td className="p-3 border-l border-gray-100 text-center bg-gray-50/30"><span className="font-bold text-art-der">-e</span></td>
-                                <td className="p-3 border-l border-gray-100 text-center"><span className="font-bold text-art-der">-e</span></td>
-                                <td className="p-3 border-l border-gray-100 text-center"><span className="font-bold text-art-der">-en</span></td>
-                                <td className="p-3 border-l border-gray-100 text-center"><span className="font-bold text-art-die">-er</span></td>
-                                <td className="p-3 border-l border-gray-100 text-center bg-gray-50/30"><span className="font-bold text-art-die">-es</span></td>
-                                <td className="p-3 border-l border-gray-100 text-center"><span className="font-bold text-art-die">-e</span></td>
-                                <td className="p-3 border-l border-gray-100 text-center"><span className="font-bold text-art-die">-en</span></td>
-                                <td className="p-3 border-l border-gray-100 text-center"><span className="font-bold text-art-das">-er</span></td>
-                                <td className="p-3 border-l border-gray-100 text-center bg-gray-50/30"><span className="font-bold text-art-das">-es</span></td>
-                                <td className="p-3 border-l border-gray-100 text-center"><span className="font-bold text-art-das">-e</span></td>
-                                <td className="p-3 border-l border-gray-100 text-center"><span className="font-bold text-art-das">-e</span></td>
-                            </tr>
-                            <tr className="border-b border-gray-100">
-                                <td className="p-3 font-bold text-gray-500 bg-gray-50/50">Accusative</td>
-                                <td className="p-3 border-l border-gray-100 text-center"><span className="font-bold text-art-der">-en</span></td>
-                                <td className="p-3 border-l border-gray-100 text-center bg-gray-50/30"><span className="font-bold text-art-der">-e</span></td>
-                                <td className="p-3 border-l border-gray-100 text-center"><span className="font-bold text-art-der">-e</span></td>
-                                <td className="p-3 border-l border-gray-100 text-center"><span className="font-bold text-art-der">-en</span></td>
-                                <td className="p-3 border-l border-gray-100 text-center"><span className="font-bold text-art-die">-en</span></td>
-                                <td className="p-3 border-l border-gray-100 text-center bg-gray-50/30"><span className="font-bold text-art-die">-es</span></td>
-                                <td className="p-3 border-l border-gray-100 text-center"><span className="font-bold text-art-die">-e</span></td>
-                                <td className="p-3 border-l border-gray-100 text-center"><span className="font-bold text-art-die">-en</span></td>
-                                <td className="p-3 border-l border-gray-100 text-center"><span className="font-bold text-art-das">-en</span></td>
-                                <td className="p-3 border-l border-gray-100 text-center bg-gray-50/30"><span className="font-bold text-art-das">-es</span></td>
-                                <td className="p-3 border-l border-gray-100 text-center"><span className="font-bold text-art-das">-e</span></td>
-                                <td className="p-3 border-l border-gray-100 text-center"><span className="font-bold text-art-das">-e</span></td>
-                            </tr>
-                            <tr className="border-b border-gray-100">
-                                <td className="p-3 font-bold text-gray-500 bg-gray-50/50">Dative</td>
-                                <td className="p-3 border-l border-gray-100 text-center"><span className="font-bold text-art-der">-en</span></td>
-                                <td className="p-3 border-l border-gray-100 text-center bg-gray-50/30"><span className="font-bold text-art-der">-en</span></td>
-                                <td className="p-3 border-l border-gray-100 text-center"><span className="font-bold text-art-der">-en</span></td>
-                                <td className="p-3 border-l border-gray-100 text-center"><span className="font-bold text-art-der">-en</span></td>
-                                <td className="p-3 border-l border-gray-100 text-center"><span className="font-bold text-art-die">-en</span></td>
-                                <td className="p-3 border-l border-gray-100 text-center bg-gray-50/30"><span className="font-bold text-art-die">-en</span></td>
-                                <td className="p-3 border-l border-gray-100 text-center"><span className="font-bold text-art-die">-en</span></td>
-                                <td className="p-3 border-l border-gray-100 text-center"><span className="font-bold text-art-die">-en</span></td>
-                                <td className="p-3 border-l border-gray-100 text-center"><span className="font-bold text-art-das">-em</span></td>
-                                <td className="p-3 border-l border-gray-100 text-center bg-gray-50/30"><span className="font-bold text-art-das">-em</span></td>
-                                <td className="p-3 border-l border-gray-100 text-center"><span className="font-bold text-art-das">-er</span></td>
-                                <td className="p-3 border-l border-gray-100 text-center"><span className="font-bold text-art-das">-en</span></td>
-                            </tr>
-                            <tr>
-                                <td className="p-3 font-bold text-gray-500 bg-gray-50/50">Genitive</td>
-                                <td className="p-3 border-l border-gray-100 text-center"><span className="font-bold text-art-der">-en</span></td>
-                                <td className="p-3 border-l border-gray-100 text-center bg-gray-50/30"><span className="font-bold text-art-der">-en</span></td>
-                                <td className="p-3 border-l border-gray-100 text-center"><span className="font-bold text-art-der">-en</span></td>
-                                <td className="p-3 border-l border-gray-100 text-center"><span className="font-bold text-art-der">-en</span></td>
-                                <td className="p-3 border-l border-gray-100 text-center"><span className="font-bold text-art-die">-en</span></td>
-                                <td className="p-3 border-l border-gray-100 text-center bg-gray-50/30"><span className="font-bold text-art-die">-en</span></td>
-                                <td className="p-3 border-l border-gray-100 text-center"><span className="font-bold text-art-die">-en</span></td>
-                                <td className="p-3 border-l border-gray-100 text-center"><span className="font-bold text-art-die">-en</span></td>
-                                <td className="p-3 border-l border-gray-100 text-center"><span className="font-bold text-art-das">-en</span></td>
-                                <td className="p-3 border-l border-gray-100 text-center bg-gray-50/30"><span className="font-bold text-art-das">-en</span></td>
-                                <td className="p-3 border-l border-gray-100 text-center"><span className="font-bold text-art-das">-er</span></td>
-                                <td className="p-3 border-l border-gray-100 text-center"><span className="font-bold text-art-das">-en</span></td>
-                            </tr>
-                        </tbody>
-                    </table>
+            <div className="mb-8 rounded-lg border border-gray-200 bg-white p-5 shadow-sm">
+                <h4 className="font-bold text-lg mb-4">Which adjective table should I use?</h4>
+                <div className="grid gap-4 md:grid-cols-3">
+                    <div className="rounded border border-blue-100 bg-blue-50 p-4">
+                        <h5 className="mb-2 font-bold text-blue-900">1. Definite Article</h5>
+                        <p className="text-sm text-blue-900">Use this when the noun already has a strong signal: <strong>der, die, das, dieser, jeder, welcher</strong>.</p>
+                        <p className="mt-3 rounded bg-white p-2 text-xs font-mono text-gray-700">der alte Mann</p>
+                    </div>
+                    <div className="rounded border border-red-100 bg-red-50 p-4">
+                        <h5 className="mb-2 font-bold text-red-900">2. Indefinite Article</h5>
+                        <p className="text-sm text-red-900">Use this after words like <strong>ein, eine, kein, mein, dein, sein, ihr</strong>.</p>
+                        <p className="mt-3 rounded bg-white p-2 text-xs font-mono text-gray-700">ein alter Mann</p>
+                    </div>
+                    <div className="rounded border border-green-100 bg-green-50 p-4">
+                        <h5 className="mb-2 font-bold text-green-900">3. Zero Article</h5>
+                        <p className="text-sm text-green-900">Use this when there is no article before the adjective.</p>
+                        <p className="mt-3 rounded bg-white p-2 text-xs font-mono text-gray-700">alter Wein</p>
+                    </div>
                 </div>
+                <p className="mt-4 text-sm text-gray-600">
+                    The detailed tables below show the endings. This is easier for A2-B1 learners than reading one huge combined table.
+                </p>
             </div>
 
             {/* Special Cases */}
@@ -848,7 +939,7 @@ export const GrammarView: React.FC = () => {
                 title="Definite Article" 
                 subtitle="After: der, die, das, dieser, jeder, welcher, alle..." 
             />
-            <GrammarTable data={definiterData} highlightColor="text-art-der" />
+                <GrammarTable data={definiterData} highlightColor="text-art-der" headers={ARTICLE_TABLE_HEADERS} />
             </section>
 
             <section>
@@ -856,7 +947,7 @@ export const GrammarView: React.FC = () => {
                 title="Indefinite Article" 
                 subtitle="After: ein, eine, kein, mein, dein, sein, ihr..." 
             />
-            <GrammarTable data={indefiniterData} highlightColor="text-art-die" />
+                <GrammarTable data={indefiniterData} highlightColor="text-art-die" headers={ARTICLE_TABLE_HEADERS} />
             </section>
 
             <section>
@@ -865,33 +956,37 @@ export const GrammarView: React.FC = () => {
                 subtitle="Without article (materials, properties, indefinite plural)." 
             />
             <StrongDeclensionExplanation />
-            <GrammarTable data={nullartikelData} highlightColor="text-art-das" />
+            <GrammarTable data={nullartikelData} highlightColor="text-art-das" headers={ARTICLE_TABLE_HEADERS} />
             </section>
         </div>
 
         {/* 2. VERBS (New) */}
         <div className="mb-16">
-            <h3 className="font-display text-2xl border-l-4 border-de-red pl-3 mb-6">Verbs & Auxiliary Verbs</h3>
+            <h3 className="font-display text-2xl border-l-4 border-de-red pl-3 mb-6">
+              Verbs & Auxiliary Verbs <LevelBadge level="A1-B1" />
+            </h3>
             
             <VerbConjugationPatterns />
 
             <VerbGroupTable 
                 title="Auxiliary Verbs" 
-                headers={["Verb", "Tense", "I (ich)", "You (du)", "He/She/It", "We/You formal", "You pl."]}
+                headers={["Verb", "Tense", "ich", "du", "er/es/sie", "wir", "ihr", "sie/Sie"]}
                 data={auxData}
             />
 
             <VerbGroupTable 
                 title="Modal Verbs (Present)" 
-                headers={["Verb", "I/He/She/It", "You (du)", "We/You formal", "You pl."]}
+                headers={["Verb", "ich", "du", "er/es/sie", "wir", "ihr", "sie/Sie"]}
                 data={modalData}
-                colWidths="w-1/5"
+                colWidths="w-1/6"
             />
         </div>
 
         {/* 3. PRONOMEN */}
         <div className="mb-16">
-            <h3 className="font-display text-2xl border-l-4 border-de-black pl-3 mb-6">Pronouns</h3>
+            <h3 className="font-display text-2xl border-l-4 border-de-black pl-3 mb-6">
+              Pronouns <LevelBadge level="A1-A2" />
+            </h3>
             
             {/* Personal Pronouns Full */}
             <section className="mb-10">
@@ -899,7 +994,7 @@ export const GrammarView: React.FC = () => {
                     title="Personal Pronouns" 
                     subtitle="Full table of all persons and cases." 
                 />
-                <GrammarTable data={personalFullData} highlightColor="text-de-black" smallText={true} />
+                <GrammarTable data={personalFullData} highlightColor="text-de-black" headers={PERSON_PRONOUN_HEADERS} smallText={true} />
             </section>
 
             {/* Reflexive */}
@@ -908,7 +1003,7 @@ export const GrammarView: React.FC = () => {
                     title="Reflexive Pronouns" 
                     subtitle="Back-referring pronouns (sich)." 
                 />
-                <GrammarTable data={reflexivData} highlightColor="text-de-black" smallText={true} />
+                <GrammarTable data={reflexivData} highlightColor="text-de-black" headers={PERSON_PRONOUN_HEADERS} smallText={true} />
             </section>
 
             {/* Definitpronomen / Relativpronomen */}
@@ -917,7 +1012,7 @@ export const GrammarView: React.FC = () => {
                     title="Relative Pronouns / Definite Pronouns" 
                     subtitle="Identical to 'Der/Die/Das' but with special forms in Genitive & Dative Plural." 
                 />
-                <GrammarTable data={definitpronomenData} highlightColor="text-de-black" />
+                <GrammarTable data={definitpronomenData} highlightColor="text-de-black" headers={ARTICLE_TABLE_HEADERS} />
             </section>
         </div>
 
@@ -932,21 +1027,23 @@ export const GrammarView: React.FC = () => {
 
         {/* 7. CHEAT SHEETS (Prepositions & Possessives) */}
         <div className="mb-8">
-            <h3 className="font-display text-2xl border-l-4 border-gray-400 pl-3 mb-6">Quick Overview</h3>
+            <h3 className="font-display text-2xl border-l-4 border-gray-400 pl-3 mb-6">
+              Quick Overview <LevelBadge level="A1-B1" />
+            </h3>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
                 {/* Possessives */}
                 <div className="bg-gray-50 p-5 rounded-lg border border-gray-200">
                      <h4 className="font-bold uppercase tracking-wider text-sm mb-4 text-de-black">Possessive Articles</h4>
                      <div className="grid grid-cols-2 gap-2 text-sm text-de-black mb-4">
-                        <div className="p-2 bg-white rounded border border-gray-100 flex justify-between items-center"><span className="text-gray-600 font-medium">I</span><strong className="text-de-black ml-2">mein</strong></div>
-                        <div className="p-2 bg-white rounded border border-gray-100 flex justify-between items-center"><span className="text-gray-600 font-medium">You</span><strong className="text-de-black ml-2">dein</strong></div>
-                        <div className="p-2 bg-white rounded border border-gray-100 flex justify-between items-center"><span className="text-gray-600 font-medium">He</span><strong className="text-de-black ml-2">sein</strong></div>
-                        <div className="p-2 bg-white rounded border border-gray-100 flex justify-between items-center"><span className="text-gray-600 font-medium">She</span><strong className="text-de-black ml-2">ihr</strong></div>
-                        <div className="p-2 bg-white rounded border border-gray-100 flex justify-between items-center"><span className="text-gray-600 font-medium">It</span><strong className="text-de-black ml-2">sein</strong></div>
-                        <div className="p-2 bg-white rounded border border-gray-100 flex justify-between items-center"><span className="text-gray-600 font-medium">We</span><strong className="text-de-black ml-2">unser</strong></div>
-                        <div className="p-2 bg-white rounded border border-gray-100 flex justify-between items-center"><span className="text-gray-600 font-medium">You pl.</span><strong className="text-de-black ml-2">euer</strong></div>
-                        <div className="p-2 bg-white rounded border border-gray-100 flex justify-between items-center"><span className="text-gray-600 font-medium">You formal</span><strong className="text-de-black ml-2">Ihr</strong></div>
+                        <div className="p-2 bg-white rounded border border-gray-100 flex justify-between items-center"><span className="text-gray-600 font-medium">ich</span><strong className="text-de-black ml-2">mein</strong></div>
+                        <div className="p-2 bg-white rounded border border-gray-100 flex justify-between items-center"><span className="text-gray-600 font-medium">du</span><strong className="text-de-black ml-2">dein</strong></div>
+                        <div className="p-2 bg-white rounded border border-gray-100 flex justify-between items-center"><span className="text-gray-600 font-medium">er/es</span><strong className="text-de-black ml-2">sein</strong></div>
+                        <div className="p-2 bg-white rounded border border-gray-100 flex justify-between items-center"><span className="text-gray-600 font-medium">sie</span><strong className="text-de-black ml-2">ihr</strong></div>
+                        <div className="p-2 bg-white rounded border border-gray-100 flex justify-between items-center"><span className="text-gray-600 font-medium">wir</span><strong className="text-de-black ml-2">unser</strong></div>
+                        <div className="p-2 bg-white rounded border border-gray-100 flex justify-between items-center"><span className="text-gray-600 font-medium">ihr</span><strong className="text-de-black ml-2">euer</strong></div>
+                        <div className="p-2 bg-white rounded border border-gray-100 flex justify-between items-center"><span className="text-gray-600 font-medium">sie</span><strong className="text-de-black ml-2">ihr</strong></div>
+                        <div className="p-2 bg-white rounded border border-gray-100 flex justify-between items-center"><span className="text-gray-600 font-medium">Sie</span><strong className="text-de-black ml-2">Ihr</strong></div>
                      </div>
                      <div className="bg-yellow-50 p-3 rounded text-xs text-gray-700 border border-yellow-100">
                         <strong>Note:</strong> The endings are identical to the <strong className="text-art-die">Indefinite Article</strong> (ein, eine, einen...).
