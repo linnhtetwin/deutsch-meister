@@ -1,6 +1,22 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Roboto", sans-serif;
+  --font-display: "Oswald", sans-serif;
+  --font-gothic: "UnifrakturMaguntia", cursive;
+
+  --color-de-black: #000000;
+  --color-de-red: #dd0000;
+  --color-de-gold: #ffce00;
+  --color-dativ: #005f73;
+  --color-akk: #ae2012;
+  --color-genitiv: #8e44ad;
+  --color-wechsel: #d35400;
+  --color-prep: #16a085;
+  --color-art-der: #2b6cb0;
+  --color-art-die: #c0392b;
+  --color-art-das: #27ae60;
+}
 
 body {
   background-color: #f4f4f4;
