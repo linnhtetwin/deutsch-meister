@@ -1,4 +1,4 @@
-const CACHE_NAME = 'deutsch-meister-v2';
+const CACHE_NAME = 'deutsch-meister-v3';
 const APP_SHELL = [
   '/',
   '/index.html',

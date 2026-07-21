@@ -6,7 +6,8 @@ import { VerbQuiz } from './components/VerbQuiz';
 import { NounQuiz } from './components/NounQuiz';
 import { GuideView } from './components/GuideView';
 import { GrammarView } from './components/GrammarView';
-import { BookOpen, HelpCircle, GraduationCap, Info, LayoutList } from 'lucide-react';
+import { LearningPathView } from './components/LearningPathView';
+import { BookOpen, HelpCircle, GraduationCap, Info, LayoutList, Map } from 'lucide-react';
 
 // Custom German Shield Logo Component
 const LogoShield: React.FC<{ className?: string }> = ({ className = "" }) => (
@@ -39,6 +40,14 @@ const NavButton: React.FC<{ tab: TabView, currentTab: TabView, setCurrentTab: (t
 const App: React.FC = () => {
   const [currentTab, setCurrentTab] = useState<TabView>('dictionary');
 
+  const navigateTo = (tab: TabView, anchor?: string) => {
+    setCurrentTab(tab);
+    window.setTimeout(() => {
+      if (anchor) document.getElementById(anchor)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      else window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, 0);
+  };
+
   return (
     <div className="min-h-screen bg-[#f4f4f4] pb-12 text-de-black">
       {/* Header */}
@@ -60,6 +69,7 @@ const App: React.FC = () => {
         {/* Navigation */}
         <nav className="sticky top-0 z-20 border-b border-gray-200 bg-[#f4f4f4]/95 px-4 py-4 backdrop-blur supports-[backdrop-filter]:bg-[#f4f4f4]/80" aria-label="Main sections">
           <div className="mx-auto grid max-w-5xl grid-cols-2 gap-3 sm:flex sm:flex-wrap sm:justify-center">
+          <NavButton tab="learning-path" currentTab={currentTab} setCurrentTab={setCurrentTab} label="Lernweg" icon={<Map size={20} />} />
           <NavButton tab="dictionary" currentTab={currentTab} setCurrentTab={setCurrentTab} label="Wörterbuch" icon={<BookOpen size={20} />} />
           <NavButton tab="grammar" currentTab={currentTab} setCurrentTab={setCurrentTab} label="Grammatik" icon={<LayoutList size={20} />} />
           <NavButton tab="verb-quiz" currentTab={currentTab} setCurrentTab={setCurrentTab} label="Verb Quiz" icon={<HelpCircle size={20} />} />
@@ -70,11 +80,12 @@ const App: React.FC = () => {
 
         {/* Content Area */}
         <div className="animate-in fade-in duration-500 pt-8">
+          {currentTab === 'learning-path' && <LearningPathView onNavigate={navigateTo} />}
           {currentTab === 'dictionary' && <DictionaryView />}
           {currentTab === 'grammar' && <GrammarView />}
           {currentTab === 'verb-quiz' && <VerbQuiz />}
           {currentTab === 'noun-quiz' && <NounQuiz />}
-          {currentTab === 'guide' && <GuideView />}
+          {currentTab === 'guide' && <GuideView onNavigate={navigateTo} />}
         </div>
       </main>
 

@@ -4,7 +4,7 @@
 
 **Master the German Case System & Articles**
 
-A comprehensive learning platform for German grammar, specializing in verbs, nouns, and the German case system (Dativ, Akkusativ, Genitiv).
+A guided German learning platform that combines a zero-to-B1 roadmap, searchable vocabulary, grammar references, and focused quizzes.
 
 [View Online](https://deutsch-meister.pages.dev/) • [Features](#features) • [Getting Started](#getting-started) • [Technologies](#technologies) • [License](#license)
 
@@ -17,15 +17,19 @@ A comprehensive learning platform for German grammar, specializing in verbs, nou
 ## Features
 
 ✨ **Interactive Learning Modules**
+- 🗺️ **Lernweg (Zero to B1)** – A complete learning path for absolute beginners through independent B1 learners. Twelve expandable missions provide clear outcomes, small checklists, recommended practice links, an automatic “next mission,” and progress saved locally in the browser.
 - 📚 **Wörterbuch (Dictionary)** – Browse and search the growing verb/noun database with lazy‑loading infinite scroll, relevance‑aware sorting and advanced filters (Dativ, Akkusativ, Genitiv, Wechselpräposition → Akk/Dativ, Präpositionalverb → Akk/Dativ, Intransitiv, Modalverb, plus nouns/adjectives/adverbs). Search looks through example sentences and full verb conjugations for smarter results.
+- 📋 **Grammatik (Grammar)** – A1–B1 grammar roadmap with learner-friendly examples, case and declension tables, expandable practical patterns, sentence order, conjunctions, prepositions, verb forms, pronouns, word building, and B1 structures.
 - ❓ **Verb Quiz** – Master German verbs with multiple quiz modes: Classic, Wechselpräpositionen, Genitiv‑Meister (rare Genitiv verbs), and Chaos Mix. Real‑time feedback plus a **streak counter** keeps you motivated.
 - 🎓 **Nomen Quiz** – Practice German article selection (Der, Die, Das) with instant feedback, streak tracking and a built‑in educational section full of gender heuristics and tips.
-- 📖 **Anleitung (Guide)** – Comprehensive grammar reference featuring declension tables, sentence‑structure rules (V2, TeKaMoLo, subclauses), adverb explanations and handy gender‑ending cheat sheets.
+- 📖 **Anleitung (App Guide)** – Explains search, audio, filters, cards, quizzes, the Lernweg workflow, and a simple retrieve–use–repeat memory method.
 
 🎨 **User Experience**
 - Clean, intuitive interface with German cultural styling
 - Real-time feedback on quiz answers
 - Streak counter to track your progress
+- Persistent learning-path checklists stored on the learner's device
+- Direct links from roadmap missions to the relevant learning and practice pages
 - Responsive design for mobile and desktop
 
 ⚙️ **Built with Modern Tech**
@@ -33,7 +37,6 @@ A comprehensive learning platform for German grammar, specializing in verbs, nou
 - Vite for blazing-fast development
 - Tailwind CSS for styling
 - Lucide React icons
-- Google Gemini API integration
 
 ---
 
@@ -57,17 +60,7 @@ A comprehensive learning platform for German grammar, specializing in verbs, nou
    npm install
    ```
 
-3. **Configure environment variables**
-   
-   Create a `.env.local` file in the root directory (these files are ignored by Git for security):
-   ```env
-   VITE_GEMINI_API_KEY=your_gemini_api_key_here
-   ```
-   You can also use other `.env` variants like `.env.development.local` or `.env.production.local` – the gitignore prevents them from being accidentally committed.
-
-> ⚠️ **Security tip:** never commit API keys or other secrets. The app reads from `import.meta.env` at build time, so local files or environment variables on the hosting platform are sufficient.
-
-4. **Start development server**
+3. **Start development server**
    ```bash
    npm run dev
    ```
@@ -101,7 +94,9 @@ deutsch-meister/
 │   ├── DictionaryView.tsx   # Dictionary/search interface
 │   ├── VerbQuiz.tsx         # Verb quiz with multiple modes
 │   ├── NounQuiz.tsx         # Noun/article quiz
-│   ├── GuideView.tsx        # Grammar guide
+│   ├── GrammarView.tsx      # A1–B1 grammar reference
+│   ├── LearningPathView.tsx # Interactive zero-to-B1 roadmap
+│   ├── GuideView.tsx        # App usage and study guide
 │   └── WordCard.tsx         # Reusable word card component
 ├── App.tsx                  # Main app component
 ├── data.ts                  # Verb and noun database
@@ -117,10 +112,9 @@ deutsch-meister/
 
 - **Frontend Framework**: [React 19](https://react.dev)
 - **Language**: [TypeScript](https://www.typescriptlang.org)
-- **Build Tool**: [Vite 6](https://vitejs.dev)
+- **Build Tool**: [Vite 8](https://vite.dev)
 - **Styling**: [Tailwind CSS](https://tailwindcss.com)
 - **Icons**: [Lucide React](https://lucide.dev)
-- **AI**: [Google Gemini API](https://ai.google.dev)
 - **Hosting**: [Cloudflare Pages](https://pages.cloudflare.com)
 
 ---
@@ -137,6 +131,18 @@ deutsch-meister/
 ---
 
 ## Learning Resources
+
+### Recommended workflow
+
+1. Open **Lernweg** and continue the first unfinished mission.
+2. Learn only five new words and one small grammar pattern at a time.
+3. Use the mission buttons to open the relevant dictionary or grammar section.
+4. Say or write personal examples, then test yourself with a quiz.
+5. Review from memory after 1, 3, 7, 14, and 30 days.
+
+The roadmap is intentionally flexible: its week ranges are guidance, not deadlines. Completion checkboxes are stored in browser `localStorage` and can be reset from the Lernweg page.
+
+### Covered topics
 
 This app focuses on mastering:
 

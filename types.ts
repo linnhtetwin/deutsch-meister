@@ -69,4 +69,4 @@ export interface NounItem {
 
 export type DatabaseItem = VerbItem | NounItem | AdjectiveItem | AdverbItem;
 
-export type TabView = 'dictionary' | 'verb-quiz' | 'noun-quiz' | 'guide' | 'grammar';
+export type TabView = 'learning-path' | 'dictionary' | 'verb-quiz' | 'noun-quiz' | 'guide' | 'grammar';

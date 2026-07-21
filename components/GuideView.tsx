@@ -1,8 +1,9 @@
 
 import React from 'react';
-import { Search, Filter, Highlighter, BookOpen, AlertTriangle, HelpCircle, Volume2 } from 'lucide-react';
+import { Search, Filter, Highlighter, BookOpen, AlertTriangle, HelpCircle, Volume2, Map, Brain, LayoutList } from 'lucide-react';
+import { TabView } from '../types';
 
-export const GuideView: React.FC = () => {
+export const GuideView: React.FC<{ onNavigate?: (tab: TabView, anchor?: string) => void }> = ({ onNavigate }) => {
   return (
     <div className="max-w-4xl mx-auto px-4 pb-20">
       <div className="bg-white rounded-lg shadow-xl overflow-hidden border-t-4 border-de-gold">
@@ -10,10 +11,46 @@ export const GuideView: React.FC = () => {
         {/* Header */}
         <div className="bg-gray-50 p-8 border-b border-gray-100">
           <h2 className="font-display text-4xl text-de-black mb-2">Benutzerhandbuch</h2>
-          <p className="text-gray-500 text-lg font-serif italic">How to master Deutsch Meister</p>
+          <p className="text-gray-500 text-lg font-serif italic">How to use Deutsch Meister without feeling overwhelmed</p>
         </div>
 
         <div className="p-8 space-y-12">
+
+          <section className="rounded-xl border border-yellow-200 bg-yellow-50 p-5 sm:p-6">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="bg-de-gold text-black p-2 rounded"><Map size={24} /></div>
+              <h3 className="font-display text-2xl text-gray-800">Start with the Lernweg</h3>
+            </div>
+            <p className="leading-relaxed text-gray-700">If you are unsure what to study, open <strong>Lernweg</strong>. It takes you from zero knowledge to B1 through twelve missions. Check off small actions, follow the suggested next mission, and use its buttons to open the right dictionary, grammar or quiz page.</p>
+            <button onClick={() => onNavigate?.('learning-path')} className="mt-4 inline-flex min-h-11 items-center gap-2 rounded-lg bg-de-black px-4 py-2 text-sm font-bold text-de-gold hover:bg-de-red hover:text-white focus:outline-none focus-visible:ring-4 focus-visible:ring-de-gold/50"><Map size={16} /> Open Zero to B1 Lernweg</button>
+          </section>
+
+          <section>
+            <div className="flex items-center gap-3 mb-4">
+              <div className="bg-de-red text-white p-2 rounded"><LayoutList size={24} /></div>
+              <h3 className="font-display text-2xl text-gray-800">Grammatik: your reference page</h3>
+            </div>
+            <p className="leading-relaxed text-gray-700">Use <strong>Grammatik</strong> when a Lernweg mission introduces a rule or when you need to check a form. It covers the A1–B1 learning roadmap, cases, adjective endings, verbs, pronouns, sentence order, conjunctions, prepositions, word formation, and B1 structures.</p>
+            <div className="mt-4 grid gap-4 sm:grid-cols-3">
+              <div className="rounded-lg border border-gray-200 p-4"><strong className="text-de-black">1 · Jump</strong><p className="mt-1 text-sm leading-relaxed text-gray-600">Use the topic buttons at the top instead of scrolling through everything.</p></div>
+              <div className="rounded-lg border border-gray-200 p-4"><strong className="text-de-black">2 · Understand</strong><p className="mt-1 text-sm leading-relaxed text-gray-600">Read the short rule and example first. Open detailed cards only when needed.</p></div>
+              <div className="rounded-lg border border-gray-200 p-4"><strong className="text-de-black">3 · Retrieve</strong><p className="mt-1 text-sm leading-relaxed text-gray-600">Close the rule, create your own example, and then check the table.</p></div>
+            </div>
+            <div className="mt-4 rounded-lg border border-blue-100 bg-blue-50 p-4 text-sm leading-relaxed text-blue-900"><strong>On a phone:</strong> wide grammar tables scroll horizontally. The expandable practical cards stay closed to keep the page breathable.</div>
+            <button onClick={() => onNavigate?.('grammar')} className="mt-4 inline-flex min-h-11 items-center gap-2 rounded-lg bg-de-black px-4 py-2 text-sm font-bold text-white hover:bg-de-red focus:outline-none focus-visible:ring-4 focus-visible:ring-de-gold/50"><LayoutList size={16} /> Open Grammatik</button>
+          </section>
+
+          <section>
+            <div className="flex items-center gap-3 mb-4">
+              <div className="bg-violet-600 text-white p-2 rounded"><Brain size={24} /></div>
+              <h3 className="font-display text-2xl text-gray-800">How to remember more</h3>
+            </div>
+            <div className="grid gap-4 sm:grid-cols-3">
+              <div className="rounded-lg border border-gray-200 p-4"><strong className="text-de-black">Retrieve</strong><p className="mt-1 text-sm leading-relaxed text-gray-600">Close the page and recall the answer before checking it.</p></div>
+              <div className="rounded-lg border border-gray-200 p-4"><strong className="text-de-black">Use</strong><p className="mt-1 text-sm leading-relaxed text-gray-600">Write or say a personal sentence with every new pattern.</p></div>
+              <div className="rounded-lg border border-gray-200 p-4"><strong className="text-de-black">Repeat</strong><p className="mt-1 text-sm leading-relaxed text-gray-600">Review after 1, 3, 7, 14 and 30 days—not five times at once.</p></div>
+            </div>
+          </section>
           
           {/* Section 1: Search */}
           <section>

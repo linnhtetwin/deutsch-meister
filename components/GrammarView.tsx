@@ -21,6 +21,47 @@ const TeacherNote = ({ children }: { children: React.ReactNode }) => (
   </div>
 );
 
+const PatternLine = ({ label, children }: { label: string; children: React.ReactNode }) => (
+  <div className="grid gap-1 border-b border-gray-100 py-2 last:border-0 sm:grid-cols-[7.5rem_1fr]">
+    <span className="text-xs font-bold uppercase tracking-wide text-gray-400">{label}</span>
+    <span className="text-sm leading-relaxed text-gray-700">{children}</span>
+  </div>
+);
+
+const TopicDetails = ({ title, level, summary, children }: { title: string; level: string; summary: string; children: React.ReactNode }) => (
+  <details className="group rounded-xl border border-gray-200 bg-white shadow-sm open:ring-2 open:ring-de-gold/30">
+    <summary className="flex cursor-pointer list-none items-start justify-between gap-4 rounded-xl p-5 focus:outline-none focus-visible:ring-4 focus-visible:ring-de-gold/50">
+      <span>
+        <span className="block font-bold text-de-black">{title} <LevelBadge level={level} /></span>
+        <span className="mt-1 block text-sm leading-relaxed text-gray-500">{summary}</span>
+      </span>
+      <span aria-hidden="true" className="mt-1 text-xl text-gray-400 transition-transform group-open:rotate-45">+</span>
+    </summary>
+    <div className="border-t border-gray-100 px-5 pb-5 pt-3">{children}</div>
+  </details>
+);
+
+const TopicNav = () => (
+  <nav aria-label="Grammar topics" className="mb-12 rounded-xl border border-gray-200 bg-gray-50 p-4">
+    <p className="mb-3 text-xs font-bold uppercase tracking-[0.16em] text-gray-500">Jump to a topic</p>
+    <div className="flex flex-wrap gap-2 text-sm">
+      {[
+        ['#cases', 'Cases'],
+        ['#adjectives', 'Adjectives'],
+        ['#verbs', 'Verbs'],
+        ['#pronouns', 'Pronouns'],
+        ['#sentences', 'Sentences'],
+        ['#prepositions', 'Prepositions'],
+        ['#word-building', 'Words & dates'],
+      ].map(([href, label]) => (
+        <a key={href} href={href} className="rounded-full border border-gray-200 bg-white px-3 py-2 font-medium text-gray-700 transition hover:border-de-red hover:text-de-red focus:outline-none focus-visible:ring-4 focus-visible:ring-de-gold/50">
+          {label}
+        </a>
+      ))}
+    </div>
+  </nav>
+);
+
 const LevelRoadmap = () => (
   <div className="mb-12 rounded-lg border border-gray-200 bg-gray-50 p-5">
     <h3 className="mb-4 font-display text-2xl text-de-black">A1-B1 Grammar Roadmap</h3>
@@ -155,6 +196,18 @@ const TenseProgressionSection = () => (
             <td className="border-l border-gray-100 p-3">Präteritum of sein/haben/modal verbs</td>
             <td className="border-l border-gray-100 p-3">Common narrative past</td>
             <td className="border-l border-gray-100 p-3 font-mono text-xs">Ich war krank. Ich musste arbeiten.</td>
+          </tr>
+          <tr className="border-t border-gray-100">
+            <td className="p-3 font-bold text-blue-700">A2</td>
+            <td className="border-l border-gray-100 p-3">Futur I</td>
+            <td className="border-l border-gray-100 p-3">Promise, prediction, or emphasis on the future</td>
+            <td className="border-l border-gray-100 p-3 font-mono text-xs">Ich werde morgen arbeiten.</td>
+          </tr>
+          <tr className="border-t border-gray-100">
+            <td className="p-3 font-bold text-violet-700">B1</td>
+            <td className="border-l border-gray-100 p-3">Plusquamperfekt</td>
+            <td className="border-l border-gray-100 p-3">An action completed before another past action</td>
+            <td className="border-l border-gray-100 p-3 font-mono text-xs">Ich hatte schon gegessen.</td>
           </tr>
           <tr className="border-t border-gray-100">
             <td className="p-3 font-bold text-violet-700">B1</td>
@@ -355,181 +408,75 @@ const SentenceStructureSection = () => (
             </div>
         </div>
 
-        <div className="bg-indigo-50 p-6 rounded-xl border border-indigo-200 mb-10">
-            <h4 className="font-bold text-de-black text-lg mb-4">Conjunctions for B1</h4>
-            <p className="text-sm text-gray-700 mb-4">
-                For B1, learners should not only memorize connectors, but also know their word-order type: position 0, position 1, or subordinate clause with the verb at the end.
-            </p>
-            <div className="grid gap-4 lg:grid-cols-3">
-                <div className="bg-white p-4 rounded border border-indigo-100">
-                    <p className="font-bold text-de-black mb-2">Reason & Result</p>
-                    <p className="text-sm text-gray-600 mb-3">weil, da, denn, deshalb, deswegen, sodass</p>
-                    <div className="bg-slate-50 p-3 rounded text-xs font-mono text-gray-700">
-                        Ich bleibe zu Hause, <span className="font-bold">weil</span> ich krank <span className="text-de-red font-bold">bin</span>.
-                        <br/>
-                        Ich bin krank. <span className="font-bold">Deshalb</span> <span className="text-de-red font-bold">bleibe</span> ich zu Hause.
-                        <br/>
-                        Er hat den Bus genommen, <span className="font-bold">sodass</span> er pünktlich <span className="text-de-red font-bold">war</span>.
+        <div className="rounded-xl border border-indigo-200 bg-indigo-50 p-5 sm:p-6">
+            <h4 className="font-bold text-de-black text-lg">Conjunctions: remember 3 patterns</h4>
+            <p className="mt-1 text-sm text-gray-600">Look at the word after the comma. Then choose where the verb goes.</p>
+
+            <div className="mt-5 grid gap-4 lg:grid-cols-3">
+                <div className="rounded-lg border border-yellow-200 bg-white p-4 shadow-sm">
+                    <div className="mb-3 flex items-center gap-3">
+                        <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-yellow-100 font-bold text-yellow-800">1</span>
+                        <div>
+                            <p className="font-bold text-de-black">Normal order</p>
+                            <p className="text-xs text-gray-500">und, aber, oder, denn, sondern</p>
+                        </div>
                     </div>
+                    <p className="text-sm text-gray-600">Start with the subject, then the verb.</p>
+                    <p className="mt-3 rounded bg-gray-50 p-3 text-sm text-gray-700">
+                        Ich bleibe zu Hause, <strong>denn ich <span className="text-de-red">bin</span></strong> krank.
+                    </p>
                 </div>
-                <div className="bg-white p-4 rounded border border-indigo-100">
-                    <p className="font-bold text-de-black mb-2">Contrast</p>
-                    <p className="text-sm text-gray-600 mb-3">aber, sondern, obwohl, trotzdem, während</p>
-                    <div className="bg-slate-50 p-3 rounded text-xs font-mono text-gray-700">
-                        <span className="font-bold">Obwohl</span> es regnet, gehen wir spazieren.
-                        <br/>
-                        Es regnet. <span className="font-bold">Trotzdem</span> gehen wir spazieren.
-                        <br/>
-                        Ich trinke keinen Kaffee, <span className="font-bold">sondern</span> Tee.
+
+                <div className="rounded-lg border border-blue-200 bg-white p-4 shadow-sm">
+                    <div className="mb-3 flex items-center gap-3">
+                        <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-blue-100 font-bold text-blue-800">2</span>
+                        <div>
+                            <p className="font-bold text-de-black">Verb directly after</p>
+                            <p className="text-xs text-gray-500">deshalb, trotzdem, dann, sonst</p>
+                        </div>
                     </div>
+                    <p className="text-sm text-gray-600">Put the verb immediately after the connector.</p>
+                    <p className="mt-3 rounded bg-gray-50 p-3 text-sm text-gray-700">
+                        Ich bin krank. <strong>Deshalb <span className="text-de-red">bleibe</span></strong> ich zu Hause.
+                    </p>
                 </div>
-                <div className="bg-white p-4 rounded border border-indigo-100">
-                    <p className="font-bold text-de-black mb-2">Time</p>
-                    <p className="text-sm text-gray-600 mb-3">wenn, als, bevor, nachdem, während, seitdem, bis, sobald, solange</p>
-                    <div className="bg-slate-50 p-3 rounded text-xs font-mono text-gray-700">
-                        <span className="font-bold">Als</span> ich Kind war, wohnte ich in Berlin.
-                        <br/>
-                        <span className="font-bold">Wenn</span> ich Zeit habe, lerne ich Deutsch.
-                        <br/>
-                        <span className="font-bold">Seitdem</span> ich hier wohne, spreche ich mehr Deutsch.
+
+                <div className="rounded-lg border border-red-200 bg-white p-4 shadow-sm">
+                    <div className="mb-3 flex items-center gap-3">
+                        <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-red-100 font-bold text-red-800">3</span>
+                        <div>
+                            <p className="font-bold text-de-black">Verb at the end</p>
+                            <p className="text-xs text-gray-500">weil, dass, wenn, obwohl, falls</p>
+                        </div>
                     </div>
-                </div>
-                <div className="bg-white p-4 rounded border border-indigo-100">
-                    <p className="font-bold text-de-black mb-2">Condition & Indirect Question</p>
-                    <p className="text-sm text-gray-600 mb-3">wenn, falls, ob</p>
-                    <div className="bg-slate-50 p-3 rounded text-xs font-mono text-gray-700">
-                        <span className="font-bold">Wenn</span> du Zeit hast, ruf mich an.
-                        <br/>
-                        <span className="font-bold">Falls</span> es regnet, bleiben wir zu Hause.
-                        <br/>
-                        Ich weiß nicht, <span className="font-bold">ob</span> er heute <span className="text-de-red font-bold">kommt</span>.
-                    </div>
-                </div>
-                <div className="bg-white p-4 rounded border border-indigo-100">
-                    <p className="font-bold text-de-black mb-2">Purpose & Method</p>
-                    <p className="text-sm text-gray-600 mb-3">damit, um ... zu, indem, ohne ... zu</p>
-                    <div className="bg-slate-50 p-3 rounded text-xs font-mono text-gray-700">
-                        Ich lerne Deutsch, <span className="font-bold">damit</span> ich in Deutschland arbeiten <span className="text-de-red font-bold">kann</span>.
-                        <br/>
-                        Ich lerne Deutsch, <span className="font-bold">um</span> eine Prüfung <span className="font-bold">zu</span> bestehen.
-                        <br/>
-                        Man lernt Wörter, <span className="font-bold">indem</span> man sie oft <span className="text-de-red font-bold">benutzt</span>.
-                    </div>
-                </div>
-                <div className="bg-white p-4 rounded border border-indigo-100">
-                    <p className="font-bold text-de-black mb-2">Two-Part Connectors</p>
-                    <p className="text-sm text-gray-600 mb-3">entweder ... oder, sowohl ... als auch, nicht nur ... sondern auch, weder ... noch</p>
-                    <div className="bg-slate-50 p-3 rounded text-xs font-mono text-gray-700">
-                        <span className="font-bold">Entweder</span> kommst du mit, <span className="font-bold">oder</span> du bleibst hier.
-                        <br/>
-                        Er ist <span className="font-bold">nicht nur</span> klug, <span className="font-bold">sondern auch</span> sehr fleißig.
-                        <br/>
-                        Sie ist <span className="font-bold">weder</span> müde <span className="font-bold">noch</span> krank.
-                    </div>
+                    <p className="text-sm text-gray-600">Save the conjugated verb for the end.</p>
+                    <p className="mt-3 rounded bg-gray-50 p-3 text-sm text-gray-700">
+                        Ich bleibe zu Hause, <strong>weil</strong> ich krank <strong className="text-de-red">bin</strong>.
+                    </p>
                 </div>
             </div>
-            <div className="mt-6 overflow-x-auto rounded-lg border border-indigo-100 bg-white shadow-sm">
-                <table className="w-full text-left text-sm border-collapse">
-                    <thead>
-                        <tr className="bg-indigo-50">
-                            <th className="p-3 font-bold text-indigo-900">Type</th>
-                            <th className="p-3 font-bold text-indigo-900 border-l border-indigo-100">Connectors</th>
-                            <th className="p-3 font-bold text-indigo-900 border-l border-indigo-100">Word order</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr className="border-t border-indigo-100">
-                            <td className="p-3 font-bold">Position 0</td>
-                            <td className="p-3 border-l border-indigo-100">und, aber, oder, denn, sondern</td>
-                            <td className="p-3 border-l border-indigo-100">Verb stays in position 2 after the subject.</td>
-                        </tr>
-                        <tr className="border-t border-indigo-100 bg-indigo-50/50">
-                            <td className="p-3 font-bold">Position 1</td>
-                            <td className="p-3 border-l border-indigo-100">deshalb, deswegen, trotzdem, dann, danach, sonst</td>
-                            <td className="p-3 border-l border-indigo-100">Connector takes position 1, verb comes immediately after it.</td>
-                        </tr>
-                        <tr className="border-t border-indigo-100">
-                            <td className="p-3 font-bold">Subordinate clause</td>
-                            <td className="p-3 border-l border-indigo-100">weil, da, dass, ob, wenn, falls, obwohl, bevor, nachdem, seitdem, bis, sobald, solange, damit, sodass, indem</td>
-                            <td className="p-3 border-l border-indigo-100">Conjugated verb goes to the end.</td>
-                        </tr>
-                    </tbody>
-                </table>
+
+            <div className="mt-5 rounded-lg border border-indigo-100 bg-white p-4 text-sm text-gray-700">
+                <strong className="text-indigo-900">Quick memory:</strong> subject + verb · connector + verb · verb at the end
             </div>
+
+            <details className="mt-4 rounded-lg border border-indigo-100 bg-white">
+                <summary className="cursor-pointer px-4 py-3 text-sm font-bold text-indigo-900 focus:outline-none focus-visible:ring-4 focus-visible:ring-de-gold/50">
+                    More B1 connectors
+                </summary>
+                <div className="grid gap-3 border-t border-indigo-100 p-4 text-sm sm:grid-cols-2">
+                    <p><strong>Verb at the end:</strong> da, ob, bevor, nachdem, seitdem, bis, damit, sodass, indem</p>
+                    <p><strong>Pairs:</strong> entweder … oder, sowohl … als auch, weder … noch, je … desto</p>
+                </div>
+            </details>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            {/* Position 0 */}
-            <div className="bg-white rounded-lg border border-gray-200 shadow-sm overflow-hidden">
-                <div className="bg-gray-50 p-4 border-b border-gray-200">
-                    <h4 className="font-bold text-de-black text-lg">Position 0 (ADUSO)</h4>
-                    <p className="text-xs text-gray-500 uppercase tracking-wider font-bold mt-1">Main Clause + Main Clause</p>
-                </div>
-                <div className="p-4">
-                    <div className="mb-4 text-sm text-gray-600">
-                        The verb remains on <strong className="text-de-red">Position 2</strong>. The connector does not count (Position 0).
-                    </div>
-                    <div className="flex flex-wrap gap-2 mb-4">
-                        {["aber (but)", "denn (because)", "und (and)", "sondern (but rather)", "oder (or)"].map(w => (
-                            <span key={w} className="px-2 py-1 bg-yellow-100 text-yellow-800 rounded font-bold text-sm">{w}</span>
-                        ))}
-                    </div>
-                    <div className="bg-gray-50 p-3 rounded text-sm border-l-4 border-yellow-400 font-mono text-gray-700">
-                        <div className="mb-1 border-b border-gray-200 pb-1"><span className="text-gray-400 w-6 inline-block">0</span> <span className="font-bold text-de-black">Denn</span></div>
-                        <div className="mb-1"><span className="text-gray-400 w-6 inline-block">1</span> er (he)</div>
-                        <div className="mb-1"><span className="text-gray-400 w-6 inline-block">2</span> <strong className="text-de-red bg-red-50 px-1 rounded">ist</strong> (is)</div>
-                        <div><span className="text-gray-400 w-6 inline-block">3</span> müde (tired).</div>
-                    </div>
-                </div>
-            </div>
-
-            {/* Position 1 */}
-            <div className="bg-white rounded-lg border border-gray-200 shadow-sm overflow-hidden">
-                <div className="bg-gray-50 p-4 border-b border-gray-200">
-                    <h4 className="font-bold text-de-black text-lg">Position 1 (Adverbs)</h4>
-                    <p className="text-xs text-gray-500 uppercase tracking-wider font-bold mt-1">Main Clause + Main Clause</p>
-                </div>
-                <div className="p-4">
-                    <div className="mb-4 text-sm text-gray-600">
-                        The connector is on Position 1. The verb follows <strong className="text-de-red">directly after</strong> (Position 2).
-                    </div>
-                    <div className="flex flex-wrap gap-2 mb-4">
-                        {["deshalb (therefore)", "dann (then)", "danach (afterwards)", "sonst (otherwise)", "trotzdem (nevertheless)"].map(w => (
-                            <span key={w} className="px-2 py-1 bg-blue-100 text-blue-800 rounded font-bold text-sm">{w}</span>
-                        ))}
-                    </div>
-                    <div className="bg-gray-50 p-3 rounded text-sm border-l-4 border-blue-400 font-mono text-gray-700">
-                        <div className="mb-1 border-b border-gray-200 pb-1"><span className="text-gray-400 w-6 inline-block">1</span> <span className="font-bold text-de-black">Deshalb</span></div>
-                        <div className="mb-1"><span className="text-gray-400 w-6 inline-block">2</span> <strong className="text-de-red bg-red-50 px-1 rounded">lernt</strong> (learns)</div>
-                        <div className="mb-1"><span className="text-gray-400 w-6 inline-block">3</span> er (he)</div>
-                        <div><span className="text-gray-400 w-6 inline-block">4</span> Deutsch (German).</div>
-                    </div>
-                </div>
-            </div>
-
-            {/* Nebensatz */}
-            <div className="bg-white rounded-lg border border-gray-200 shadow-sm overflow-hidden">
-                <div className="bg-gray-50 p-4 border-b border-gray-200">
-                    <h4 className="font-bold text-de-black text-lg">Subordinate Clause (End)</h4>
-                    <p className="text-xs text-gray-500 uppercase tracking-wider font-bold mt-1">Main Clause + Subordinate Clause</p>
-                </div>
-                <div className="p-4">
-                    <div className="mb-4 text-sm text-gray-600">
-                        The conjugated verb goes to the <strong className="text-de-red">end</strong> of the sentence (Verb-Kick).
-                    </div>
-                    <div className="flex flex-wrap gap-2 mb-4">
-                        {["weil (because)", "wenn (if/when)", "als (when)", "dass (that)", "obwohl (although)", "seit (since)", "damit (so that)", "falls (in case/if)"].map(w => (
-                            <span key={w} className="px-2 py-1 bg-red-100 text-red-800 rounded font-bold text-sm">{w}</span>
-                        ))}
-                    </div>
-                    <div className="bg-gray-50 p-3 rounded text-sm border-l-4 border-de-red font-mono text-gray-700">
-                        <div className="mb-1 border-b border-gray-200 pb-1">... <span className="font-bold text-de-black">weil</span></div>
-                        <div className="mb-1">er (he)</div>
-                        <div className="mb-1">Deutsch (German)</div>
-                        <div><strong className="text-de-red bg-red-50 px-1 rounded">lernt</strong> (learns).</div>
-                    </div>
-                </div>
-            </div>
+        <div className="mt-6">
+            <TopicDetails title="Indirect questions" level="B1" summary="Keep the question word—or use ob for a yes/no question—and move the verb to the end.">
+                <PatternLine label="W-question">Wo ist der Bahnhof? → Wissen Sie, <strong>wo</strong> der Bahnhof <strong>ist</strong>?</PatternLine>
+                <PatternLine label="Yes / no">Kommt sie heute? → Weißt du, <strong>ob</strong> sie heute <strong>kommt</strong>?</PatternLine>
+                <p className="mt-3 text-xs text-gray-500">This follows pattern 3 above: the conjugated verb waits until the end.</p>
+            </TopicDetails>
         </div>
     </div>
 );
@@ -581,6 +528,16 @@ const AdverbSection = () => (
                         <li>trotzdem (nevertheless)</li>
                     </ul>
                 </div>
+            </div>
+        </div>
+        <div className="rounded-xl border border-emerald-100 bg-white p-5 shadow-sm">
+            <h4 className="font-bold text-de-black">Degree particles</h4>
+            <p className="mt-1 text-sm text-gray-600">These small words strengthen or weaken an adjective or adverb; they do not change their form.</p>
+            <div className="mt-4 grid gap-2 text-sm sm:grid-cols-2 lg:grid-cols-4">
+                <div className="rounded bg-emerald-50 p-3"><strong>++</strong> total, besonders</div>
+                <div className="rounded bg-emerald-50 p-3"><strong>+</strong> echt, ziemlich, wirklich</div>
+                <div className="rounded bg-emerald-50 p-3"><strong>−</strong> nicht so, nicht besonders</div>
+                <div className="rounded bg-emerald-50 p-3"><strong>−−</strong> gar nicht, überhaupt nicht</div>
             </div>
         </div>
     </div>
@@ -685,11 +642,230 @@ const StrongDeclensionExplanation = () => (
     </div>
 );
 
+const NounAdjectiveExtensions = () => (
+  <div className="mb-10 grid gap-4 lg:grid-cols-2">
+    <TopicDetails
+      title="N-declension nouns"
+      level="A2"
+      summary="Some masculine people and animals add -(e)n outside the nominative singular."
+    >
+      <PatternLine label="Nominative">der Kollege · ein Kunde · der Junge</PatternLine>
+      <PatternLine label="Other cases">den/dem/des Kolleg<strong>en</strong> · Kund<strong>en</strong> · Jung<strong>en</strong></PatternLine>
+      <p className="mt-3 text-xs leading-relaxed text-gray-500">Common signals include masculine nouns ending in <strong>-e</strong>, plus words such as <strong>Herr, Mensch, Student, Tourist</strong>.</p>
+    </TopicDetails>
+
+    <TopicDetails
+      title="Adjectives used as nouns"
+      level="A2"
+      summary="The adjective keeps its normal ending and begins with a capital letter."
+    >
+      <PatternLine label="Person">der Bekannt<strong>e</strong> · ein Bekannt<strong>er</strong> · die Bekannt<strong>e</strong></PatternLine>
+      <PatternLine label="Plural">die Bekannt<strong>en</strong> · keine Bekannt<strong>en</strong></PatternLine>
+      <PatternLine label="Idea/thing">etwas Neu<strong>es</strong> · nichts Interessant<strong>es</strong></PatternLine>
+      <p className="mt-3 text-xs text-gray-500">Choose the ending from the adjective tables above; only the missing noun is implied.</p>
+    </TopicDetails>
+
+    <TopicDetails
+      title="Participles as adjectives"
+      level="B1"
+      summary="A participle can describe a noun and then takes an adjective ending."
+    >
+      <PatternLine label="Partizip I">wohnen → wohnend → der wohnend<strong>e</strong> Student</PatternLine>
+      <PatternLine label="Partizip II">schreiben → geschrieben → der geschrieben<strong>e</strong> Brief</PatternLine>
+      <p className="mt-3 text-xs text-gray-500"><strong>Partizip I</strong> is usually verb stem + <strong>-d</strong>. Both participles then follow the same declension rules as other adjectives.</p>
+    </TopicDetails>
+
+    <TopicDetails
+      title="Comparison and adjective endings"
+      level="A2-B1"
+      summary="Comparative and superlative forms can also stand before nouns."
+    >
+      <PatternLine label="Regular">klein → klein<strong>er</strong> → am klein<strong>sten</strong></PatternLine>
+      <PatternLine label="Irregular">gut → besser → am besten · gern → lieber → am liebsten · viel → mehr → am meisten</PatternLine>
+      <PatternLine label="Before noun">ein größer<strong>es</strong> Problem · mit einem größer<strong>en</strong> Problem</PatternLine>
+      <PatternLine label="Compare">größer <strong>als</strong> · genauso groß <strong>wie</strong></PatternLine>
+      <p className="mt-3 text-xs text-gray-500">Build the comparative first, then add the ending required by article, gender and case.</p>
+    </TopicDetails>
+  </div>
+);
+
+const PronounObjectPatterns = () => (
+  <div className="mb-10 grid gap-4 lg:grid-cols-2">
+    <TopicDetails title="Indefinite pronouns" level="A2" summary="Use these when the person or thing is unknown, general, or already understood.">
+      <PatternLine label="People">jemand · niemand · man</PatternLine>
+      <PatternLine label="Things">etwas · nichts · alles</PatternLine>
+      <PatternLine label="From ein/kein">einer, eine, eins · keiner, keine, keins</PatternLine>
+      <p className="mt-3 text-xs text-gray-500">Example: Ich brauche einen Stift. Hast du <strong>einen</strong>? — Nein, ich habe <strong>keinen</strong>.</p>
+    </TopicDetails>
+
+    <TopicDetails title="What kind of …?" level="A2" summary="Was für ein asks about type or quality; only ein changes for gender and case.">
+      <PatternLine label="Question">Was für <strong>ein</strong> Kurs? · Was für <strong>eine</strong> Prüfung?</PatternLine>
+      <PatternLine label="Accusative">Was für <strong>einen</strong> Film siehst du?</PatternLine>
+      <PatternLine label="Plural">Was für Bücher liest du? (no ein)</PatternLine>
+    </TopicDetails>
+
+    <TopicDetails title="Two objects: simple order" level="A2" summary="Put the dative person before the accusative thing in the usual neutral sentence.">
+      <PatternLine label="Two nouns">Ich schenke <strong>meinem Bruder</strong> <strong>das Buch</strong>.</PatternLine>
+      <PatternLine label="Pronoun first">Ich schenke <strong>es</strong> meinem Bruder. · Ich schenke <strong>ihm</strong> das Buch.</PatternLine>
+      <PatternLine label="Two pronouns">Ich schenke <strong>es ihm</strong>.</PatternLine>
+    </TopicDetails>
+
+    <TopicDetails title="Possession with von" level="A1-A2" summary="In everyday German, von + dative is a simple alternative to the genitive.">
+      <PatternLine label="Genitive">Annas Mutter · die Mutter meines Freundes</PatternLine>
+      <PatternLine label="von + Dat.">die Mutter <strong>von Anna</strong> · das Auto <strong>von meinem Freund</strong></PatternLine>
+    </TopicDetails>
+  </div>
+);
+
+const PracticalVerbPatterns = () => (
+  <div className="mb-16">
+    <div className="mb-6 flex items-end justify-between gap-4">
+      <div>
+        <h3 className="font-display text-2xl text-de-black">Practical Verb Patterns <LevelBadge level="A1-B1" /></h3>
+        <p className="mt-1 text-sm text-gray-500">Open only the pattern you need; the conjugation tables above remain the reference.</p>
+      </div>
+    </div>
+    <div className="grid gap-4 lg:grid-cols-2">
+      <TopicDetails title="Future and earlier past" level="A2-B1" summary="Use a sentence bracket: the conjugated helper comes early and the main form closes the sentence.">
+        <PatternLine label="Futur I">Ich <strong>werde</strong> morgen länger <strong>arbeiten</strong>.</PatternLine>
+        <PatternLine label="Promise">Ich <strong>werde</strong> keinen Termin <strong>vergessen</strong>.</PatternLine>
+        <PatternLine label="Plusquamperfekt">Ich <strong>hatte</strong> schon <strong>gegessen</strong>, bevor er kam.</PatternLine>
+        <p className="mt-3 text-xs text-gray-500">German often uses the present tense with a time word for plans: <em>Morgen arbeite ich länger.</em></p>
+      </TopicDetails>
+
+      <TopicDetails title="Imperative and polite requests" level="A1-A2" summary="Choose the form by who you are addressing; omit the pronoun with du and ihr.">
+        <PatternLine label="du">Komm mit! · Fahr langsam! · Sei leise!</PatternLine>
+        <PatternLine label="ihr">Kommt mit! · Fahrt langsam! · Seid leise!</PatternLine>
+        <PatternLine label="Sie">Kommen Sie bitte mit! · Seien Sie bitte leise!</PatternLine>
+        <PatternLine label="Softer">Könnten Sie mir bitte helfen?</PatternLine>
+      </TopicDetails>
+
+      <TopicDetails title="Verbs with dative" level="A2" summary="A small group of common verbs asks for a dative person, not an accusative object.">
+        <PatternLine label="Pattern">Das Hemd <strong>gefällt mir</strong>. · Der Mantel <strong>steht dir</strong>.</PatternLine>
+        <PatternLine label="Common verbs">helfen, danken, gefallen, gehören, passen, schmecken, fehlen, folgen</PatternLine>
+        <p className="mt-3 text-xs text-gray-500">Ask <strong>Wem?</strong>: Wem gefällt das Hemd? — Mir.</p>
+      </TopicDetails>
+
+      <TopicDetails title="Infinitive with zu" level="A2" summary="Use zu when a second action depends on many verbs, adjectives or noun expressions.">
+        <PatternLine label="Simple">Ich versuche, früher <strong>zu schlafen</strong>.</PatternLine>
+        <PatternLine label="Separable">Fang an, die Bewerbung <strong>auszufüllen</strong>.</PatternLine>
+        <PatternLine label="No zu">After modal verbs and <strong>lassen, sehen, hören, gehen</strong>: Ich muss arbeiten.</PatternLine>
+      </TopicDetails>
+
+      <TopicDetails title="Useful expressions with es" level="A2" summary="Many impersonal statements use es as a fixed placeholder subject.">
+        <PatternLine label="Situation">Es ist leicht/schwierig/möglich, Deutsch zu lernen.</PatternLine>
+        <PatternLine label="Weather/time">Es regnet. · Es ist Viertel nach acht.</PatternLine>
+        <PatternLine label="Existence">Es gibt hier einen Supermarkt. (+ accusative)</PatternLine>
+      </TopicDetails>
+
+      <TopicDetails title="Build the Perfekt" level="A1-A2" summary="The prefix tells you where ge- goes—or whether it disappears.">
+        <PatternLine label="Separable">kennenlernen → kennengelernt · einkaufen → eingekauft</PatternLine>
+        <PatternLine label="Inseparable">besuchen → besucht · verstehen → verstanden (no ge-)</PatternLine>
+        <PatternLine label="-ieren">telefonieren → telefoniert · studieren → studiert (no ge-)</PatternLine>
+        <p className="mt-3 text-xs text-gray-500">Most verbs use <strong>haben</strong>; movement or change-of-state verbs often use <strong>sein</strong>.</p>
+      </TopicDetails>
+
+      <TopicDetails title="Reflexive verbs" level="A2" summary="The reflexive pronoun refers back to the subject and changes with the person.">
+        <PatternLine label="Pattern">Ich freue <strong>mich</strong>. · Du fühlst <strong>dich</strong> müde.</PatternLine>
+        <PatternLine label="Common verbs">sich erinnern, sich interessieren, sich beeilen, sich ausruhen, sich treffen</PatternLine>
+        <p className="mt-3 text-xs text-gray-500">Use the reflexive-pronoun table above when the subject changes.</p>
+      </TopicDetails>
+
+      <TopicDetails title="Modal verbs in the past" level="A2" summary="In everyday narration, modal verbs commonly use the simple past.">
+        <PatternLine label="Forms">musste · konnte · wollte · durfte · sollte</PatternLine>
+        <PatternLine label="Example">Ich <strong>musste</strong> arbeiten. · Wir <strong>konnten</strong> nicht kommen.</PatternLine>
+      </TopicDetails>
+
+      <TopicDetails title="lassen" level="B1" summary="Use lassen for permission, instruction, or having something done.">
+        <PatternLine label="Permission">Sie <strong>lässt</strong> ihn ihr Konto prüfen.</PatternLine>
+        <PatternLine label="Have done">Ich <strong>lasse</strong> mein Fahrrad reparieren.</PatternLine>
+        <PatternLine label="Advice">Du <strong>solltest</strong> die Reifen wechseln lassen.</PatternLine>
+      </TopicDetails>
+    </div>
+  </div>
+);
+
+const PrepositionsInUse = () => (
+  <div id="prepositions" className="mb-16 scroll-mt-28">
+    <h3 className="mb-2 font-display text-2xl border-l-4 border-prep pl-3">Prepositions in Use <LevelBadge level="A1-B1" /></h3>
+    <p className="mb-6 pl-4 text-sm text-gray-500">These patterns apply the case lists below to the three questions learners use most.</p>
+    <div className="grid gap-4 lg:grid-cols-2">
+      <TopicDetails title="Time: duration, start and deadline" level="A1-A2" summary="Match the preposition to the question: how long, since when, or until when?">
+        <PatternLine label="Duration">für + Akk.: für einen Monat · für zwei Wochen</PatternLine>
+        <PatternLine label="Starting point">seit + Dat.: seit einem Jahr · seit der Ausbildung</PatternLine>
+        <PatternLine label="Before/after">vor/nach + Dat.: vor dem Kurs · nach dem Training</PatternLine>
+        <PatternLine label="Deadline/start">bis Freitag · ab morgen</PatternLine>
+      </TopicDetails>
+
+      <TopicDetails title="Place: Wo? or Wohin?" level="A2" summary="With two-way prepositions, location takes dative; destination takes accusative.">
+        <PatternLine label="Wo? + Dat.">Ich bin <strong>in der</strong> Apotheke. · Das Bild hängt <strong>an der</strong> Wand.</PatternLine>
+        <PatternLine label="Wohin? + Akk.">Ich gehe <strong>in die</strong> Apotheke. · Ich hänge das Bild <strong>an die</strong> Wand.</PatternLine>
+        <PatternLine label="People">bei Maria → zu Maria</PatternLine>
+        <PatternLine label="Countries">in Deutschland → nach Deutschland · in der Schweiz → in die Schweiz</PatternLine>
+      </TopicDetails>
+
+      <TopicDetails title="Verbs with fixed prepositions" level="A2-B1" summary="Learn the verb, preposition and case as one vocabulary unit.">
+        <PatternLine label="+ Akk.">denken an · warten auf · sich freuen über · sprechen über</PatternLine>
+        <PatternLine label="+ Dat.">teilnehmen an · sprechen mit · träumen von · gehören zu</PatternLine>
+        <PatternLine label="Person">An wen denkst du? — An meine Schwester.</PatternLine>
+        <PatternLine label="Thing">Woran denkst du? — An die Prüfung.</PatternLine>
+      </TopicDetails>
+
+      <TopicDetails title="da(r)- and wo(r)- compounds" level="B1" summary="Use wo(r)- to ask about things and da(r)- to refer back to them.">
+        <PatternLine label="Consonant">mit → womit? / damit · von → wovon? / davon</PatternLine>
+        <PatternLine label="Vowel">an → woran? / daran · über → worüber? / darüber</PatternLine>
+        <p className="mt-3 text-xs text-gray-500">For people, keep preposition + pronoun: <strong>mit wem?</strong>, <strong>mit ihm</strong>.</p>
+      </TopicDetails>
+
+      <TopicDetails title="Direction: hin or her?" level="A2" summary="hin means away from the speaker; her means toward the speaker.">
+        <PatternLine label="Away: hin">Wohin gehst du? — Ich gehe <strong>dorthin</strong>. · Geh hinein!</PatternLine>
+        <PatternLine label="Toward: her">Woher kommst du? — Komm <strong>hierher</strong>! · Komm herein!</PatternLine>
+        <PatternLine label="Short commands">Geh hinunter! · Komm herauf!</PatternLine>
+      </TopicDetails>
+
+      <TopicDetails title="Source and time span" level="A2" summary="Use Woher? for origin and these compact patterns for time ranges.">
+        <PatternLine label="Woher?">aus dem Bus · aus der S-Bahn · vom Arzt · von der Tankstelle</PatternLine>
+        <PatternLine label="From now">von Montag <strong>an</strong> · von heute <strong>an</strong></PatternLine>
+        <PatternLine label="For a period"><strong>über</strong> eine Stunde · über das Wochenende</PatternLine>
+      </TopicDetails>
+    </div>
+  </div>
+);
+
+const WordsAndDates = () => (
+  <div id="word-building" className="mb-16 scroll-mt-28">
+    <h3 className="mb-2 font-display text-2xl border-l-4 border-de-gold pl-3">Words & Dates <LevelBadge level="A1-B1" /></h3>
+    <p className="mb-6 pl-4 text-sm text-gray-500">Compact formation rules from the screenshots; gender suffixes are already covered above.</p>
+    <div className="grid gap-4 lg:grid-cols-2">
+      <TopicDetails title="Ordinal numbers and dates" level="A1-A2" summary="Use -te through 19 and -ste from 20 onward, then add an adjective ending in a sentence.">
+        <PatternLine label="1–19">erste, zweite, dritte, vierte … neunzehnte</PatternLine>
+        <PatternLine label="20+">zwanzigste, einundzwanzigste …</PatternLine>
+        <PatternLine label="When?">am zweiten Mai · vom zweiten bis zum zwanzigsten Mai</PatternLine>
+      </TopicDetails>
+
+      <TopicDetails title="Build new nouns" level="A2-B1" summary="German grows vocabulary through compounds, people suffixes and noun-forming endings.">
+        <PatternLine label="Compound">das Volk + das Fest → das Volksfest · braten + die Wurst → die Bratwurst</PatternLine>
+        <PatternLine label="Person">der Mechaniker → die Mechanikerin · der Arzt → die Ärztin</PatternLine>
+        <PatternLine label="From verb">sich erinnern → die Erinnerung · herstellen → die Herstellung</PatternLine>
+        <p className="mt-3 text-xs text-gray-500">In compounds, the <strong>last noun</strong> decides the article and plural.</p>
+      </TopicDetails>
+
+      <TopicDetails title="Build adjectives" level="B1" summary="A few productive endings help you understand and create related words.">
+        <PatternLine label="-los">die Arbeit → arbeitslos · der Geschmack → geschmacklos</PatternLine>
+        <PatternLine label="-isch / -ig">der Sturm → stürmisch · die Lust → lustig</PatternLine>
+        <PatternLine label="-bar">benutzen → benutzbar · essen → essbar</PatternLine>
+        <PatternLine label="un-">angenehm → unangenehm · möglich → unmöglich</PatternLine>
+      </TopicDetails>
+    </div>
+  </div>
+);
+
 const B1GrammarSection = () => {
   const konjunktivData = [
     ["würde + Infinitive", "Ich würde gehen", "Du würdest gehen", "Er würde gehen", "Wir würden gehen", "Ihr würdet gehen", "Sie würden gehen"],
     ["hätte / wäre", "Ich hätte Zeit", "Du hättest Zeit", "Er wäre glücklich", "Wir wären bereit", "Ihr wärt hier", "Sie wären stolz"],
     ["könnte / sollte", "Ich könnte helfen", "Du solltest lernen", "Er könnte kommen", "Wir sollten gehen", "Ihr könntet fragen", "Sie sollten antworten"],
+    ["Past: hätte/wäre + Partizip II", "Ich hätte angerufen", "Du wärst gekommen", "Er hätte geholfen", "Wir wären geblieben", "Ihr hättet gefragt", "Sie wären gefahren"],
   ];
 
   const passiveData = [
@@ -706,7 +882,7 @@ const B1GrammarSection = () => {
   ];
 
   return (
-    <div className="mb-16">
+    <div id="b1-grammar" className="mb-16 scroll-mt-28">
       <h3 className="font-display text-2xl border-l-4 border-violet-500 pl-3 mb-6">
         B1 Grammar Focus <LevelBadge level="B1" />
       </h3>
@@ -731,6 +907,7 @@ const B1GrammarSection = () => {
             <div><strong>Präsens:</strong> Der Brief wird geschrieben.</div>
             <div><strong>Präteritum:</strong> Der Brief wurde geschrieben.</div>
             <div><strong>Perfekt:</strong> Der Brief ist geschrieben worden.</div>
+            <div><strong>With modal:</strong> Der Brief muss geschrieben werden.</div>
           </div>
         </div>
         <div className="bg-white rounded-lg border border-gray-200 shadow-sm p-6">
@@ -742,6 +919,8 @@ const B1GrammarSection = () => {
             <div>Das ist der Mann, <strong>der</strong> das Buch liest.</div>
             <div>Ich kenne das Haus, <strong>in dem</strong> er wohnt.</div>
             <div>Die Frau, <strong>deren</strong> Auto kaputt ist, fährt heute nicht.</div>
+            <div>Ich fahre dorthin, <strong>wo</strong> es ruhig ist.</div>
+            <div>Das ist alles, <strong>was</strong> ich weiß.</div>
           </div>
         </div>
       </div>
@@ -847,13 +1026,14 @@ export const GrammarView: React.FC = () => {
             <p className="text-gray-500 font-display uppercase tracking-widest text-sm font-bold">A1-B1 Learning Path & Reference Tables</p>
         </div>
 
+        <TopicNav />
         <LevelRoadmap />
         <CorePatternsSection />
-        <CaseDecisionSection />
+        <div id="cases" className="scroll-mt-28"><CaseDecisionSection /></div>
         <TenseProgressionSection />
 
         {/* 0. COMMON ENDINGS (New) */}
-        <div className="mb-12 border-b border-gray-100 pb-8">
+        <div id="noun-gender" className="mb-12 scroll-mt-28 border-b border-gray-100 pb-8">
             <h3 className="font-display text-2xl border-l-4 border-de-black pl-3 mb-6">
               Noun Gender & Endings <LevelBadge level="A1-A2" />
             </h3>
@@ -861,7 +1041,7 @@ export const GrammarView: React.FC = () => {
         </div>
 
         {/* 1. ADJEKTIVDEKLINATION */}
-        <div className="mb-16">
+        <div id="adjectives" className="mb-16 scroll-mt-28">
             <h3 className="font-display text-2xl border-l-4 border-de-gold pl-3 mb-6">
               Adjective Declension <LevelBadge level="A2-B1" />
             </h3>
@@ -958,10 +1138,12 @@ export const GrammarView: React.FC = () => {
             <StrongDeclensionExplanation />
             <GrammarTable data={nullartikelData} highlightColor="text-art-das" headers={ARTICLE_TABLE_HEADERS} />
             </section>
+
+            <NounAdjectiveExtensions />
         </div>
 
         {/* 2. VERBS (New) */}
-        <div className="mb-16">
+        <div id="verbs" className="mb-16 scroll-mt-28">
             <h3 className="font-display text-2xl border-l-4 border-de-red pl-3 mb-6">
               Verbs & Auxiliary Verbs <LevelBadge level="A1-B1" />
             </h3>
@@ -982,8 +1164,10 @@ export const GrammarView: React.FC = () => {
             />
         </div>
 
+        <PracticalVerbPatterns />
+
         {/* 3. PRONOMEN */}
-        <div className="mb-16">
+        <div id="pronouns" className="mb-16 scroll-mt-28">
             <h3 className="font-display text-2xl border-l-4 border-de-black pl-3 mb-6">
               Pronouns <LevelBadge level="A1-A2" />
             </h3>
@@ -1014,16 +1198,22 @@ export const GrammarView: React.FC = () => {
                 />
                 <GrammarTable data={definitpronomenData} highlightColor="text-de-black" headers={ARTICLE_TABLE_HEADERS} />
             </section>
+
+            <PronounObjectPatterns />
         </div>
 
         {/* 4. SENTENCE STRUCTURE (New) */}
-        <SentenceStructureSection />
+        <div id="sentences" className="scroll-mt-28"><SentenceStructureSection /></div>
 
         {/* 5. B1 GRAMMAR */}
         <B1GrammarSection />
 
         {/* 6. ADVERBS (New) */}
         <AdverbSection />
+
+        <PrepositionsInUse />
+
+        <WordsAndDates />
 
         {/* 7. CHEAT SHEETS (Prepositions & Possessives) */}
         <div className="mb-8">
