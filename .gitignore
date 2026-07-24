@@ -16,6 +16,7 @@ dist-ssr
 .env
 .env.*.local
 *.local
+nouns.csv
 
 # Editor directories and files
 .vscode/*
